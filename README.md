@@ -22,8 +22,12 @@ Astro 5 line until that is fixed upstream.
 
 ## Status: not launch-ready
 
-Structure, programs, compliance scaffolding, and imagery are done. Bios, the company NMLS ID, and
-Lorie's NMLS ID are outstanding and render as loud amber placeholders on the page.
+Structure, programs, compliance scaffolding, and imagery are done.
+
+**The site reads as finished, but most of its prose is our draft.** Placeholders are deliberately
+not visually flagged so the build can be demoed, which means nothing on the page distinguishes
+draft copy from confirmed copy. [`PLACEHOLDERS.md`](PLACEHOLDERS.md) is the only register — do not
+launch without walking it.
 
 **Preview deploys only. Do not point `auramortgagepartners.com` at this build until the checklist
 below is clear.**
@@ -37,12 +41,14 @@ Placeholders use a sentinel string. `pending("brief")` marks a field as outstand
 text is what renders on the page, so each placeholder doubles as the writing prompt for that field.
 To fill one in, replace the whole `pending(...)` call with the real string:
 
-```ts
-nmls: pending("Lorie Lewis's NMLS ID — the brief gave both 273007 and 334279…"),
-nmls: "273007",
-```
+Two conventions are in play:
 
-`Copy.astro` renders any value pending-aware, so no component changes are needed.
+- **`// DRAFT:` comments** mark our stand-in copy. `grep -rn "DRAFT:" src/` lists every one.
+- **Empty strings** mark facts we refused to guess — chiefly license numbers. Every component
+  omits an empty value cleanly rather than rendering a gap, so the page still looks finished.
+
+The `pending()` sentinel and `Copy.astro` remain in place for any field that should render a loud
+amber prompt instead, but nothing currently uses them.
 
 ## Confirmed by client
 
@@ -90,31 +96,26 @@ Before any production deploy:
 ```bash
 npm run build
 
-# 1. Sentinel leak into metadata or schema. Must return nothing.
-#    Catches a pending value used without settled() in a meta tag or JSON-LD.
-grep -rn "__PENDING__" dist/
+# 1. Draft copy still in place. Every hit needs client confirmation.
+grep -rn "DRAFT:" src/
 
-# 2. Outstanding client content. Must reach 0 before launch.
-#    Copy.astro strips the sentinel and renders the brief in an amber box, so
-#    grep #1 alone will NOT catch unfilled copy — this is the real content gate.
-grep -ro 'class="pending' dist --include=*.html | wc -l
-
-# 3. Sitewide compliance coverage. All four must equal the page count (31).
+# 2. Sitewide compliance coverage. All four must equal the page count (31).
 grep -rl nmlsconsumeraccess dist --include=*.html | wc -l
 grep -rl 'Equal Housing Lender' dist --include=*.html | wc -l
 grep -rl '297944' dist --include=*.html | wc -l
 grep -ril 'not a commitment to lend' dist --include=*.html | wc -l
 
+# 3. The company NMLS ID. Currently 0 — must equal 31 before launch.
+grep -rl 'Company NMLS' dist --include=*.html | wc -l
+
 # 4. Reg Z / MAP Rule content scan. Every hit needs a human read.
 grep -rhoiE '[0-9]+(\.[0-9]+)?%|guarantee[a-z]*|lowest rate[s]?|instant [a-z]+' dist --include=*.html | sort | uniq -c
 ```
 
-As of the current build: coverage is 31/31 on all four compliance checks, and **147 pending blocks
-across 31 pages** remain (the bios, company NMLS, and Lorie's NMLS drive most of them). Scan #4
-currently returns only SVG gradient stops (`0%`, `55%`, `100%`), a URL-encoded map query, and the
-factual VA phrases "VA-guaranteed" and "guaranteed by the Department of Veterans Affairs" — plus
-"personal guarantee" in the commercial FAQ. **No rate, payment, or down-payment figure appears
-anywhere on the site.**
+As of the current build, checks 1–2 pass at 31/31 and scan 4 returns only SVG gradient stops, a
+URL-encoded map query, and the factual VA phrases "VA-guaranteed" and "guaranteed by the Department
+of Veterans Affairs", plus "personal guarantee" in the commercial FAQ. **No rate, payment, or
+down-payment figure appears anywhere on the site.** Check 3 returns **0** — that is the blocker.
 
 ## Structure
 
@@ -134,9 +135,12 @@ makes it structurally impossible to ship a page without compliance text.
 `/loan-programs/[slug]` generates 20 pages from `programs.ts` via `getStaticPaths()`. One array
 drives the nav, both index grids, the detail pages, the sitemap, and the `hasOfferCatalog` JSON-LD.
 
-**The header scrolls with the page** — not sticky — and carries no CTA. The hero holds the only
-above-the-fold conversion point. Because the header scrolls away, the sticky mobile call bar in
-`Footer.astro` carries the CTA on long pages; it is the compensating control, not decoration.
+**The header scrolls with the page** — not sticky — and carries no CTA. It is midnight rather than
+white so it can hold the champagne logo, which fails contrast on a light background.
+
+There is **no sticky mobile call bar**. It existed as the compensating control for a non-sticky
+header, but `SectionCta.astro` now closes every section with a centred Call button, so the bar was
+covering content without adding reach. The home page carries six call links.
 
 ## SEO
 
