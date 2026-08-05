@@ -15,10 +15,10 @@ const liveSocial = social.filter((s) => !isPending(s.href));
 ---
 
 <footer class="bg-midnight text-white">
-  <div class="container-page grid gap-12 py-14 md:grid-cols-3">
+  <div class="container-page grid gap-12 py-14 text-center md:grid-cols-3">
     <div>
-      <Logo />
-      <p class="mt-5 max-w-xs text-sm leading-relaxed text-white/65">
+      <Logo class="mx-auto" />
+      <p class="mx-auto mt-5 max-w-xs text-sm leading-relaxed text-white/65">
         A Florida mortgage brokerage in West Palm Beach. Open seven days a week.
       </p>
     </div>
@@ -29,7 +29,7 @@ const liveSocial = social.filter((s) => !isPending(s.href));
         <a
           href={`tel:${site.phoneTel}`}
           data-call-cta
-          class="flex items-center gap-2.5 text-lg font-bold text-white transition-colors hover:text-champagne"
+          class="flex items-center justify-center gap-2.5 text-lg font-bold text-white transition-colors hover:text-champagne"
         >
           <Icon name="phone" class="h-4 w-4 text-champagne" />
           {site.phoneDisplay}
@@ -39,7 +39,7 @@ const liveSocial = social.filter((s) => !isPending(s.href));
           email ? (
             <a
               href={`mailto:${email}`}
-              class="flex items-center gap-2.5 text-sm break-all text-white/80 transition-colors hover:text-champagne"
+              class="flex items-center justify-center gap-2.5 text-sm break-all text-white/80 transition-colors hover:text-champagne"
             >
               <Icon name="mail" class="h-4 w-4 shrink-0 text-champagne" />
               {email}
@@ -49,12 +49,12 @@ const liveSocial = social.filter((s) => !isPending(s.href));
           )
         }
 
-        <p class="flex items-start gap-2.5 text-sm text-white/80">
+        <p class="flex items-start justify-center gap-2.5 text-sm text-white/80">
           <Icon name="map-pin" class="mt-0.5 h-4 w-4 shrink-0 text-champagne" />
           <span>{site.street}<br />{site.city}, {site.region} {site.postal}</span>
         </p>
 
-        <p class="flex items-start gap-2.5 text-sm text-white/80">
+        <p class="flex items-start justify-center gap-2.5 text-sm text-white/80">
           <Icon name="clock" class="mt-0.5 h-4 w-4 shrink-0 text-champagne" />
           <span>{site.hours}</span>
         </p>
@@ -65,7 +65,7 @@ const liveSocial = social.filter((s) => !isPending(s.href));
       <h2 class="font-display text-lg font-semibold">Follow</h2>
       {
         liveSocial.length ? (
-          <ul class="mt-4 flex items-center gap-3">
+          <ul class="mt-4 flex items-center justify-center gap-3">
             {liveSocial.map((s) => (
               <li>
                 <a
@@ -107,8 +107,8 @@ const liveSocial = social.filter((s) => !isPending(s.href));
   </div>
 
   <div class="border-t border-white/15">
-    <div class="container-page space-y-5 py-10">
-      <div class="flex flex-wrap items-center gap-x-8 gap-y-5">
+    <div class="container-page space-y-5 py-10 text-center">
+      <div class="flex flex-wrap items-center justify-center gap-x-8 gap-y-5">
         <p
           class="rounded-lg border border-champagne/50 bg-white/5 px-4 py-2.5 text-base font-bold tracking-wide text-white"
         >
@@ -123,7 +123,7 @@ const liveSocial = social.filter((s) => !isPending(s.href));
         </div>
       </div>
 
-      <ul class="flex flex-wrap gap-x-6 gap-y-2">
+      <ul class="flex flex-wrap justify-center gap-x-6 gap-y-2">
         {
           team
             .filter((m) => m.nmls)
@@ -150,7 +150,7 @@ const liveSocial = social.filter((s) => !isPending(s.href));
         . Licensed in: {compliance.statesLicensed}.
       </p>
 
-      <p class="max-w-4xl text-xs leading-relaxed text-white/55">
+      <p class="mx-auto max-w-4xl text-xs leading-relaxed text-white/55">
         {compliance.disclaimer}
       </p>
     </div>
