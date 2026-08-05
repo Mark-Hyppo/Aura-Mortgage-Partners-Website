@@ -172,16 +172,6 @@ const liveSocial = social.filter((s) => !isPending(s.href));
   </div>
 </footer>
 
-<!-- Sticky call bar: the compensating control for a non-sticky header on mobile. -->
-<a
-  href={`tel:${site.phoneTel}`}
-  data-call-cta
-  class="fixed inset-x-0 bottom-0 z-40 flex min-h-[4.5rem] items-center justify-center gap-2.5 bg-aurora text-lg font-bold text-midnight shadow-[0_-8px_24px_-12px_rgba(11,18,32,0.5)] lg:hidden"
->
-  <Icon name="phone" class="h-5 w-5" />
-  Call {site.phoneDisplay}
-</a>
-
 <script>
   // No Hyppo site tracks tel: clicks today. The primary CTA should be measurable.
   document.querySelectorAll("[data-call-cta]").forEach((el) =>
