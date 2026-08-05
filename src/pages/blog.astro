@@ -1,0 +1,65 @@
+---
+import Layout from "../layouts/Layout.astro";
+import PageHeader from "../components/PageHeader.astro";
+import CallButton from "../components/CallButton.astro";
+import { site, hyppo, settled } from "../data/site";
+
+// Listing, pagination, post detail, JSON-LD, and the blog sitemap all live in
+// HyppoCRM. Do not add post routes or local post data here.
+const crumbs = [{ name: "Blog", href: "/blog" }];
+const tenant = settled(hyppo.tenantSlug);
+const blog = settled(hyppo.blogSlug);
+const embedSrc = tenant && blog ? `https://hyppohq.io/blog/${tenant}/${blog}?embed=true` : "";
+const mountId = blog ? `hyppo-blog-${blog}` : "hyppo-blog";
+---
+
+<Layout
+  title="Mortgage Blog | Aura Mortgage Partners | West Palm Beach"
+  description={`Aura Mortgage Partners provides mortgage guidance and market education in ${site.city}, ${site.region}. Contact us at ${site.phoneDisplay}.`}
+  pathname="/blog"
+  breadcrumbs={crumbs}
+>
+  <PageHeader
+    heading="Mortgage notes"
+    lede="Program explainers, South Florida property nuances, and what actually happens between underwriting and clear-to-close."
+    breadcrumbs={crumbs}
+  />
+
+  {
+    embedSrc && (
+      <section class="section">
+        <div class="container-page">
+          <div id={mountId} data-blog-embed={embedSrc} />
+        </div>
+      </section>
+    )
+  }
+
+  <section class="aurora-wash bg-midnight text-white">
+    <div class="container-page py-16 text-center md:py-20">
+      <h2 class="section-heading">Questions the blog did not answer?</h2>
+      <div class="mt-8 flex justify-center"><CallButton /></div>
+      <p class="mt-4 text-sm text-champagne/80">{site.hoursShort}</p>
+    </div>
+  </section>
+</Layout>
+
+<script>
+  const host = document.querySelector<HTMLElement>("[data-blog-embed]");
+  const src = host?.dataset.blogEmbed;
+  if (host && src) {
+    const frame = document.createElement("iframe");
+    frame.src = src;
+    frame.title = "Aura Mortgage Partners blog";
+    frame.setAttribute("scrolling", "no");
+    frame.style.cssText =
+      "width:100%;max-width:100%;height:600px;border:none;overflow:hidden;display:block;";
+    host.appendChild(frame);
+
+    window.addEventListener("message", (e: MessageEvent) => {
+      if (e.data?.type === "hyppo-blog-resize" && typeof e.data.height === "number") {
+        frame.style.height = `${e.data.height}px`;
+      }
+    });
+  }
+</script>

@@ -1,0 +1,146 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import SectionCta from "../../components/SectionCta.astro";
+import PageHeader from "../../components/PageHeader.astro";
+import CallButton from "../../components/CallButton.astro";
+import Icon from "../../components/Icon.astro";
+import ProgramCard from "../../components/ProgramCard.astro";
+import { programs, groups, type Program } from "../../data/programs";
+import { site, compliance } from "../../data/site";
+import { team } from "../../data/team";
+import { isPending } from "../../data/site";
+
+export function getStaticPaths() {
+  return programs.map((program) => ({ params: { slug: program.slug }, props: { program } }));
+}
+
+interface Props {
+  program: Program;
+}
+
+const { program } = Astro.props;
+
+const related = programs
+  .filter((p) => p.group === program.group && p.slug !== program.slug)
+  .slice(0, 3);
+
+const crumbs = [
+  { name: "Loan Programs", href: "/loan-programs" },
+  { name: program.name, href: `/loan-programs/${program.slug}` },
+];
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: program.faq.map((f) => ({
+    "@type": "Question",
+    name: f.q,
+    acceptedAnswer: { "@type": "Answer", text: f.a },
+  })),
+};
+---
+
+<Layout
+  title={`${program.titleName} | Aura Mortgage Partners | West Palm Beach`}
+  description={`Aura Mortgage Partners provides ${program.service} in ${site.city}, ${site.region}. Contact us at ${site.phoneDisplay}.`}
+  pathname={`/loan-programs/${program.slug}`}
+  breadcrumbs={crumbs}
+>
+  <PageHeader heading={program.name} lede={program.lede} breadcrumbs={crumbs} />
+
+  <section class="section">
+    <div class="container-page grid gap-12 lg:grid-cols-[1fr_20rem] lg:gap-16">
+      <div>
+        <div class="grid gap-10 sm:grid-cols-2">
+          <div>
+            <h2 class="font-display text-xl font-semibold">Who it fits</h2>
+            <ul class="mt-5 space-y-3">
+              {
+                program.whoItFits.map((item) => (
+                  <li class="flex gap-3 text-[0.9375rem] leading-relaxed text-ink/80">
+                    <Icon name="check" class="mt-1 h-4 w-4 shrink-0 text-aurora-deep" />
+                    <span>{item}</span>
+                  </li>
+                ))
+              }
+            </ul>
+          </div>
+
+          <div>
+            <h2 class="font-display text-xl font-semibold">What to bring</h2>
+            <ul class="mt-5 space-y-3">
+              {
+                program.whatToBring.map((item) => (
+                  <li class="flex gap-3 text-[0.9375rem] leading-relaxed text-ink/80">
+                    <Icon name="check" class="mt-1 h-4 w-4 shrink-0 text-aurora-deep" />
+                    <span>{item}</span>
+                  </li>
+                ))
+              }
+            </ul>
+          </div>
+        </div>
+
+        <h2 class="mt-14 font-display text-2xl font-semibold">Common questions</h2>
+        <dl class="mt-6 divide-y divide-line border-t border-line">
+          {
+            program.faq.map((f) => (
+              <div class="py-6">
+                <dt class="font-display text-lg font-semibold text-midnight">{f.q}</dt>
+                <dd class="mt-3 text-[0.9375rem] leading-relaxed text-ink/75">{f.a}</dd>
+              </div>
+            ))
+          }
+        </dl>
+      </div>
+
+      <aside class="lg:sticky lg:top-8 lg:self-start">
+        <div class="card">
+          <p class="text-xs font-semibold tracking-wider text-muted uppercase">
+            {groups[program.group].heading}
+          </p>
+          <h2 class="mt-3 font-display text-xl font-semibold">Talk it through</h2>
+          <p class="mt-3 text-[0.9375rem] leading-relaxed text-ink/75">
+            Five minutes on the phone will tell you more than an hour of reading. No application
+            required to ask.
+          </p>
+          <CallButton class="mt-6 w-full" size="sm" />
+          <p class="mt-3 text-center text-sm text-muted">{site.hoursShort}</p>
+
+          <ul class="mt-6 space-y-2 border-t border-line pt-5">
+            {
+              team.map((m) => (
+                <li class="text-sm text-ink/70">
+                  <a href={`/team/${m.slug}`} class="font-semibold hover:text-aurora-deep">
+                    {m.name}
+                  </a>
+                  {!isPending(m.nmls) && <span>, NMLS ID# {m.nmls}</span>}
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+
+        <p class="mt-5 text-xs leading-relaxed text-muted">{compliance.disclaimer}</p>
+      </aside>
+    </div>
+  </section>
+
+  {
+    related.length > 0 && (
+      <section class="section bg-white">
+        <div class="container-page">
+          <h2 class="section-heading">More {groups[program.group].heading.toLowerCase()}</h2>
+          <div class="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            {related.map((p) => (
+              <ProgramCard program={p} />
+            ))}
+          </div>
+          <SectionCta />
+        </div>
+      </section>
+    )
+  }
+
+  <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} is:inline />
+</Layout>

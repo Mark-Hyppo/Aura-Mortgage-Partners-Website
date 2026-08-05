@@ -1,0 +1,144 @@
+---
+import Layout from "../layouts/Layout.astro";
+import SectionCta from "../components/SectionCta.astro";
+import PageHeader from "../components/PageHeader.astro";
+import Icon from "../components/Icon.astro";
+import Copy from "../components/Copy.astro";
+import { site, hyppo, compliance, settled } from "../data/site";
+import { team } from "../data/team";
+
+const crumbs = [{ name: "Contact", href: "/contact" }];
+const email = settled(site.email);
+const tenant = settled(hyppo.tenantSlug);
+const formSlug = settled(hyppo.contactFormSlug);
+const embedSrc = tenant && formSlug ? `https://hyppohq.io/api/v1/forms/embed/${tenant}/${formSlug}` : "";
+const mapQuery = encodeURIComponent(`${site.street}, ${site.city}, ${site.region} ${site.postal}`);
+---
+
+<Layout
+  title="Contact | Aura Mortgage Partners | West Palm Beach, FL"
+  description={`Aura Mortgage Partners provides mortgage brokerage services in ${site.city}, ${site.region}. Contact us at ${site.phoneDisplay}.`}
+  pathname="/contact"
+  breadcrumbs={crumbs}
+>
+  <PageHeader
+    heading="Call us"
+    lede="The fastest way to get an answer is the phone. We answer nine to five, seven days a week, including weekends and holidays."
+    breadcrumbs={crumbs}
+  />
+
+  <section class="section">
+    <div class="container-page">
+      <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        <a
+          href={`tel:${site.phoneTel}`}
+          data-call-cta
+          class="group rounded-2xl border border-line bg-white p-7 transition-colors hover:border-aurora hover:bg-halo"
+        >
+          <Icon name="phone" class="h-7 w-7 text-aurora-deep" />
+          <p class="mt-5 text-xs font-semibold tracking-wider text-muted uppercase">Call</p>
+          <p class="mt-1 text-xl font-bold text-midnight sm:text-2xl">{site.phoneDisplay}</p>
+        </a>
+
+        <div class="rounded-2xl border border-line bg-white p-7">
+          <Icon name="map-pin" class="h-7 w-7 text-aurora-deep" />
+          <p class="mt-5 text-xs font-semibold tracking-wider text-muted uppercase">Office</p>
+          <address class="mt-1 text-base leading-relaxed font-semibold text-midnight not-italic">
+            {site.street}<br />{site.city}, {site.region} {site.postal}
+          </address>
+        </div>
+
+        <div class="rounded-2xl border border-line bg-white p-7">
+          <Icon name="clock" class="h-7 w-7 text-aurora-deep" />
+          <p class="mt-5 text-xs font-semibold tracking-wider text-muted uppercase">Hours</p>
+          <p class="mt-1 text-base leading-relaxed font-semibold text-midnight">{site.hours}</p>
+        </div>
+      </div>
+
+      {
+        email ? (
+          <p class="mt-6 text-sm text-ink/75">
+            Prefer email?{" "}
+            <a
+              href={`mailto:${email}`}
+              class="font-semibold text-aurora-deep underline underline-offset-2"
+            >
+              {email}
+            </a>
+          </p>
+        ) : (
+          <Copy value={site.email} as="p" class="mt-6 max-w-xl" />
+        )
+      }
+    </div>
+  </section>
+
+  <section class="section bg-white">
+    <div class={`container-page grid gap-12 lg:gap-16 ${embedSrc ? "lg:grid-cols-2" : "lg:grid-cols-2"}`}>
+      {
+        embedSrc && (
+          <div>
+            <h2 class="section-heading section-heading--left">Send a message</h2>
+            <p class="mt-4 max-w-xl leading-relaxed text-ink/75">
+              If it is easier to write it down than to explain it on a call, use the form. We will
+              get back to you — but if it is time-sensitive, call instead.
+            </p>
+
+            <div class="mt-8" data-form={formSlug}>
+              <script is:inline src={embedSrc} async title="Contact Aura Mortgage Partners" />
+              <noscript>
+                <p class="text-[0.9375rem] text-ink/80">
+                  This form needs JavaScript. Call{" "}
+                  <a href={`tel:${site.phoneTel}`} class="font-semibold text-aurora-deep">
+                    {site.phoneDisplay}
+                  </a>{" "}
+                  instead.
+                </p>
+              </noscript>
+            </div>
+          </div>
+        )
+      }
+
+      <div>
+        <div class="overflow-hidden rounded-2xl border border-line">
+          <iframe
+            src={`https://maps.google.com/maps?q=${mapQuery}&t=&z=13&ie=UTF8&iwloc=&output=embed`}
+            title={`Map to ${site.name}, ${site.street}, ${site.city}, ${site.region}`}
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            class="block aspect-[4/3] w-full border-0"></iframe>
+        </div>
+      </div>
+
+      <div>
+        <div class="card">
+          <h2 class="font-display text-lg font-semibold">Licensed originators</h2>
+          <ul class="mt-4 space-y-2.5">
+            {
+              team.map((m) => (
+                <li class="text-[0.9375rem]">
+                  <a href={`/team/${m.slug}`} class="font-semibold hover:text-aurora-deep">
+                    {m.name}
+                  </a>
+                  {m.nmls && <span class="text-ink/70">, NMLS ID# {m.nmls}</span>}
+                </li>
+              ))
+            }
+          </ul>
+          <p class="mt-4 text-sm text-muted">
+            Verify at{" "}
+            <a
+              href={compliance.verifyUrl}
+              rel="noopener noreferrer"
+              target="_blank"
+              class="font-semibold text-aurora-deep underline underline-offset-2"
+              >{compliance.verifyLabel}</a
+            >.
+          </p>
+        </div>
+      </div>
+      <SectionCta />
+    </div>
+  </section>
+</Layout>

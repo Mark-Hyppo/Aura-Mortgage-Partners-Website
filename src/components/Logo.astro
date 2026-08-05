@@ -1,0 +1,25 @@
+---
+// The approved lockup: Nova's aurora ribbons with the Manrope wordmark typeset
+// into the negative space (scripts/logo-wordmark.mjs). public/logo.png is that
+// file cropped to the wordmark with its edges feathered to transparent, so it
+// melts into a dark surface instead of reading as a pasted rectangle.
+//
+// It is a raster on a dark field by nature, so it only works on dark surfaces.
+// Both the header and the footer are midnight, which is why they can carry it.
+interface Props {
+  class?: string;
+  /** Rendered height. The lockup is ~3.1:1, so width follows. */
+  size?: "sm" | "md";
+}
+
+const { class: cls = "", size = "md" } = Astro.props;
+const h = size === "sm" ? "h-16" : "h-20 md:h-24";
+---
+
+<img
+  src="/logo.png"
+  alt="Aura Mortgage Partners"
+  width="880"
+  height="287"
+  class={`${h} w-auto ${cls}`}
+/>

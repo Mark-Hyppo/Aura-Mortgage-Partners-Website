@@ -1,0 +1,125 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import SectionCta from "../../components/SectionCta.astro";
+import PageHeader from "../../components/PageHeader.astro";
+import CallButton from "../../components/CallButton.astro";
+import Copy from "../../components/Copy.astro";
+import Icon from "../../components/Icon.astro";
+import { team, type TeamMember } from "../../data/team";
+import { site, compliance, isPending, settled } from "../../data/site";
+
+export function getStaticPaths() {
+  return team.map((member) => ({ params: { slug: member.slug }, props: { member } }));
+}
+
+interface Props {
+  member: TeamMember;
+}
+
+const { member } = Astro.props;
+const nmls = settled(member.nmls);
+const headshot = settled(member.headshot);
+
+const crumbs = [
+  { name: "Our Team", href: "/team" },
+  { name: member.name, href: `/team/${member.slug}` },
+];
+
+// SAFE Act: the originator's NMLS ID must appear on their bio page.
+const personSchema = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: member.legalName,
+  jobTitle: member.title,
+  url: `${site.url}/team/${member.slug}`,
+  telephone: site.phoneTel,
+  worksFor: { "@id": `${site.url}/#business` },
+  ...(nmls && { identifier: `NMLS ID# ${nmls}` }),
+  ...(headshot && { image: headshot }),
+  knowsAbout: member.specialties,
+};
+---
+
+<Layout
+  title={`${member.name} | Aura Mortgage Partners | West Palm Beach`}
+  description={`${member.name} is a licensed mortgage loan originator with Aura Mortgage Partners in ${site.city}, ${site.region}. Call ${site.phoneDisplay}.`}
+  pathname={`/team/${member.slug}`}
+  breadcrumbs={crumbs}
+>
+  <PageHeader heading={member.name} lede={member.title} breadcrumbs={crumbs} />
+
+  <section class="section">
+    <div class="container-page grid gap-12 lg:grid-cols-[1fr_20rem] lg:gap-16">
+      <div class="max-w-2xl">
+        {
+          headshot ? (
+            <img
+              src={headshot}
+              alt={member.headshotAlt}
+              width="160"
+              height="160"
+              class="h-40 w-40 rounded-full object-cover"
+            />
+          ) : (
+            <span class="flex h-40 w-40 items-center justify-center rounded-full bg-halo font-display text-5xl font-bold text-aurora-deep">
+              {member.name.charAt(0)}
+            </span>
+          )
+        }
+
+        <div class="mt-8 space-y-5">
+          {
+            member.bio.map((para) => (
+              <Copy value={para} as="p" class="leading-relaxed text-ink/85" />
+            ))
+          }
+        </div>
+
+        <h2 class="mt-12 font-display text-xl font-semibold">Specialties</h2>
+        <ul class="mt-5 grid gap-3 sm:grid-cols-2">
+          {
+            member.specialties.map((s) => (
+              <li class="flex gap-3 text-[0.9375rem] text-ink/80">
+                <Icon name="check" class="mt-1 h-4 w-4 shrink-0 text-aurora-deep" />
+                <span>{s}</span>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+
+      <aside class="lg:sticky lg:top-8 lg:self-start">
+        <div class="card">
+          <h2 class="font-display text-lg font-semibold">Licensing</h2>
+          <p class="mt-3 rounded-lg border border-aurora/40 bg-halo px-4 py-3 text-base font-bold text-midnight">
+            {member.legalName}
+            {nmls && (
+              <>
+                <br />NMLS ID# {nmls}
+              </>
+            )}
+          </p>
+          <p class="mt-4 text-sm text-muted">
+            Verify at{" "}
+            <a
+              href={compliance.verifyUrl}
+              rel="noopener noreferrer"
+              target="_blank"
+              class="font-semibold text-aurora-deep underline underline-offset-2"
+              >{compliance.verifyLabel}</a
+            >.
+          </p>
+
+          <CallButton class="mt-6 w-full" size="sm" />
+          <p class="mt-3 text-center text-sm text-muted">{site.hoursShort}</p>
+        </div>
+
+        <p class="mt-5 text-xs leading-relaxed text-muted">{compliance.disclaimer}</p>
+      </aside>
+    </div>
+  </section>
+
+  <SectionCta class="pb-20" />
+
+  <script type="application/ld+json" set:html={JSON.stringify(personSchema)} is:inline />
+</Layout>

@@ -1,0 +1,44 @@
+---
+interface Props {
+  heading: string;
+  lede?: string;
+  breadcrumbs?: { name: string; href: string }[];
+}
+
+const { heading, lede, breadcrumbs } = Astro.props;
+---
+
+<section class="aurora-wash bg-midnight text-white">
+  <div class="container-page py-16 md:py-20">
+    {
+      breadcrumbs?.length && (
+        <nav aria-label="Breadcrumb" class="mb-6">
+          <ol class="flex flex-wrap items-center justify-center gap-x-2 gap-y-1 text-sm text-white/60">
+            <li>
+              <a href="/" class="transition-colors hover:text-champagne">
+                Home
+              </a>
+            </li>
+            {breadcrumbs.map((c, i) => (
+              <>
+                <li aria-hidden="true">/</li>
+                <li>
+                  {i === breadcrumbs.length - 1 ? (
+                    <span class="text-white/85">{c.name}</span>
+                  ) : (
+                    <a href={c.href} class="transition-colors hover:text-champagne">
+                      {c.name}
+                    </a>
+                  )}
+                </li>
+              </>
+            ))}
+          </ol>
+        </nav>
+      )
+    }
+
+    <h1 class="section-heading">{heading}</h1>
+    {lede && <p class="section-lede mt-5 text-lg leading-relaxed text-white/75">{lede}</p>}
+  </div>
+</section>

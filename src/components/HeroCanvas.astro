@@ -1,0 +1,429 @@
+---
+// Houses being framed, drawn progressively on a canvas over the hero image.
+// Same shape as the floor-plan canvas on mayan-design.com: spawn, draw, hold,
+// fade, respawn — but the geometry is house framing rather than room plans, and
+// the strokes are ordered the way a house actually goes up: slab, studs, plates,
+// trusses, then openings.
+---
+
+<canvas
+  id="hero-canvas"
+  aria-hidden="true"
+  class="pointer-events-none absolute inset-0 h-full w-full"></canvas>
+
+<script>
+  // Unit-space house templates. Each stroke is a polyline in a 100x100 box,
+  // listed in build order. `baseW`/`baseH` set the aspect before scaling.
+  type Stroke = [number, number][];
+  interface Template {
+    baseW: number;
+    baseH: number;
+    strokes: Stroke[];
+  }
+
+  const GABLE: Template = {
+    baseW: 100,
+    baseH: 78,
+    strokes: [
+      [[0, 78], [100, 78]],                                  // slab
+      [[8, 78], [8, 42]], [[26, 78], [26, 42]],              // studs
+      [[50, 78], [50, 42]], [[74, 78], [74, 42]],
+      [[92, 78], [92, 42]],
+      [[0, 42], [100, 42]],                                  // top plate
+      [[0, 42], [50, 8]], [[50, 8], [100, 42]],              // rafters
+      [[22, 28], [78, 28]],                                  // collar tie
+      [[50, 8], [50, 28]],                                   // king post
+      [[38, 78], [38, 58], [58, 58], [58, 78]],              // door
+      [[12, 66], [24, 66], [24, 54], [12, 54], [12, 66]],    // window
+      [[76, 66], [88, 66], [88, 54], [76, 54], [76, 66]],    // window
+    ],
+  };
+
+  const HIP: Template = {
+    baseW: 120,
+    baseH: 70,
+    strokes: [
+      [[0, 70], [120, 70]],
+      [[10, 70], [10, 40]], [[36, 70], [36, 40]],
+      [[62, 70], [62, 40]], [[88, 70], [88, 40]],
+      [[110, 70], [110, 40]],
+      [[0, 40], [120, 40]],
+      [[0, 40], [34, 12]], [[34, 12], [86, 12]], [[86, 12], [120, 40]],
+      [[34, 12], [18, 40]], [[86, 12], [102, 40]],
+      [[48, 70], [48, 52], [72, 52], [72, 70]],
+      [[16, 62], [30, 62], [30, 50], [16, 50], [16, 62]],
+      [[92, 62], [106, 62], [106, 50], [92, 50], [92, 62]],
+    ],
+  };
+
+  const TWO_STOREY: Template = {
+    baseW: 92,
+    baseH: 96,
+    strokes: [
+      [[0, 96], [92, 96]],
+      [[8, 96], [8, 56]], [[30, 96], [30, 56]],
+      [[54, 96], [54, 56]], [[84, 96], [84, 56]],
+      [[0, 56], [92, 56]],                                   // floor deck
+      [[8, 56], [8, 26]], [[30, 56], [30, 26]],
+      [[54, 56], [54, 26]], [[84, 56], [84, 26]],
+      [[0, 26], [92, 26]],
+      [[0, 26], [46, 4]], [[46, 4], [92, 26]],
+      [[34, 96], [34, 76], [54, 76], [54, 96]],
+      [[12, 46], [26, 46], [26, 34], [12, 34], [12, 46]],
+      [[62, 46], [76, 46], [76, 34], [62, 34], [62, 46]],
+    ],
+  };
+
+  const BUNGALOW: Template = {
+    baseW: 112,
+    baseH: 74,
+    strokes: [
+      [[0, 74], [112, 74]],
+      [[10, 74], [10, 46]], [[34, 74], [34, 46]], [[58, 74], [58, 46]],
+      [[82, 74], [82, 46]], [[104, 74], [104, 46]],
+      [[0, 46], [112, 46]],
+      [[0, 46], [56, 18]], [[56, 18], [112, 46]],
+      [[16, 74], [16, 58]], [[40, 74], [40, 58]],                 // porch posts
+      [[10, 58], [46, 58]],                                       // porch beam
+      [[22, 74], [22, 60], [34, 60], [34, 74]],                   // door
+      [[66, 68], [78, 68], [78, 56], [66, 56], [66, 68]],
+      [[88, 68], [100, 68], [100, 56], [88, 56], [88, 68]],
+    ],
+  };
+
+  // Townhouse row — the co-op and non-warrantable condo end of the book.
+  const ROW: Template = {
+    baseW: 132,
+    baseH: 80,
+    strokes: [
+      [[0, 80], [132, 80]],
+      [[0, 80], [0, 40]], [[44, 80], [44, 40]],
+      [[88, 80], [88, 40]], [[132, 80], [132, 40]],               // party walls
+      [[0, 40], [132, 40]],
+      [[0, 40], [22, 22]], [[22, 22], [44, 40]],
+      [[44, 40], [66, 22]], [[66, 22], [88, 40]],
+      [[88, 40], [110, 22]], [[110, 22], [132, 40]],
+      [[14, 80], [14, 64], [26, 64], [26, 80]],
+      [[58, 80], [58, 64], [70, 64], [70, 80]],
+      [[102, 80], [102, 64], [114, 64], [114, 80]],
+    ],
+  };
+
+  const TOWER: Template = {
+    baseW: 68,
+    baseH: 116,
+    strokes: [
+      [[0, 116], [68, 116]],
+      [[0, 116], [0, 20]], [[68, 116], [68, 20]],
+      [[0, 96], [68, 96]], [[0, 76], [68, 76]],                   // floor decks
+      [[0, 56], [68, 56]], [[0, 36], [68, 36]],
+      [[22, 96], [22, 20]], [[46, 96], [46, 20]],                 // mullions
+      [[0, 20], [68, 20]],
+      [[0, 20], [0, 10], [68, 10], [68, 20]],                     // parapet
+      [[26, 116], [26, 104], [42, 104], [42, 116]],               // entry
+    ],
+  };
+
+  const A_FRAME: Template = {
+    baseW: 84,
+    baseH: 90,
+    strokes: [
+      [[0, 90], [84, 90]],
+      [[0, 90], [42, 10]], [[42, 10], [84, 90]],
+      [[14, 64], [70, 64]],
+      [[24, 40], [60, 40]],
+      [[42, 10], [42, 40]],
+      [[34, 90], [34, 70], [50, 70], [50, 90]],
+      [[36, 58], [48, 58], [48, 46], [36, 46], [36, 58]],
+    ],
+  };
+
+  // Ranch with an attached garage — the most common Florida purchase shape.
+  const RANCH: Template = {
+    baseW: 140,
+    baseH: 66,
+    strokes: [
+      [[0, 66], [140, 66]],
+      [[6, 66], [6, 38]], [[30, 66], [30, 38]],
+      [[54, 66], [54, 38]], [[78, 66], [78, 38]],
+      [[0, 38], [92, 38]],
+      [[0, 38], [46, 16]], [[46, 16], [92, 38]],
+      [[92, 66], [92, 44]], [[140, 66], [140, 44]], [[92, 44], [140, 44]],
+      [[92, 44], [116, 28]], [[116, 28], [140, 44]],              // garage roof
+      [[100, 66], [100, 48], [132, 48], [132, 66]],               // garage door
+      [[38, 66], [38, 50], [52, 50], [52, 66]],
+      [[10, 58], [24, 58], [24, 46], [10, 46], [10, 58]],
+    ],
+  };
+
+  const TEMPLATES = [GABLE, HIP, TWO_STOREY, BUNGALOW, ROW, TOWER, A_FRAME, RANCH];
+
+  interface House {
+    tmpl: Template;
+    color: string;
+    x: number;
+    y: number;
+    scale: number;
+    lengths: number[];
+    total: number;
+    elapsed: number;
+    progress: number;
+    alpha: number;
+    phase: "drawing" | "holding" | "fading";
+  }
+
+  class FramingCanvas {
+    canvas: HTMLCanvasElement;
+    ctx: CanvasRenderingContext2D;
+    houses: House[] = [];
+
+    DRAW_DURATION = 5200;
+    HOLD_DURATION = 2600;
+    FADE_DURATION = 2000;
+    MAX_ACTIVE = 4;
+    SPAWN_INTERVAL = 1900;
+
+    // Alternating brand colours: champagne gold and aurora teal.
+    PALETTE = ["235, 211, 160", "47, 182, 168"];
+    MAX_ALPHA = 0.34;
+    LINE_WIDTH = 1.6;
+
+    dpr = 1;
+    lastTime: number | null = null;
+    spawnTimer = 0;
+    spawnCount = 0;
+    /** Shuffled deck, so every design shows before any repeats. */
+    deck: Template[] = [];
+    /** Horizontal bands either side of the headline. Houses only draw in here. */
+    bands: { x0: number; x1: number }[] = [];
+    MIN_BAND = 130;
+
+    constructor(canvas: HTMLCanvasElement) {
+      this.canvas = canvas;
+      this.ctx = canvas.getContext("2d")!;
+
+      if (window.innerWidth < 700) {
+        this.MAX_ACTIVE = 2;
+        this.SPAWN_INTERVAL = 2600;
+      }
+
+      this.resize();
+      window.addEventListener("resize", () => this.resize());
+
+      const initial = Math.min(2, this.MAX_ACTIVE);
+      for (let i = 0; i < initial; i++) {
+        setTimeout(() => this.spawn(), i * this.SPAWN_INTERVAL * 0.7);
+      }
+
+      requestAnimationFrame((t) => this.tick(t));
+    }
+
+    resize() {
+      const rect = this.canvas.getBoundingClientRect();
+      this.dpr = Math.min(window.devicePixelRatio || 1, 2);
+      this.canvas.width = Math.max(1, Math.floor(rect.width * this.dpr));
+      this.canvas.height = Math.max(1, Math.floor(rect.height * this.dpr));
+      this.ctx.setTransform(this.dpr, 0, 0, this.dpr, 0, 0);
+      this.measureBands(rect);
+      // Drop anything now sitting under the headline.
+      this.houses = this.houses.filter((h) => this.fitsBand(h.x, h.tmpl.baseW * h.scale));
+    }
+
+    /**
+     * The headline block is the keep-out. Everything the animation draws lives in
+     * the margins either side of it, so nothing ever runs behind the text.
+     */
+    measureBands(canvasRect: DOMRect) {
+      const content = document.querySelector("[data-hero-content]");
+      if (!content) {
+        this.bands = [];
+        return;
+      }
+      const r = content.getBoundingClientRect();
+      const pad = 40;
+      const left = r.left - canvasRect.left - pad;
+      const right = r.right - canvasRect.left + pad;
+
+      this.bands = [
+        { x0: 0, x1: left },
+        { x0: right, x1: canvasRect.width },
+      ].filter((b) => b.x1 - b.x0 >= this.MIN_BAND);
+    }
+
+    fitsBand(x: number, width: number) {
+      return this.bands.some((b) => x >= b.x0 && x + width <= b.x1);
+    }
+
+    get w() {
+      return this.canvas.width / this.dpr;
+    }
+    get h() {
+      return this.canvas.height / this.dpr;
+    }
+
+    spawn() {
+      if (!this.bands.length) return;
+
+      const band = this.bands[Math.floor(Math.random() * this.bands.length)];
+      const bandW = band.x1 - band.x0;
+
+      const tmpl = this.nextTemplate();
+
+      // Scale to the band rather than the viewport, so a house never overhangs
+      // into the headline on a narrow margin.
+      const maxScale = (bandW * 0.82) / tmpl.baseW;
+      const scale = Math.min(maxScale, 1.4 + Math.random() * 1.6);
+      if (scale < 0.6) return;
+
+      const sw = tmpl.baseW * scale;
+      const sh = tmpl.baseH * scale;
+      const margin = 24;
+
+      const x = band.x0 + Math.random() * Math.max(0, bandW - sw);
+      const y = margin + Math.random() * Math.max(0, this.h - sh - margin * 2);
+
+      // Per-stroke path lengths, so the reveal advances at a constant rate
+      // across the whole drawing rather than per-stroke.
+      const lengths = tmpl.strokes.map((s) => {
+        let len = 0;
+        for (let i = 1; i < s.length; i++) {
+          len += Math.hypot(s[i][0] - s[i - 1][0], s[i][1] - s[i - 1][1]);
+        }
+        return len * scale;
+      });
+
+      this.houses.push({
+        tmpl,
+        // Alternate rather than randomise, so both brand colours are always on
+        // screen instead of clustering by chance.
+        color: this.PALETTE[this.spawnCount++ % this.PALETTE.length],
+        x,
+        y,
+        scale,
+        lengths,
+        total: lengths.reduce((a, b) => a + b, 0),
+        elapsed: 0,
+        progress: 0,
+        alpha: 0,
+        phase: "drawing",
+      });
+    }
+
+    /**
+     * Draw from a shuffled deck rather than picking at random — random picks
+     * cluster and the same house shows twice in a row often enough to notice.
+     */
+    nextTemplate(): Template {
+      if (!this.deck.length) {
+        this.deck = [...TEMPLATES];
+        for (let i = this.deck.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [this.deck[i], this.deck[j]] = [this.deck[j], this.deck[i]];
+        }
+      }
+      return this.deck.pop()!;
+    }
+
+    easeInOut(t: number) {
+      return t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
+    }
+
+    tick(now: number) {
+      const dt = this.lastTime === null ? 16 : Math.min(now - this.lastTime, 60);
+      this.lastTime = now;
+
+      this.ctx.clearRect(0, 0, this.w, this.h);
+
+      this.spawnTimer += dt;
+      if (this.spawnTimer >= this.SPAWN_INTERVAL && this.houses.length < this.MAX_ACTIVE) {
+        this.spawn();
+        this.spawnTimer = 0;
+      }
+
+      this.houses = this.houses.filter((house) => {
+        house.elapsed += dt;
+
+        if (house.phase === "drawing") {
+          const t = Math.min(1, house.elapsed / this.DRAW_DURATION);
+          house.progress = this.easeInOut(t);
+          house.alpha = Math.min(this.MAX_ALPHA, (t / 0.12) * this.MAX_ALPHA);
+          if (t >= 1) {
+            house.phase = "holding";
+            house.elapsed = 0;
+          }
+        } else if (house.phase === "holding") {
+          house.progress = 1;
+          house.alpha = this.MAX_ALPHA;
+          if (house.elapsed >= this.HOLD_DURATION) {
+            house.phase = "fading";
+            house.elapsed = 0;
+          }
+        } else {
+          const t = Math.min(1, house.elapsed / this.FADE_DURATION);
+          house.progress = 1;
+          house.alpha = this.MAX_ALPHA * (1 - this.easeInOut(t));
+          if (t >= 1) {
+            this.spawn();
+            return false;
+          }
+        }
+
+        this.draw(house);
+        return true;
+      });
+
+      requestAnimationFrame((t) => this.tick(t));
+    }
+
+    draw(house: House) {
+      const { ctx } = this;
+      const { tmpl, x, y, scale, progress, alpha, lengths, total, color } = house;
+
+      ctx.save();
+      ctx.strokeStyle = `rgba(${color}, ${alpha})`;
+      ctx.lineWidth = this.LINE_WIDTH;
+      ctx.lineCap = "round";
+      ctx.lineJoin = "round";
+
+      let budget = progress * total;
+
+      for (let s = 0; s < tmpl.strokes.length && budget > 0; s++) {
+        const stroke = tmpl.strokes[s];
+        const strokeLen = lengths[s];
+        const shown = Math.min(1, budget / strokeLen);
+        budget -= strokeLen;
+
+        ctx.beginPath();
+        ctx.moveTo(x + stroke[0][0] * scale, y + stroke[0][1] * scale);
+
+        let drawn = 0;
+        const target = strokeLen * shown;
+
+        for (let i = 1; i < stroke.length; i++) {
+          const ax = stroke[i - 1][0] * scale;
+          const ay = stroke[i - 1][1] * scale;
+          const bx = stroke[i][0] * scale;
+          const by = stroke[i][1] * scale;
+          const seg = Math.hypot(bx - ax, by - ay);
+
+          if (drawn + seg <= target) {
+            ctx.lineTo(x + bx, y + by);
+            drawn += seg;
+          } else {
+            const f = Math.max(0, (target - drawn) / seg);
+            ctx.lineTo(x + ax + (bx - ax) * f, y + ay + (by - ay) * f);
+            break;
+          }
+        }
+        ctx.stroke();
+      }
+
+      ctx.restore();
+    }
+  }
+
+  const canvas = document.getElementById("hero-canvas") as HTMLCanvasElement | null;
+  if (canvas && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    new FramingCanvas(canvas);
+  }
+</script>

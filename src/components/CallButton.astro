@@ -1,0 +1,30 @@
+---
+import Icon from "./Icon.astro";
+import { site } from "../data/site";
+
+interface Props {
+  variant?: "primary" | "secondary" | "on-dark";
+  size?: "sm" | "md";
+  label?: string;
+  class?: string;
+}
+
+const { variant = "primary", size = "md", label, class: cls = "" } = Astro.props;
+
+const variantClass = {
+  primary: "btn-primary",
+  secondary: "btn-secondary",
+  "on-dark": "btn-on-dark",
+}[variant];
+
+const sizeClass = size === "sm" ? "text-base px-6 min-h-[3rem]" : "";
+---
+
+<a
+  href={`tel:${site.phoneTel}`}
+  data-call-cta
+  class={`btn ${variantClass} ${sizeClass} ${cls}`}
+>
+  <Icon name="phone" class="h-5 w-5" />
+  {label ?? `Call ${site.phoneDisplay}`}
+</a>

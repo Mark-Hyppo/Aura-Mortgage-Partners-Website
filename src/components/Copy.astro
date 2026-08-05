@@ -1,0 +1,15 @@
+---
+import { isPending, briefOf } from "../data/site";
+
+interface Props {
+  value: string;
+  as?: string;
+  class?: string;
+}
+
+const { value, as = "span", class: cls = "" } = Astro.props;
+const Tag = as as any;
+const outstanding = isPending(value);
+---
+
+<Tag class={outstanding ? `pending ${cls}` : cls}>{outstanding ? briefOf(value) : value}</Tag>

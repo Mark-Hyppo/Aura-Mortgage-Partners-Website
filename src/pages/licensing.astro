@@ -1,0 +1,152 @@
+---
+import Layout from "../layouts/Layout.astro";
+import SectionCta from "../components/SectionCta.astro";
+import PageHeader from "../components/PageHeader.astro";
+import Icon from "../components/Icon.astro";
+import Copy from "../components/Copy.astro";
+import { site, compliance, isPending, settled } from "../data/site";
+import { team } from "../data/team";
+
+const crumbs = [{ name: "Licensing & Disclosures", href: "/licensing" }];
+const companyNmls = settled(compliance.companyNmls);
+const sponsorNmls = settled(compliance.sponsorNmls);
+---
+
+<Layout
+  title="Licensing & Disclosures | Aura Mortgage Partners"
+  description={`Aura Mortgage Partners provides licensing and disclosure information in ${site.city}, ${site.region}. Contact us at ${site.phoneDisplay}.`}
+  pathname="/licensing"
+  breadcrumbs={crumbs}
+>
+  <PageHeader
+    heading="Licensing & Disclosures"
+    lede="Every license we hold, where to verify it, and the disclosures that govern everything on this site."
+    breadcrumbs={crumbs}
+  />
+
+  <section class="section">
+    <div class="container-page">
+      <div class="prose-legal">
+        <h2>Company licensing</h2>
+        <p>
+          <strong>{site.legalName}</strong>
+          {companyNmls && (
+            <>
+              <br />Company NMLS ID# {companyNmls}
+            </>
+          )}
+        </p>
+
+        {sponsorNmls && <p>Sponsoring entity NMLS ID# {sponsorNmls}</p>}
+
+        <h2>States licensed</h2>
+        <p>
+          {site.legalName} is licensed to originate residential mortgage loans in{" "}
+          <strong>{compliance.statesLicensed}</strong>. We do not originate loans in any state where
+          we are not licensed.
+        </p>
+
+        <div class="mt-6 overflow-x-auto">
+          <table class="w-full min-w-[32rem] border-collapse text-left text-[0.9375rem]">
+            <thead>
+              <tr class="border-b border-line">
+                <th class="py-3 pr-4 font-semibold text-midnight">State</th>
+                <th class="py-3 pr-4 font-semibold text-midnight">Regulator</th>
+                <th class="py-3 font-semibold text-midnight">License number</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="border-b border-line">
+                <td class="py-3 pr-4 text-ink/85">Florida</td>
+                <td class="py-3 pr-4 text-ink/85">Florida Office of Financial Regulation</td>
+                <td class="py-3 text-ink/85">
+                  {companyNmls ? `NMLS ID# ${companyNmls}` : "Pending"}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h2>Licensed loan originators</h2>
+        <ul>
+          {
+            team.map((m) => (
+              <li>
+                <a href={`/team/${m.slug}`} class="font-semibold text-aurora-deep">
+                  {m.legalName}
+                </a>
+                {m.nmls && <span> — NMLS ID# {m.nmls}</span>}
+              </li>
+            ))
+          }
+        </ul>
+
+        <h2>Verify our licensing</h2>
+        <p>
+          Consumers may confirm the status of any company or loan originator listed here through the
+          Nationwide Multistate Licensing System &amp; Registry Consumer Access site.
+        </p>
+        <p>
+          <a
+            href={compliance.verifyUrl}
+            rel="noopener noreferrer"
+            target="_blank"
+            class="font-semibold text-aurora-deep underline underline-offset-2"
+            >{compliance.verifyLabel}</a
+          >
+        </p>
+
+        <h2>Equal Housing Lender</h2>
+        <div class="mt-4 flex items-center gap-3 text-midnight">
+          <Icon name="equal-housing" class="h-10 w-10" />
+          <span class="text-sm font-semibold tracking-wider uppercase">
+            {compliance.equalHousing}
+          </span>
+        </div>
+        <p>
+          We do business in accordance with the Federal Fair Housing Act and the Equal Credit
+          Opportunity Act. We do not discriminate on the basis of race, color, religion, national
+          origin, sex, familial status, disability, marital status, age, or because all or part of an
+          applicant&rsquo;s income derives from a public assistance program.
+        </p>
+
+        <h2>Lending disclosures</h2>
+        <p>{compliance.disclaimer}</p>
+        <p>
+          Nothing on this website is an offer to lend, a commitment to lend, or an advertisement for
+          a specific credit product on specific terms. Loan programs described here are summaries
+          only. Program availability, eligibility criteria, and guidelines are set by the lenders we
+          broker to and are subject to change without notice.
+        </p>
+
+        <h2>Rates and terms</h2>
+        <p>
+          This website does not display interest rates or annual percentage rates. Any rate quoted to
+          you directly will be accompanied by its APR, the date it was quoted, and the assumptions it
+          is based on, and is subject to change until locked in writing.
+        </p>
+        <p>{compliance.regZDisclosure}</p>
+
+        <h2>Third-party information</h2>
+        <p>
+          Program descriptions referencing government or state programs — including FHA-insured, VA-
+          guaranteed, and Florida Hometown Heroes financing — are provided for general information
+          only. {site.legalName} is not a government agency and is not acting on behalf of or at the
+          direction of any government agency. Program terms are set by the administering agency and
+          are subject to change.
+        </p>
+
+        <h2>Contact</h2>
+        <address class="mt-4 text-[0.9375rem] leading-relaxed text-ink/85 not-italic">
+          {site.legalName}<br />
+          {site.street}<br />
+          {site.city}, {site.region} {site.postal}<br />
+          <a href={`tel:${site.phoneTel}`} class="font-semibold hover:text-aurora-deep"
+            >{site.phoneDisplay}</a
+          >
+        </address>
+      </div>
+      <SectionCta />
+    </div>
+  </section>
+</Layout>

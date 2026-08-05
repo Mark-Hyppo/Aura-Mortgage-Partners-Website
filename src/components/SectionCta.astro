@@ -1,0 +1,18 @@
+---
+import CallButton from "./CallButton.astro";
+import { site } from "../data/site";
+
+interface Props {
+  /** "dark" for midnight sections, "light" for halo/white sections. */
+  tone?: "light" | "dark";
+  class?: string;
+}
+
+const { tone = "light", class: cls = "" } = Astro.props;
+const hoursColor = tone === "dark" ? "text-champagne/80" : "text-muted";
+---
+
+<div class={`mt-14 flex flex-col items-center gap-3 ${cls}`}>
+  <CallButton variant={tone === "dark" ? "primary" : "primary"} />
+  <p class={`text-sm ${hoursColor}`}>{site.hoursShort}</p>
+</div>

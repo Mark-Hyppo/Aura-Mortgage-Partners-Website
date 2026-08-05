@@ -1,0 +1,191 @@
+---
+import "../styles/global.css";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import { site, compliance, media, hyppo, seo, isPending, settled } from "../data/site";
+import { programs } from "../data/programs";
+import { team } from "../data/team";
+
+interface Props {
+  title: string;
+  description: string;
+  pathname: string;
+  /** [{ name, href }] for nested routes. The home crumb is prepended automatically. */
+  breadcrumbs?: { name: string; href: string }[];
+}
+
+const { title, description, pathname, breadcrumbs } = Astro.props;
+
+// SEO spec: title < 70 chars, description < 155. With ~30 pages this cannot be
+// eyeballed, so fail the build instead of shipping a truncated SERP listing.
+if (title.length >= 70) {
+  throw new Error(`Title is ${title.length} chars (must be < 70) on ${pathname}: "${title}"`);
+}
+if (description.length >= 155) {
+  throw new Error(
+    `Description is ${description.length} chars (must be < 155) on ${pathname}: "${description}"`
+  );
+}
+
+const canonical = pathname === "/" ? `${site.url}/` : `${site.url}${pathname}`;
+const logo = settled(media.logo);
+const logoAlt = settled(media.logoAlt);
+const keywords = seo.keywords.some(isPending) ? "" : seo.keywords.join(", ");
+const pixelId = settled(hyppo.pixelId);
+const lat = settled(site.geo.lat);
+const lng = settled(site.geo.lng);
+const companyNmls = settled(compliance.companyNmls);
+
+const address = {
+  "@type": "PostalAddress",
+  streetAddress: site.street,
+  addressLocality: site.city,
+  addressRegion: site.region,
+  postalCode: site.postal,
+  addressCountry: "US",
+};
+
+const employees = team
+  .filter((m) => !isPending(m.nmls))
+  .map((m) => ({
+    "@type": "Person",
+    name: m.legalName,
+    jobTitle: m.title,
+    identifier: `NMLS ID# ${m.nmls}`,
+  }));
+
+const businessSchema = {
+  "@context": "https://schema.org",
+  "@type": "MortgageBroker",
+  "@id": `${site.url}/#business`,
+  name: site.name,
+  legalName: site.legalName,
+  url: site.url,
+  telephone: site.phoneTel,
+  address,
+  areaServed: { "@type": "State", name: "Florida" },
+  priceRange: "$$",
+  openingHoursSpecification: {
+    "@type": "OpeningHoursSpecification",
+    dayOfWeek: [
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday",
+      "Saturday",
+      "Sunday",
+    ],
+    opens: "09:00",
+    closes: "17:00",
+  },
+  knowsAbout: programs.map((p) => p.name),
+  ...(companyNmls && { identifier: `NMLS ID# ${companyNmls}` }),
+  ...(employees.length && { employee: employees }),
+  ...(logo && { logo, image: logo }),
+  ...(lat && lng && { geo: { "@type": "GeoCoordinates", latitude: lat, longitude: lng } }),
+  hasOfferCatalog: {
+    "@type": "OfferCatalog",
+    name: "Loan Programs",
+    itemListElement: programs.map((p) => ({
+      "@type": "Offer",
+      itemOffered: {
+        "@type": "Service",
+        name: p.name,
+        description: p.blurb,
+        provider: { "@id": `${site.url}/#business` },
+      },
+    })),
+  },
+};
+
+const websiteSchema = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "@id": `${site.url}/#website`,
+  url: site.url,
+  name: site.name,
+  publisher: { "@id": `${site.url}/#business` },
+  inLanguage: "en-US",
+};
+
+const breadcrumbSchema = breadcrumbs?.length
+  ? {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      itemListElement: [{ name: "Home", href: "/" }, ...breadcrumbs].map((c, i) => ({
+        "@type": "ListItem",
+        position: i + 1,
+        name: c.name,
+        item: `${site.url}${c.href === "/" ? "/" : c.href}`,
+      })),
+    }
+  : null;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    {pixelId && <script async src="https://hyppohq.io/h-pixel.js" data-pixel-id={pixelId} />}
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#0b1220" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="canonical" href={canonical} />
+
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    {keywords && <meta name="keywords" content={keywords} />}
+    <meta name="author" content={site.name} />
+    <meta name="language" content="En" />
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
+
+    <meta name="geo.region" content="US-FL" />
+    <meta name="geo.placename" content={`${site.city}, Florida`} />
+    {lat && lng && <meta name="geo.position" content={`${lat};${lng}`} />}
+    {lat && lng && <meta name="ICBM" content={`${lat}, ${lng}`} />}
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={site.name} />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    {logo && <meta property="og:image" content={logo} />}
+    {logo && logoAlt && <meta property="og:image:alt" content={logoAlt} />}
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:url" content={canonical} />
+    {logo && <meta name="twitter:image" content={logo} />}
+    {logo && logoAlt && <meta name="twitter:image:alt" content={logoAlt} />}
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap"
+    />
+
+    <script type="application/ld+json" set:html={JSON.stringify(businessSchema)} />
+    <script type="application/ld+json" set:html={JSON.stringify(websiteSchema)} />
+    {
+      breadcrumbSchema && (
+        <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
+      )
+    }
+  </head>
+  <body class="pb-[4.5rem] lg:pb-0">
+    <a
+      href="#main"
+      class="sr-only focus:not-sr-only focus:absolute focus:top-3 focus:left-3 focus:z-50 focus:rounded-full focus:bg-midnight focus:px-5 focus:py-3 focus:text-white"
+      >Skip to content</a
+    >
+    <Header />
+    <main id="main">
+      <slot />
+    </main>
+    <Footer />
+  </body>
+</html>

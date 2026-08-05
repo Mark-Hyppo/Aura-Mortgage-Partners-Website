@@ -1,0 +1,235 @@
+@import "tailwindcss";
+
+@theme {
+  --color-midnight: #0b1220;
+  --color-slate-deep: #131c30;
+  --color-slate-soft: #1e2a42;
+  --color-aurora: #2fb6a8;
+  --color-aurora-deep: #12786e;
+  --color-aurora-lo: #7c6cf0;
+  --color-halo: #f4f7fb;
+  --color-ink: #0f1724;
+  --color-muted: #56657d;
+  --color-line: #dde4ee;
+
+  /* Champagne gold — the brand highlight, taken from the logo lockup.
+     12.80:1 on midnight, but only 1.46:1 on white: it is a DARK-SURFACE
+     accent only. Use champagne-deep (4.69:1 on halo) for gold on light. */
+  --color-champagne: #ebd3a0;
+  --color-champagne-deep: #8a6a24;
+
+  --font-sans: "Manrope", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-display: "Manrope", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 1rem;
+}
+
+body {
+  font-family: var(--font-sans);
+  color: var(--color-ink);
+  background: var(--color-halo);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-display);
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+}
+
+@layer components {
+  .container-page {
+    width: 100%;
+    max-width: 72rem;
+    margin-inline: auto;
+    padding-inline: 1.25rem;
+  }
+
+  @media (min-width: 768px) {
+    .container-page {
+      padding-inline: 2rem;
+    }
+  }
+
+  .section {
+    padding-block: 4.5rem;
+  }
+
+  @media (min-width: 768px) {
+    .section {
+      padding-block: 6.5rem;
+    }
+  }
+
+  /* Section headings are CENTRED by default. Left-alignment is the exception and
+     has to be asked for with .section-heading--left — it belongs to headings that
+     sit inside a column, a card, or running prose, not ones introducing a section. */
+  .section-heading {
+    font-size: clamp(1.875rem, 1.4rem + 1.9vw, 2.75rem);
+    line-height: 1.12;
+    font-weight: 600;
+    text-align: center;
+  }
+
+  .section-heading--left {
+    text-align: left;
+  }
+
+  /* The supporting paragraph under a section heading. Centres and constrains
+     the measure so it tracks the heading above it. */
+  .section-lede {
+    margin-inline: auto;
+    max-width: 46rem;
+    text-align: center;
+    text-wrap: pretty;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.625rem;
+    min-height: 3.5rem;
+    padding-inline: 2rem;
+    border-radius: 9999px;
+    font-weight: 600;
+    font-size: 1.0625rem;
+    line-height: 1;
+    text-decoration: none;
+    transition:
+      background-color 180ms ease,
+      color 180ms ease,
+      transform 180ms ease,
+      box-shadow 180ms ease;
+  }
+
+  .btn:active {
+    transform: translateY(1px);
+  }
+
+  /* Teal fill with midnight text = 7.45:1. Never white text on aurora (2.51:1). */
+  .btn-primary {
+    background: var(--color-aurora);
+    color: var(--color-midnight);
+    box-shadow: 0 10px 24px -12px rgb(11 18 32 / 0.55);
+  }
+
+  .btn-primary:hover {
+    background: #43cabb;
+  }
+
+  .btn-secondary {
+    background: transparent;
+    color: var(--color-midnight);
+    border: 1.5px solid var(--color-midnight);
+  }
+
+  .btn-secondary:hover {
+    background: var(--color-midnight);
+    color: #fff;
+  }
+
+  .btn-on-dark {
+    background: rgb(255 255 255 / 0.08);
+    color: #fff;
+    border: 1.5px solid rgb(255 255 255 / 0.35);
+  }
+
+  .btn-on-dark:hover {
+    background: #fff;
+    color: var(--color-midnight);
+  }
+
+  .card {
+    background: #fff;
+    border: 1px solid var(--color-line);
+    border-radius: 1rem;
+    padding: 1.75rem;
+  }
+
+  .prose-legal {
+    max-width: 52rem;
+  }
+
+  .prose-legal h2 {
+    margin-top: 2.5rem;
+    font-size: 1.375rem;
+    font-weight: 600;
+  }
+
+  .prose-legal p,
+  .prose-legal li {
+    margin-top: 1rem;
+    line-height: 1.7;
+    color: rgb(15 23 36 / 0.85);
+  }
+
+  .prose-legal ul {
+    list-style: disc;
+    padding-left: 1.25rem;
+  }
+}
+
+@layer utilities {
+  .pending {
+    display: block;
+    border: 1.5px dashed #b45309;
+    background: #fffbeb;
+    color: #7c2d12;
+    border-radius: 0.5rem;
+    padding: 0.625rem 0.875rem;
+    font-family: var(--font-sans);
+    font-size: 0.8125rem;
+    font-weight: 500;
+    font-style: normal;
+    line-height: 1.45;
+    letter-spacing: 0;
+    text-align: left;
+  }
+
+  .pending::before {
+    content: "Needed from client — ";
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-size: 0.6875rem;
+  }
+
+  /* Aurora ribbon wash for dark sections. Decorative only. */
+  .aurora-wash {
+    position: relative;
+    isolation: isolate;
+  }
+
+  .aurora-wash::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background:
+      radial-gradient(60rem 28rem at 18% -10%, rgb(47 182 168 / 0.28), transparent 60%),
+      radial-gradient(48rem 26rem at 88% 8%, rgb(124 108 240 / 0.26), transparent 62%),
+      radial-gradient(40rem 20rem at 50% 108%, rgb(47 182 168 / 0.14), transparent 65%);
+    pointer-events: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}

@@ -1,0 +1,90 @@
+---
+import Logo from "./Logo.astro";
+import Icon from "./Icon.astro";
+import { nav, site } from "../data/site";
+
+// Header scrolls with the page — not sticky. The hero owns the only above-the-fold
+// conversion point, and MobileCallBar carries the CTA once the header scrolls away.
+const path = Astro.url.pathname.replace(/\.html$/, "").replace(/\/$/, "") || "/";
+const isCurrent = (href: string) => (href === "/" ? path === "/" : path.startsWith(href));
+---
+
+<header class="border-b border-white/10 bg-midnight text-white">
+  <div class="container-page flex items-center justify-between gap-6 py-3">
+    <a href="/" class="shrink-0" aria-label={`${site.name} — home`}>
+      <Logo />
+    </a>
+
+    <nav aria-label="Primary" class="hidden lg:block">
+      <ul class="flex items-center gap-8">
+        {
+          nav.map((item) => (
+            <li>
+              <a
+                href={item.href}
+                aria-current={isCurrent(item.href) ? "page" : undefined}
+                class:list={[
+                  "text-[0.9375rem] font-semibold transition-colors hover:text-champagne",
+                  isCurrent(item.href) ? "text-champagne" : "text-white/75",
+                ]}
+              >
+                {item.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+
+    <button
+      type="button"
+      id="nav-toggle"
+      class="inline-flex h-12 w-12 items-center justify-center rounded-full border border-white/25 text-white lg:hidden"
+      aria-expanded="false"
+      aria-controls="mobile-nav"
+      aria-label="Open menu"
+    >
+      <Icon name="menu" class="h-6 w-6" />
+    </button>
+  </div>
+
+  <div id="mobile-nav" class="hidden border-t border-white/10 lg:hidden">
+    <nav aria-label="Mobile" class="container-page py-5">
+      <ul class="space-y-1">
+        {
+          nav.map((item) => (
+            <li>
+              <a
+                href={item.href}
+                aria-current={isCurrent(item.href) ? "page" : undefined}
+                class="block rounded-lg px-3 py-3 text-base font-semibold text-white/80 hover:bg-white/5 hover:text-champagne"
+              >
+                {item.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<script>
+  const toggle = document.getElementById("nav-toggle");
+  const panel = document.getElementById("mobile-nav");
+
+  toggle?.addEventListener("click", () => {
+    const open = toggle.getAttribute("aria-expanded") === "true";
+    toggle.setAttribute("aria-expanded", String(!open));
+    toggle.setAttribute("aria-label", open ? "Open menu" : "Close menu");
+    panel?.classList.toggle("hidden", open);
+  });
+
+  panel?.querySelectorAll("a").forEach((a) =>
+    a.addEventListener("click", () => {
+      panel.classList.add("hidden");
+      toggle?.setAttribute("aria-expanded", "false");
+      toggle?.setAttribute("aria-label", "Open menu");
+    })
+  );
+</script>

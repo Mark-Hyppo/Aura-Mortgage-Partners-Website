@@ -1,0 +1,119 @@
+---
+import Layout from "../layouts/Layout.astro";
+import SectionCta from "../components/SectionCta.astro";
+import PageHeader from "../components/PageHeader.astro";
+import CallButton from "../components/CallButton.astro";
+import Copy from "../components/Copy.astro";
+import Icon from "../components/Icon.astro";
+import { site, about, trustPoints, isPending } from "../data/site";
+import { team } from "../data/team";
+import { groups } from "../data/programs";
+
+const crumbs = [{ name: "About", href: "/about" }];
+---
+
+<Layout
+  title="About | Aura Mortgage Partners | West Palm Beach, FL"
+  description={`Aura Mortgage Partners provides mortgage brokerage services in ${site.city}, ${site.region}. Contact us at ${site.phoneDisplay}.`}
+  pathname="/about"
+  breadcrumbs={crumbs}
+>
+  <PageHeader heading={about.heading} breadcrumbs={crumbs} />
+
+  <section class="section">
+    <div class="container-page grid gap-12 lg:grid-cols-[1fr_18rem] lg:gap-16">
+      <div class="max-w-2xl space-y-5">
+        <Copy value={about.intro} as="p" class="text-lg leading-relaxed text-ink/85" />
+        {
+          about.body.map((para) => (
+            <Copy value={para} as="p" class="leading-relaxed text-ink/80" />
+          ))
+        }
+      </div>
+
+      <aside class="lg:sticky lg:top-8 lg:self-start">
+        <div class="card">
+          <h2 class="font-display text-lg font-semibold">At a glance</h2>
+          <dl class="mt-5 space-y-4 text-sm">
+            <div>
+              <dt class="font-semibold text-muted">Entity</dt>
+              <dd class="mt-0.5 text-ink/85">{site.legalName}</dd>
+            </div>
+            <div>
+              <dt class="font-semibold text-muted">Location</dt>
+              <dd class="mt-0.5 text-ink/85">{site.city}, {site.region}</dd>
+            </div>
+            <div>
+              <dt class="font-semibold text-muted">Hours</dt>
+              <dd class="mt-0.5 text-ink/85">{site.hours}</dd>
+            </div>
+            <div>
+              <dt class="font-semibold text-muted">Originators</dt>
+              <dd class="mt-0.5 space-y-1 text-ink/85">
+                {
+                  team.map((m) => (
+                    <span class="block">
+                      {m.name}
+                      {!isPending(m.nmls) && <span>, NMLS ID# {m.nmls}</span>}
+                    </span>
+                  ))
+                }
+              </dd>
+            </div>
+          </dl>
+          <CallButton class="mt-6 w-full" size="sm" />
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <section class="section bg-white">
+    <div class="container-page">
+      <h2 class="section-heading">How we work</h2>
+      <div class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        {
+          trustPoints.map((point) => (
+            <div class="card text-center">
+              <span class="mx-auto flex h-32 w-32 items-center justify-center rounded-full bg-halo text-aurora-deep">
+                <Icon name={point.icon} class="h-16 w-16" />
+              </span>
+              <h3 class="mt-6 font-display text-lg font-semibold">{point.title}</h3>
+              <p class="mt-2.5 text-[0.9375rem] leading-relaxed text-ink/75">{point.desc}</p>
+            </div>
+          ))
+        }
+      </div>
+      <SectionCta />
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container-page grid gap-6 md:grid-cols-2">
+      {
+        (["inside", "outside"] as const).map((key) => (
+          <div class="rounded-2xl border border-line bg-white p-8">
+            <h2 class="font-display text-2xl font-semibold">{groups[key].heading}</h2>
+            <p class="mt-3 leading-relaxed text-ink/75">{groups[key].desc}</p>
+            <a
+              href="/loan-programs"
+              class="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-aurora-deep"
+            >
+              See the programs
+              <Icon name="arrow-right" class="h-4 w-4" />
+            </a>
+          </div>
+        ))
+      }
+    </div>
+  </section>
+
+  <section class="aurora-wash bg-midnight text-white">
+    <div class="container-page py-16 text-center md:py-20">
+      <h2 class="section-heading">Start with a conversation</h2>
+      <p class="mx-auto mt-4 max-w-xl text-lg text-white/75">
+        Seven days a week, including weekends and holidays.
+      </p>
+      <div class="mt-8 flex justify-center"><CallButton /></div>
+    </div>
+  </section>
+</Layout>

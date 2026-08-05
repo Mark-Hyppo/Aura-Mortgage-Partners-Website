@@ -1,0 +1,225 @@
+---
+import Layout from "../layouts/Layout.astro";
+import SectionCta from "../components/SectionCta.astro";
+import PageHeader from "../components/PageHeader.astro";
+import Copy from "../components/Copy.astro";
+import { site, settled } from "../data/site";
+
+const email = settled(site.email);
+const updated = "August 4, 2026";
+---
+
+<Layout
+  title="Terms of Service | Aura Mortgage Partners | West Palm Beach"
+  description={`Aura Mortgage Partners provides mortgage brokerage services in ${site.city}, ${site.region}. Contact us at ${site.phoneDisplay}.`}
+  pathname="/terms"
+  breadcrumbs={[{ name: "Terms of Service", href: "/terms" }]}
+>
+  <PageHeader
+    heading="Terms of Service"
+    breadcrumbs={[{ name: "Terms of Service", href: "/terms" }]}
+  />
+
+  <section class="section">
+    <div class="container-page">
+      <div class="prose-legal">
+        <p class="text-sm font-semibold text-muted">Last updated: {updated}</p>
+
+        <p>
+          These Terms of Service (&ldquo;Terms&rdquo;) govern your use of {site.url} and your
+          relationship with {site.legalName} (&ldquo;Company,&rdquo; &ldquo;we,&rdquo;
+          &ldquo;us,&rdquo; or &ldquo;our&rdquo;). By using our website, contacting us, requesting
+          information, requesting a quote or estimate, scheduling services, or purchasing services,
+          you agree to these Terms.
+        </p>
+
+        <h2>Services and Estimates</h2>
+        <p>
+          We provide products and/or services as described on our website, invoices, proposals,
+          estimates, service agreements, or other written communications. Any quote or estimate we
+          provide may be based on the information you submit to us and may be subject to change if
+          the scope of work changes, additional issues are identified, materials or labor
+          requirements change, or incomplete or inaccurate information was originally provided. Any
+          timelines we provide are estimates only and may be affected by scheduling availability,
+          supply chain issues, third-party delays, weather, shipping delays, customer
+          responsiveness, or other factors outside our control.
+        </p>
+
+        <h2>Customer Responsibilities</h2>
+        <p>
+          You agree to provide accurate, current, and complete information when requesting
+          information, estimates, appointments, or services. You are responsible for timely
+          responses, approvals, and access reasonably necessary for us to provide the requested
+          services. You are also responsible for reviewing any estimate, invoice, agreement, proof,
+          deliverable, or service details we provide and notifying us promptly of any requested
+          changes or concerns.
+        </p>
+
+        <h2>Scheduling and Appointments</h2>
+        <p>
+          Appointments and service dates are subject to availability. We may reschedule appointments
+          or service timelines when reasonably necessary. You agree to arrive on time for scheduled
+          appointments, if applicable, and to provide any materials, approvals, or access needed for
+          us to perform the services. Delays caused by missing information, missed appointments, or
+          lack of access may result in rescheduling or additional charges where permitted by law.
+        </p>
+
+        <h2>Deposits, Payments, and Fees</h2>
+        <p>
+          A deposit, retainer, or upfront payment may be required before work begins, before
+          materials are ordered, or before an appointment is reserved. Payments are due according to
+          the terms stated in your invoice, proposal, estimate, service agreement, or other written
+          communication. Late or failed payments may result in delayed work, paused services,
+          rescheduling, cancellation, or additional fees where permitted by law. Unless otherwise
+          stated in writing, deposits for custom work, reserved time, ordered materials, or work
+          already performed may be non-refundable.
+        </p>
+
+        <h2>Cancellations and Rescheduling</h2>
+        <p>
+          Requests to cancel or reschedule must be made as soon as possible. Cancellation or
+          rescheduling may be subject to availability, lost time, material costs, restocking fees, or
+          charges for work already performed, where permitted by law. If custom work has begun or
+          materials have already been ordered, some or all amounts paid may be non-refundable.
+        </p>
+
+        <h2>Changes to Scope</h2>
+        <p>
+          Any change to the original scope of work, requested deliverables, materials, timeline, or
+          services may require updated pricing, a revised estimate, a change order, or a new
+          timeline. We are not required to perform work outside the agreed scope unless confirmed by
+          us in writing.
+        </p>
+
+        <h2>Warranties and Disclaimers</h2>
+        <p>
+          Any warranty we provide will be stated in writing in your invoice, estimate, proposal,
+          service agreement, or other written communication. Unless otherwise stated in writing, all
+          services, products, website content, and communications are provided on an &ldquo;as
+          is&rdquo; and &ldquo;as available&rdquo; basis to the fullest extent permitted by law. We
+          disclaim all implied warranties, including any implied warranties of merchantability,
+          fitness for a particular purpose, and non-infringement, except where such disclaimers are
+          prohibited by law. We do not guarantee uninterrupted access to our website or that our
+          services will be error-free, completed by a particular date, or suitable for every specific
+          purpose unless expressly stated in writing.
+        </p>
+
+        <h2>Limitation of Liability</h2>
+        <p>
+          To the fullest extent permitted by law, we will not be liable for any indirect,
+          incidental, special, consequential, exemplary, or punitive damages arising out of or
+          related to your use of our website, your communications with us, or any products or
+          services we provide. To the fullest extent permitted by law, our total liability for any
+          claim related to a specific product or service will not exceed the amount you paid us for
+          that specific product or service giving rise to the claim.
+        </p>
+
+        <h2>Communications Consent</h2>
+        <p>
+          By providing your contact information to us, including through a website form, scheduling
+          tool, quote request, invoice, service agreement, or other communication channel, you
+          consent to receive communications from us related to your inquiry, account, requested
+          services, appointments, transactions, customer support, and ongoing business relationship.
+          These communications may be sent by phone call, email, and SMS text message.
+        </p>
+        <p>
+          If you opt in to receive text messages, you agree that we may send you conversational,
+          informational, transactional, or service-related text messages, including messages about
+          scheduling, appointment reminders, estimates, updates, follow-up, customer support, and
+          related service communications. Message frequency varies. Message and data rates may apply.
+          You can opt out of text messages at any time by replying STOP. For help, reply HELP or
+          contact us directly using the contact information listed below. Consent to receive text
+          messages is not a condition of purchase.
+        </p>
+
+        <h2>SMS and Mobile Data</h2>
+        <p>
+          We do not sell, rent, or share mobile opt-in data or consent with third parties or
+          affiliates for marketing or promotional purposes. We may share limited information with
+          service providers that help us deliver messaging services, operate our business, or provide
+          requested services, such as phone providers, SMS platforms, CRM platforms, email providers,
+          scheduling tools, website hosts, analytics providers, and payment processors. These service
+          providers may use the information only as necessary to perform services on our behalf and
+          must protect it appropriately. Mobile carriers are not liable for delayed or undelivered
+          messages.
+        </p>
+
+        <h2>Privacy</h2>
+        <p>
+          Your use of our website and services is also subject to our{" "}
+          <a href="/privacy" class="font-semibold text-aurora-deep underline underline-offset-2"
+            >Privacy Policy</a
+          >. By using our website or services, you acknowledge that you have reviewed our Privacy
+          Policy.
+        </p>
+
+        <h2>Website Use</h2>
+        <p>
+          You agree not to misuse the website or any related systems. This includes, without
+          limitation, attempting unauthorized access, interfering with website functionality,
+          transmitting malicious code, scraping or copying content without permission, submitting
+          false information, or using the website in violation of any applicable law.
+        </p>
+
+        <h2>Intellectual Property</h2>
+        <p>
+          All content on this website, including text, graphics, logos, images, branding, layout, and
+          other materials, is owned by us or used with permission and is protected by applicable
+          intellectual property laws. You may not copy, reproduce, distribute, modify, republish, or
+          exploit website content without our prior written permission.
+        </p>
+
+        <h2>Third-Party Services and Links</h2>
+        <p>
+          Our website or services may include links to or integrations with third-party websites,
+          tools, or platforms. We are not responsible for the content, availability, policies, or
+          practices of any third party. Your use of third-party services is governed by their own
+          terms and policies.
+        </p>
+
+        <h2>Termination</h2>
+        <p>
+          We reserve the right to refuse service, cancel services, limit access, or terminate access
+          to our website or services at our discretion, including when we believe there has been a
+          violation of these Terms, misuse of our systems, nonpayment, abusive conduct, or unlawful
+          activity.
+        </p>
+
+        <h2>Changes to These Terms</h2>
+        <p>
+          We may update these Terms from time to time. Any updates will be posted on this page with a
+          revised &ldquo;Last updated&rdquo; date. Your continued use of the website or services
+          after changes are posted constitutes your acceptance of the updated Terms.
+        </p>
+
+        <h2>Governing Law</h2>
+        <p>
+          These Terms are governed by the laws of the state in which the Company is organized or
+          primarily operates, unless otherwise required by applicable law, without regard to conflict
+          of law principles.
+        </p>
+
+        <h2>Contact</h2>
+        <p>If you have questions about these Terms, please contact us at:</p>
+        <address class="mt-4 text-[0.9375rem] leading-relaxed text-ink/85 not-italic">
+          {site.legalName}<br />
+          {site.street}<br />
+          {site.city}, {site.region} {site.postal}<br />
+          <a href={`tel:${site.phoneTel}`} class="font-semibold hover:text-aurora-deep"
+            >{site.phoneDisplay}</a
+          ><br />
+          {
+            email ? (
+              <a href={`mailto:${email}`} class="font-semibold hover:text-aurora-deep">
+                {email}
+              </a>
+            ) : (
+              <Copy value={site.email} as="span" />
+            )
+          }
+        </address>
+      </div>
+      <SectionCta />
+    </div>
+  </section>
+</Layout>

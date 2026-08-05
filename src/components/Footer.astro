@@ -1,0 +1,203 @@
+---
+import Logo from "./Logo.astro";
+import Icon from "./Icon.astro";
+import Copy from "./Copy.astro";
+import { site, compliance, social, footerLegal, isPending, settled } from "../data/site";
+import { team } from "../data/team";
+
+// This footer lives in Layout.astro, never in a page. Every sitewide disclosure is
+// here, which makes it structurally impossible to ship a page without compliance text.
+const year = new Date().getFullYear();
+const companyNmls = settled(compliance.companyNmls);
+const sponsorNmls = settled(compliance.sponsorNmls);
+const email = settled(site.email);
+const liveSocial = social.filter((s) => !isPending(s.href));
+---
+
+<footer class="bg-midnight text-white">
+  <div class="container-page grid gap-12 py-14 md:grid-cols-3">
+    <div>
+      <Logo />
+      <p class="mt-5 max-w-xs text-sm leading-relaxed text-white/65">
+        A Florida mortgage brokerage in West Palm Beach. Open seven days a week.
+      </p>
+    </div>
+
+    <div>
+      <h2 class="font-display text-lg font-semibold">Contact</h2>
+      <address class="mt-4 space-y-4 not-italic">
+        <a
+          href={`tel:${site.phoneTel}`}
+          data-call-cta
+          class="flex items-center gap-2.5 text-lg font-bold text-white transition-colors hover:text-champagne"
+        >
+          <Icon name="phone" class="h-4 w-4 text-champagne" />
+          {site.phoneDisplay}
+        </a>
+
+        {
+          email ? (
+            <a
+              href={`mailto:${email}`}
+              class="flex items-center gap-2.5 text-sm break-all text-white/80 transition-colors hover:text-champagne"
+            >
+              <Icon name="mail" class="h-4 w-4 shrink-0 text-champagne" />
+              {email}
+            </a>
+          ) : (
+            <Copy value={site.email} as="span" />
+          )
+        }
+
+        <p class="flex items-start gap-2.5 text-sm text-white/80">
+          <Icon name="map-pin" class="mt-0.5 h-4 w-4 shrink-0 text-champagne" />
+          <span>{site.street}<br />{site.city}, {site.region} {site.postal}</span>
+        </p>
+
+        <p class="flex items-start gap-2.5 text-sm text-white/80">
+          <Icon name="clock" class="mt-0.5 h-4 w-4 shrink-0 text-champagne" />
+          <span>{site.hours}</span>
+        </p>
+      </address>
+    </div>
+
+    <div>
+      <h2 class="font-display text-lg font-semibold">Follow</h2>
+      {
+        liveSocial.length ? (
+          <ul class="mt-4 flex items-center gap-3">
+            {liveSocial.map((s) => (
+              <li>
+                <a
+                  href={s.href}
+                  aria-label={s.label}
+                  rel="noopener noreferrer"
+                  target="_blank"
+                  class="inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/20 text-white/80 transition-colors hover:border-champagne hover:text-champagne"
+                >
+                  <Icon name={s.icon} class="h-5 w-5" />
+                </a>
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p class="pending mt-4">
+            Social media profile URLs — Facebook, Instagram, and LinkedIn. None were provided, so no
+            links render rather than shipping dead ones.
+          </p>
+        )
+      }
+
+      <h2 class="mt-8 font-display text-lg font-semibold">Legal</h2>
+      <ul class="mt-4 space-y-2.5">
+        {
+          footerLegal.map((item) => (
+            <li>
+              <a
+                href={item.href}
+                class="text-sm text-white/75 transition-colors hover:text-champagne"
+              >
+                {item.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </div>
+
+  <div class="border-t border-white/15">
+    <div class="container-page space-y-5 py-10">
+      <div class="flex flex-wrap items-center gap-x-8 gap-y-5">
+        <p
+          class="rounded-lg border border-champagne/50 bg-white/5 px-4 py-2.5 text-base font-bold tracking-wide text-white"
+        >
+          {site.legalName}{companyNmls && ` | Company NMLS ID# ${companyNmls}`}
+        </p>
+
+        <div class="flex items-center gap-3 text-white">
+          <Icon name="equal-housing" class="h-9 w-9" />
+          <span class="text-sm font-semibold tracking-wider uppercase">
+            {compliance.equalHousing}
+          </span>
+        </div>
+      </div>
+
+      <ul class="flex flex-wrap gap-x-6 gap-y-2">
+        {
+          team
+            .filter((m) => m.nmls)
+            .map((m) => (
+              <li class="text-sm font-semibold text-white/90">
+                {m.name}, NMLS ID# {m.nmls}
+              </li>
+            ))
+        }
+      </ul>
+
+      {sponsorNmls && <p class="text-sm text-white/70">Sponsored by NMLS ID# {sponsorNmls}</p>}
+
+      <p class="text-sm text-white/70">
+        Verify licensing at{" "}
+        <a
+          href={compliance.verifyUrl}
+          rel="noopener noreferrer"
+          target="_blank"
+          class="font-semibold text-champagne underline underline-offset-2"
+        >
+          {compliance.verifyLabel}
+        </a>
+        . Licensed in: {compliance.statesLicensed}.
+      </p>
+
+      <p class="max-w-4xl text-xs leading-relaxed text-white/55">
+        {compliance.disclaimer}
+      </p>
+    </div>
+  </div>
+
+  <div class="bg-slate-deep">
+    <div class="container-page flex flex-col items-center gap-2 py-5 text-center text-xs text-white/50">
+      <p>&copy; {year} {site.legalName}. All rights reserved.</p>
+      <p>
+        Powered by{" "}
+        <a
+          href="https://hyppohq.ai"
+          rel="noopener noreferrer"
+          target="_blank"
+          class="font-semibold text-white/75 transition-colors hover:text-champagne">HyppoAI</a
+        >
+      </p>
+    </div>
+  </div>
+</footer>
+
+<!-- Sticky call bar: the compensating control for a non-sticky header on mobile. -->
+<a
+  href={`tel:${site.phoneTel}`}
+  data-call-cta
+  class="fixed inset-x-0 bottom-0 z-40 flex min-h-[4.5rem] items-center justify-center gap-2.5 bg-aurora text-lg font-bold text-midnight shadow-[0_-8px_24px_-12px_rgba(11,18,32,0.5)] lg:hidden"
+>
+  <Icon name="phone" class="h-5 w-5" />
+  Call {site.phoneDisplay}
+</a>
+
+<script>
+  // No Hyppo site tracks tel: clicks today. The primary CTA should be measurable.
+  document.querySelectorAll("[data-call-cta]").forEach((el) =>
+    el.addEventListener("click", () => {
+      const pixel = document.querySelector<HTMLScriptElement>("script[data-pixel-id]");
+      const payload = {
+        event: "call_click",
+        pixel_id: pixel?.dataset.pixelId,
+        url: location.href,
+        ts: Date.now(),
+      };
+      if (!payload.pixel_id) return;
+      navigator.sendBeacon?.(
+        "https://hyppohq.io/api/v1/analytics/track",
+        new Blob([JSON.stringify(payload)], { type: "application/json" })
+      );
+    })
+  );
+</script>

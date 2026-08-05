@@ -1,0 +1,12 @@
+.env
+.env.*
+!.env.example
+node_modules/
+dist/
+.astro/
+.vercel/
+.DS_Store
+*.log
+scripts/icons-raw/
+scripts/logo-candidates/
+scripts/hero-candidates/
