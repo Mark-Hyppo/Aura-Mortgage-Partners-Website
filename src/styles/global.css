@@ -147,6 +147,28 @@ h4 {
     color: var(--color-midnight);
   }
 
+  /* Stacked calls to action. Children stretch to a shared width so buttons with
+     different labels still read as one column rather than a ragged edge. */
+  .btn-stack {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 1rem;
+    width: 100%;
+    max-width: 22rem;
+    margin-inline: auto;
+  }
+
+  .btn-stack > .btn {
+    width: 100%;
+  }
+
+  .btn-lg {
+    min-height: 4.25rem;
+    padding-inline: 2.5rem;
+    font-size: 1.1875rem;
+  }
+
   .card {
     background: #fff;
     border: 1px solid var(--color-line);

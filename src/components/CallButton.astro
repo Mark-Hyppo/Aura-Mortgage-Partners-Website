@@ -4,7 +4,7 @@ import { site } from "../data/site";
 
 interface Props {
   variant?: "primary" | "secondary" | "on-dark";
-  size?: "sm" | "md";
+  size?: "sm" | "md" | "lg";
   label?: string;
   class?: string;
 }
@@ -17,7 +17,7 @@ const variantClass = {
   "on-dark": "btn-on-dark",
 }[variant];
 
-const sizeClass = size === "sm" ? "text-base px-6 min-h-[3rem]" : "";
+const sizeClass = size === "sm" ? "text-base px-6 min-h-[3rem]" : size === "lg" ? "btn-lg" : "";
 ---
 
 <a
@@ -25,6 +25,6 @@ const sizeClass = size === "sm" ? "text-base px-6 min-h-[3rem]" : "";
   data-call-cta
   class={`btn ${variantClass} ${sizeClass} ${cls}`}
 >
-  <Icon name="phone" class="h-5 w-5" />
+  <Icon name="phone" class={size === "lg" ? "h-6 w-6" : "h-5 w-5"} />
   {label ?? `Call ${site.phoneDisplay}`}
 </a>
