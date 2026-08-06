@@ -12,7 +12,7 @@ const crumbs = [{ name: "Our Team", href: "/team" }];
 ---
 
 <Layout
-  title="Loan Officers | Aura Mortgage Partners | West Palm Beach"
+  title={`Loan Officers | Aura Mortgage Partners | ${site.city}`}
   description={`Aura Mortgage Partners provides licensed mortgage loan originators in ${site.city}, ${site.region}. Contact us at ${site.phoneDisplay}.`}
   pathname="/team"
   breadcrumbs={crumbs}
@@ -38,7 +38,7 @@ const crumbs = [{ name: "Our Team", href: "/team" }];
                   class="h-24 w-24 rounded-full object-cover"
                 />
               ) : (
-                <span class="flex h-24 w-24 shrink-0 items-center justify-center rounded-full bg-halo font-display text-3xl font-bold text-aurora-deep">
+                <span class="flex h-24 w-24 shrink-0 items-center justify-center rounded-full bg-halo font-display text-3xl font-bold text-brand">
                   {m.name.charAt(0)}
                 </span>
               )}
@@ -46,7 +46,7 @@ const crumbs = [{ name: "Our Team", href: "/team" }];
                 <h2 class="font-display text-2xl font-semibold">{m.name}</h2>
                 <p class="text-sm text-ink/70">{m.title}</p>
                 {m.nmls && (
-                  <p class="mt-1 text-sm font-bold text-aurora-deep">NMLS ID# {m.nmls}</p>
+                  <p class="mt-1 text-sm font-bold text-brand">NMLS ID# {m.nmls}</p>
                 )}
               </div>
             </div>
@@ -62,7 +62,7 @@ const crumbs = [{ name: "Our Team", href: "/team" }];
             <div class="mt-auto flex flex-wrap items-center gap-4 pt-7">
               <a
                 href={`/team/${m.slug}`}
-                class="inline-flex items-center gap-1.5 text-sm font-semibold text-aurora-deep"
+                class="inline-flex items-center gap-1.5 text-sm font-semibold text-brand"
               >
                 Read bio
                 <Icon name="arrow-right" class="h-4 w-4" />
@@ -70,7 +70,7 @@ const crumbs = [{ name: "Our Team", href: "/team" }];
               <a
                 href={`tel:${site.phoneTel}`}
                 data-call-cta
-                class="inline-flex items-center gap-1.5 text-sm font-semibold text-midnight hover:text-aurora-deep"
+                class="inline-flex items-center gap-1.5 text-sm font-semibold text-navy hover:text-brand"
               >
                 <Icon name="phone" class="h-4 w-4" />
                 {site.phoneDisplay}
@@ -90,18 +90,18 @@ const crumbs = [{ name: "Our Team", href: "/team" }];
           href={compliance.verifyUrl}
           rel="noopener noreferrer"
           target="_blank"
-          class="font-semibold text-aurora-deep underline underline-offset-2"
+          class="font-semibold text-brand underline underline-offset-2"
           >{compliance.verifyLabel}</a
         >.
       </p>
     </div>
   </section>
 
-  <section class="aurora-wash bg-midnight text-white">
+  <section class="brand-wash bg-navy text-white">
     <div class="container-page py-16 text-center md:py-20">
       <h2 class="section-heading">One call reaches both</h2>
       <div class="btn-stack mt-8"><CallButton /></div>
-      <p class="mt-4 text-sm text-champagne/80">{site.hoursShort}</p>
+      <p class="mt-4 text-sm text-gold/80">{site.hoursShort}</p>
     </div>
   </section>
 </Layout>

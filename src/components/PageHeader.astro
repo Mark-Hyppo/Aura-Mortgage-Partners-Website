@@ -8,14 +8,14 @@ interface Props {
 const { heading, lede, breadcrumbs } = Astro.props;
 ---
 
-<section class="aurora-wash bg-midnight text-white">
+<section class="brand-wash bg-navy text-white">
   <div class="container-page py-16 md:py-20">
     {
       breadcrumbs?.length && (
         <nav aria-label="Breadcrumb" class="mb-6">
           <ol class="flex flex-wrap items-center justify-center gap-x-2 gap-y-1 text-sm text-white/60">
             <li>
-              <a href="/" class="transition-colors hover:text-champagne">
+              <a href="/" class="transition-colors hover:text-gold">
                 Home
               </a>
             </li>
@@ -26,7 +26,7 @@ const { heading, lede, breadcrumbs } = Astro.props;
                   {i === breadcrumbs.length - 1 ? (
                     <span class="text-white/85">{c.name}</span>
                   ) : (
-                    <a href={c.href} class="transition-colors hover:text-champagne">
+                    <a href={c.href} class="transition-colors hover:text-gold">
                       {c.name}
                     </a>
                   )}

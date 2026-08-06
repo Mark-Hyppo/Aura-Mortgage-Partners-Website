@@ -4,7 +4,8 @@
 // moment they are published. See PLACEHOLDERS.md.
 //
 // NMLS IDs are NOT drafted. Mark Wilkinson's 297944 is confirmed against public
-// record. Lorie Lewis's is unresolved and stays empty rather than guessed.
+// record. Lorie Lewis's 273007 is corroborated but not yet registry-verified —
+// see the note on her entry below.
 
 export interface TeamMember {
   slug: string;
@@ -27,10 +28,10 @@ export const team: TeamMember[] = [
     legalName: "Mark Wilkinson",
     title: "Loan Originator",
     nmls: "297944",
-    // No headshot supplied. The UI falls back to a monogram, which reads as a
-    // deliberate design choice rather than a missing image.
-    headshot: "",
-    headshotAlt: "",
+    // Supplied by the client. Cropped by scripts/gen-headshots.mjs, which removes
+    // the green accent bar another site had baked into the bottom of the file.
+    headshot: "/team/mark-wilkinson.webp",
+    headshotAlt: "Mark Wilkinson, Loan Originator at Aura Mortgage Partners",
     // DRAFT: both paragraphs.
     // Public sources (markmymortgage.com, Group One Mortgage) additionally claim
     // 30+ years, a Florida Atlantic BBA, 4,000+ transactions and $1B+ in volume.
@@ -52,11 +53,18 @@ export const team: TeamMember[] = [
     name: "Lorie Lewis",
     legalName: "Lorie Ann Lewis",
     title: "Loan Originator",
-    // NOT DRAFTED — the brief gave both 273007 and 334279 and the AIOS project
-    // docs say 273007. Verify on nmlsconsumeraccess.org. LAUNCH BLOCKER.
-    nmls: "",
-    headshot: "",
-    headshotAlt: "",
+    // The brief gave both 273007 and 334279. 273007 is the one that holds up:
+    // Group One Mortgage's originator roster lists her at it, and it matches a
+    // ZoomInfo MLO profile. 334279 returns no originator anywhere — a bad
+    // transcription. Still worth a confirming lookup on nmlsconsumeraccess.org;
+    // neither source page could be read directly.
+    nmls: "273007",
+    // DRAFT: PLACEHOLDER PORTRAIT — this is not Lorie Lewis. It is an
+    // AI-generated image carried over from the AIOS project, standing in until a
+    // real headshot is taken. It sits above a real name and a real NMLS ID on a
+    // mortgage advertisement, so it must not reach production. See PLACEHOLDERS.md.
+    headshot: "/team/lorie-lewis.webp",
+    headshotAlt: "Lorie Lewis, Loan Originator at Aura Mortgage Partners",
     // DRAFT: both paragraphs. Very little is known about Lorie's background, so
     // this is deliberately general and makes no verifiable claims.
     bio: [

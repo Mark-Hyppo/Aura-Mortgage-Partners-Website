@@ -1,7 +1,8 @@
 # Plan — "Areas We Serve" pages
 
-**Status: proposal, not committed.** Mark asked for a plan without deciding whether it ships.
-Nothing here is built. No routes, data, or copy exist yet.
+**Status: proposal, not committed.** Nothing here is built — no routes, data, or copy exist yet.
+Revised 2026-08-05 after the office was confirmed as **Boca Raton**, which moved the home market
+from West Palm Beach and changed the selection rule.
 
 ---
 
@@ -72,40 +73,63 @@ I would put this rule in `COMPLIANCE.md` before writing the first page.
 
 ## Recommended approach
 
-**Tier the cities. Do not do all 39.**
+**The office is in Boca Raton**, at the southern edge of the county against the Broward line. That
+placement is what makes the selection rule matter: a Boca-centred footprint drawn by instinct skews
+affluent and coastal, and cherry-picking inside it is exactly the exposure described above.
 
-### Tier 1 — build these (12)
+**So do not pick cities. Write a rule, then build whatever it returns.**
 
-Real mortgage volume, genuine local financing angles, and a footprint that spans the county's
-economic range rather than only its coastline.
+> Palm Beach County municipalities within roughly 25 driving miles of the Boca Raton office,
+> with a population of about 10,000 or more.
 
-| City | The actual local financing hook |
-| --- | --- |
-| West Palm Beach | Home market; broadest program mix |
-| Boca Raton | Jumbo and super jumbo; large condo inventory |
-| Boynton Beach | Condo warrantability; 55+ community financing |
-| Delray Beach | Condo and townhouse; second homes |
-| Jupiter | Jumbo; waterfront and flood-zone considerations |
-| Palm Beach Gardens | Jumbo; PUD and golf-community HOA structures |
-| Wellington | Equestrian property; acreage and non-conforming parcels |
-| Royal Palm Beach | Conforming and FHA; first-time buyers |
-| Lake Worth Beach | FHA, VA, Hometown Heroes; older housing stock |
-| Riviera Beach | FHA and VA; Hometown Heroes eligibility |
-| Palm Beach | Super jumbo; portfolio and asset-based lending |
-| Belle Glade | FHA, VA, USDA-adjacent rural; agricultural-area lending |
+Both criteria are neutral on their face and neither correlates with income or racial composition.
+The rule is defensible precisely because of what it *excludes*: affluent Jupiter, Palm Beach
+Gardens and the town of Palm Beach fall outside it on distance, exactly as the Glades communities
+do. It cuts wealthy and low-income areas by the same measure — which is the thing a marketing
+footprint has to be able to demonstrate if anyone asks.
 
-Belle Glade is on the list deliberately. Dropping it because search volume is low is exactly the
-decision that creates the footprint problem described above.
+Write the rule into `COMPLIANCE.md` alongside the language rule, so the next person to add a city
+has to satisfy it rather than re-litigate it.
 
-### Tier 2 — later, only if Tier 1 earns it (optional)
+### Tier 1 — what the rule returns (~10)
 
-Greenacres, Palm Springs, North Palm Beach, Tequesta, Juno Beach, Lantana, Atlantis, Loxahatchee
-Groves, Westlake, Pahokee, South Bay, Lake Park.
+| City | Approx. miles | The local financing hook |
+| --- | --- | --- |
+| Boca Raton | 0 | Home market; jumbo, super jumbo, large condo inventory |
+| Delray Beach | 7 | Condo and townhouse warrantability; second homes |
+| Boynton Beach | 12 | Condo warrantability; 55+ community financing |
+| Lantana | 16 | Older housing stock; FHA and renovation |
+| Lake Worth Beach | 18 | FHA, VA, Hometown Heroes; older housing stock |
+| Greenacres | 19 | Conforming and FHA; first-time buyers |
+| Palm Springs | 20 | FHA and VA; entry-price purchase |
+| Wellington | 21 | Equestrian property; acreage and non-conforming parcels |
+| West Palm Beach | 25 | County seat; broadest program mix |
+| Royal Palm Beach | 25 | Conforming and FHA; first-time buyers |
+
+That set spans the county's economic range — Boca and Wellington at one end, Lake Worth Beach,
+Greenacres and Palm Springs at the other — because the rule, not taste, selected it.
+
+> **The mileages and populations above are from general knowledge and are NOT verified.** Recompute
+> them from the real Boca Raton street address once it is supplied, then confirm the list before a
+> single page is written. If the recomputed radius changes the membership, the list changes with it —
+> that is the rule working, not a problem with the rule.
+
+### Tier 2 — only if Tier 1 earns it
+
+Municipalities that clear the distance test but fall under the population floor, or sit just beyond
+25 miles: Highland Beach, Ocean Ridge, Hypoluxo, Manalapan, Atlantis, Lake Clarke Shores,
+Loxahatchee Groves, North Palm Beach, Riviera Beach, Palm Beach, Westlake.
 
 ### Tier 3 — do not build
 
-Villages under ~1,500 people (Cloud Lake, Glen Ridge, Golf, Briny Breezes, Jupiter Inlet Colony,
-Manalapan). No search demand, and a page each is pure thin content.
+Villages under ~1,500 people (Cloud Lake, Glen Ridge, Golf, Briny Breezes, Jupiter Inlet Colony).
+No search demand, and a page each is pure thin content.
+
+**On the Glades** — Belle Glade, Pahokee and South Bay sit 45–55 miles from Boca and fall outside
+the rule on distance, along with Jupiter and Palm Beach Gardens. That is a defensible outcome
+*because the rule is neutral and applied evenly*. It would stop being defensible the moment
+someone hand-adds Jupiter back for its jumbo volume while leaving Belle Glade out. If the
+geography is ever extended north, it extends for everyone at that distance.
 
 ---
 
@@ -162,35 +186,34 @@ interface Area {
 - Interlink: each area page links its named programs, each program page links back to relevant
   areas. That internal linking is most of the SEO value and is what a doorway cluster lacks.
 
-Twelve pages, +1 index = **13 routes, taking the site from 31 to 44 pages.**
+Ten pages, +1 index = **11 routes, taking the site from 32 to 43 pages.**
 
 ---
 
 ## Build steps
 
-1. Add the fair-lending language rule to `COMPLIANCE.md` — no community characterisation, financing
-   conditions only.
-2. Write `src/data/areas.ts` with the 12 Tier 1 cities. This is the whole job; the templates are
-   trivial by comparison.
+1. Add BOTH fair-lending rules to `COMPLIANCE.md` — the neutral city-selection rule, and the
+   language rule (no community characterisation, financing conditions only).
+2. Write `src/data/areas.ts` with the Tier 1 cities the rule returns. This is the whole job; the
+   templates are trivial by comparison.
 3. Build `[slug].astro` and `index.astro` from the loan-programs templates.
 4. Add to nav, extend `areaServed` schema, wire the program ↔ area interlinks.
 5. Run the existing gates: the title/description length assertion catches long city names
    automatically, then the Reg Z and MAP Rule greps.
-6. Have Mark Wilkinson read all 12 financing paragraphs. He is the one who knows whether the local
+6. Have Mark Wilkinson read every financing paragraph. He is the one who knows whether the local
    claims are true.
 
-**Effort:** roughly a day, almost entirely on the 12 paragraphs and 30-ish FAQs. Templates are an
-hour.
+**Effort:** roughly a day, almost entirely on the paragraphs and ~25 FAQs. Templates are an hour.
 
 ---
 
 ## Open questions
 
-1. **Is Aura licensed anywhere beyond Florida?** If so, the geography could extend past Palm Beach
-   County and the tiering changes.
-2. **Does Mark want the Glades communities included?** My recommendation is yes, and the reasoning
-   above is why — but it is his call and he should make it knowingly.
-3. **Do the 12 financing hooks hold up?** I drafted them from general South Florida lending
-   knowledge. Each needs his confirmation before it goes near a page.
-4. **Should this wait?** The site still has unresolved NMLS blockers. Adding 13 pages multiplies the
-   surface carrying an absent company NMLS ID. I would resolve [[aura-nmls-blockers]] first.
+1. **The Boca Raton street address.** The radius cannot be computed without it, so the city list
+   above is provisional. This is the same blocker as the site's `site.street` / `site.postal`.
+2. **Is Aura licensed anywhere beyond Florida?** If so the geography could extend past Palm Beach
+   County and the rule needs a second criterion.
+3. **Do the financing hooks hold up?** Drafted from general South Florida lending knowledge. Each
+   needs Mark Wilkinson's confirmation before it goes near a page.
+4. **Should this wait?** The company NMLS ID is still empty and required on every page. Adding 11
+   routes multiplies the surface carrying that gap. Resolve it first.

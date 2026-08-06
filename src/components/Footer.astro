@@ -11,15 +11,17 @@ const year = new Date().getFullYear();
 const companyNmls = settled(compliance.companyNmls);
 const sponsorNmls = settled(compliance.sponsorNmls);
 const email = settled(site.email);
+const street = settled(site.street);
+const postal = settled(site.postal);
 const liveSocial = social.filter((s) => !isPending(s.href));
 ---
 
-<footer class="bg-midnight text-white">
+<footer class="border-t border-line bg-halo text-ink">
   <div class="container-page grid gap-12 py-14 text-center md:grid-cols-3">
     <div>
-      <Logo class="mx-auto" />
-      <p class="mx-auto mt-5 max-w-xs text-sm leading-relaxed text-white/65">
-        A Florida mortgage brokerage in West Palm Beach. Open seven days a week.
+      <Logo variant="full" size="lg" class="mx-auto" />
+      <p class="mx-auto mt-5 max-w-xs text-sm leading-relaxed text-ink/70">
+        A Florida mortgage brokerage in {site.city}. Open seven days a week.
       </p>
     </div>
 
@@ -29,9 +31,9 @@ const liveSocial = social.filter((s) => !isPending(s.href));
         <a
           href={`tel:${site.phoneTel}`}
           data-call-cta
-          class="flex items-center justify-center gap-2.5 text-lg font-bold text-white transition-colors hover:text-champagne"
+          class="flex items-center justify-center gap-2.5 text-lg font-bold text-navy transition-colors hover:text-brand"
         >
-          <Icon name="phone" class="h-4 w-4 text-champagne" />
+          <Icon name="phone" class="h-4 w-4 text-gold-deep" />
           {site.phoneDisplay}
         </a>
 
@@ -39,9 +41,9 @@ const liveSocial = social.filter((s) => !isPending(s.href));
           email ? (
             <a
               href={`mailto:${email}`}
-              class="flex items-center justify-center gap-2.5 text-sm break-all text-white/80 transition-colors hover:text-champagne"
+              class="flex items-center justify-center gap-2.5 text-sm break-all text-ink/75 transition-colors hover:text-brand"
             >
-              <Icon name="mail" class="h-4 w-4 shrink-0 text-champagne" />
+              <Icon name="mail" class="h-4 w-4 shrink-0 text-gold-deep" />
               {email}
             </a>
           ) : (
@@ -49,13 +51,16 @@ const liveSocial = social.filter((s) => !isPending(s.href));
           )
         }
 
-        <p class="flex items-start justify-center gap-2.5 text-sm text-white/80">
-          <Icon name="map-pin" class="mt-0.5 h-4 w-4 shrink-0 text-champagne" />
-          <span>{site.street}<br />{site.city}, {site.region} {site.postal}</span>
+        <p class="flex items-start justify-center gap-2.5 text-sm text-ink/75">
+          <Icon name="map-pin" class="mt-0.5 h-4 w-4 shrink-0 text-gold-deep" />
+          <span>
+            {street && <>{street}<br /></>}
+            {site.city}, {site.region} {postal}
+          </span>
         </p>
 
-        <p class="flex items-start justify-center gap-2.5 text-sm text-white/80">
-          <Icon name="clock" class="mt-0.5 h-4 w-4 shrink-0 text-champagne" />
+        <p class="flex items-start justify-center gap-2.5 text-sm text-ink/75">
+          <Icon name="clock" class="mt-0.5 h-4 w-4 shrink-0 text-gold-deep" />
           <span>{site.hours}</span>
         </p>
       </address>
@@ -73,7 +78,7 @@ const liveSocial = social.filter((s) => !isPending(s.href));
                   aria-label={s.label}
                   rel="noopener noreferrer"
                   target="_blank"
-                  class="inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/20 text-white/80 transition-colors hover:border-champagne hover:text-champagne"
+                  class="inline-flex h-11 w-11 items-center justify-center rounded-full border border-line bg-white text-ink/75 transition-colors hover:border-brand hover:text-brand"
                 >
                   <Icon name={s.icon} class="h-5 w-5" />
                 </a>
@@ -95,7 +100,7 @@ const liveSocial = social.filter((s) => !isPending(s.href));
             <li>
               <a
                 href={item.href}
-                class="text-sm text-white/75 transition-colors hover:text-champagne"
+                class="text-sm text-ink/75 transition-colors hover:text-brand"
               >
                 {item.label}
               </a>
@@ -106,16 +111,16 @@ const liveSocial = social.filter((s) => !isPending(s.href));
     </div>
   </div>
 
-  <div class="border-t border-white/15">
+  <div class="border-t border-line">
     <div class="container-page space-y-5 py-10 text-center">
       <div class="flex flex-wrap items-center justify-center gap-x-8 gap-y-5">
         <p
-          class="rounded-lg border border-champagne/50 bg-white/5 px-4 py-2.5 text-base font-bold tracking-wide text-white"
+          class="rounded-lg border border-gold-deep/45 bg-white px-4 py-2.5 text-base font-bold tracking-wide text-navy"
         >
           {site.legalName}{companyNmls && ` | Company NMLS ID# ${companyNmls}`}
         </p>
 
-        <div class="flex items-center gap-3 text-white">
+        <div class="flex items-center gap-3 text-navy">
           <Icon name="equal-housing" class="h-9 w-9" />
           <span class="text-sm font-semibold tracking-wider uppercase">
             {compliance.equalHousing}
@@ -128,36 +133,36 @@ const liveSocial = social.filter((s) => !isPending(s.href));
           team
             .filter((m) => m.nmls)
             .map((m) => (
-              <li class="text-sm font-semibold text-white/90">
+              <li class="text-sm font-semibold text-ink/85">
                 {m.name}, NMLS ID# {m.nmls}
               </li>
             ))
         }
       </ul>
 
-      {sponsorNmls && <p class="text-sm text-white/70">Sponsored by NMLS ID# {sponsorNmls}</p>}
+      {sponsorNmls && <p class="text-sm text-ink/70">Sponsored by NMLS ID# {sponsorNmls}</p>}
 
-      <p class="text-sm text-white/70">
+      <p class="text-sm text-ink/70">
         Verify licensing at{" "}
         <a
           href={compliance.verifyUrl}
           rel="noopener noreferrer"
           target="_blank"
-          class="font-semibold text-champagne underline underline-offset-2"
+          class="font-semibold text-brand underline underline-offset-2"
         >
           {compliance.verifyLabel}
         </a>
         . Licensed in: {compliance.statesLicensed}.
       </p>
 
-      <p class="mx-auto max-w-4xl text-xs leading-relaxed text-white/55">
+      <p class="mx-auto max-w-4xl text-xs leading-relaxed text-ink/65">
         {compliance.disclaimer}
       </p>
     </div>
   </div>
 
-  <div class="bg-slate-deep">
-    <div class="container-page flex flex-col items-center gap-2 py-5 text-center text-xs text-white/50">
+  <div class="bg-navy-deep">
+    <div class="container-page flex flex-col items-center gap-2 py-5 text-center text-xs text-white/60">
       <p>&copy; {year} {site.legalName}. All rights reserved.</p>
       <p>
         Powered by{" "}
@@ -165,7 +170,7 @@ const liveSocial = social.filter((s) => !isPending(s.href));
           href="https://hyppohq.ai"
           rel="noopener noreferrer"
           target="_blank"
-          class="font-semibold text-white/75 transition-colors hover:text-champagne">HyppoAI</a
+          class="font-semibold text-ink/75 transition-colors hover:text-brand">HyppoAI</a
         >
       </p>
     </div>

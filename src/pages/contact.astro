@@ -12,11 +12,17 @@ const email = settled(site.email);
 const tenant = settled(hyppo.tenantSlug);
 const formSlug = settled(hyppo.contactFormSlug);
 const embedSrc = tenant && formSlug ? `https://hyppohq.io/api/v1/forms/embed/${tenant}/${formSlug}` : "";
-const mapQuery = encodeURIComponent(`${site.street}, ${site.city}, ${site.region} ${site.postal}`);
+const street = settled(site.street);
+const postal = settled(site.postal);
+// Without a street address the embed would resolve to a city-wide search, which
+// looks like a broken pin. Omit the map entirely until the address is supplied.
+const mapQuery = street
+  ? encodeURIComponent(`${street}, ${site.city}, ${site.region} ${postal}`)
+  : "";
 ---
 
 <Layout
-  title="Contact | Aura Mortgage Partners | West Palm Beach, FL"
+  title={`Contact | Aura Mortgage Partners | ${site.city}, ${site.region}`}
   description={`Aura Mortgage Partners provides mortgage brokerage services in ${site.city}, ${site.region}. Contact us at ${site.phoneDisplay}.`}
   pathname="/contact"
   breadcrumbs={crumbs}
@@ -33,25 +39,26 @@ const mapQuery = encodeURIComponent(`${site.street}, ${site.city}, ${site.region
         <a
           href={`tel:${site.phoneTel}`}
           data-call-cta
-          class="group rounded-2xl border border-line bg-white p-7 transition-colors hover:border-aurora hover:bg-halo"
+          class="group rounded-2xl border border-line bg-white p-7 transition-colors hover:border-brand hover:bg-halo"
         >
-          <Icon name="phone" class="h-7 w-7 text-aurora-deep" />
+          <Icon name="phone" class="h-7 w-7 text-brand" />
           <p class="mt-5 text-xs font-semibold tracking-wider text-muted uppercase">Call</p>
-          <p class="mt-1 text-xl font-bold text-midnight sm:text-2xl">{site.phoneDisplay}</p>
+          <p class="mt-1 text-xl font-bold text-navy sm:text-2xl">{site.phoneDisplay}</p>
         </a>
 
         <div class="rounded-2xl border border-line bg-white p-7">
-          <Icon name="map-pin" class="h-7 w-7 text-aurora-deep" />
+          <Icon name="map-pin" class="h-7 w-7 text-brand" />
           <p class="mt-5 text-xs font-semibold tracking-wider text-muted uppercase">Office</p>
-          <address class="mt-1 text-base leading-relaxed font-semibold text-midnight not-italic">
-            {site.street}<br />{site.city}, {site.region} {site.postal}
+          <address class="mt-1 text-base leading-relaxed font-semibold text-navy not-italic">
+            {street && <>{street}<br /></>}
+            {site.city}, {site.region} {postal}
           </address>
         </div>
 
         <div class="rounded-2xl border border-line bg-white p-7">
-          <Icon name="clock" class="h-7 w-7 text-aurora-deep" />
+          <Icon name="clock" class="h-7 w-7 text-brand" />
           <p class="mt-5 text-xs font-semibold tracking-wider text-muted uppercase">Hours</p>
-          <p class="mt-1 text-base leading-relaxed font-semibold text-midnight">{site.hours}</p>
+          <p class="mt-1 text-base leading-relaxed font-semibold text-navy">{site.hours}</p>
         </div>
       </div>
 
@@ -61,7 +68,7 @@ const mapQuery = encodeURIComponent(`${site.street}, ${site.city}, ${site.region
             Prefer email?{" "}
             <a
               href={`mailto:${email}`}
-              class="font-semibold text-aurora-deep underline underline-offset-2"
+              class="font-semibold text-brand underline underline-offset-2"
             >
               {email}
             </a>
@@ -89,7 +96,7 @@ const mapQuery = encodeURIComponent(`${site.street}, ${site.city}, ${site.region
               <noscript>
                 <p class="text-[0.9375rem] text-ink/80">
                   This form needs JavaScript. Call{" "}
-                  <a href={`tel:${site.phoneTel}`} class="font-semibold text-aurora-deep">
+                  <a href={`tel:${site.phoneTel}`} class="font-semibold text-brand">
                     {site.phoneDisplay}
                   </a>{" "}
                   instead.
@@ -100,16 +107,25 @@ const mapQuery = encodeURIComponent(`${site.street}, ${site.city}, ${site.region
         )
       }
 
-      <div>
-        <div class="overflow-hidden rounded-2xl border border-line">
-          <iframe
-            src={`https://maps.google.com/maps?q=${mapQuery}&t=&z=13&ie=UTF8&iwloc=&output=embed`}
-            title={`Map to ${site.name}, ${site.street}, ${site.city}, ${site.region}`}
-            loading="lazy"
-            referrerpolicy="no-referrer-when-downgrade"
-            class="block aspect-[4/3] w-full border-0"></iframe>
-        </div>
-      </div>
+      {
+        mapQuery ? (
+          <div>
+            <div class="overflow-hidden rounded-2xl border border-line">
+              <iframe
+                src={`https://maps.google.com/maps?q=${mapQuery}&t=&z=13&ie=UTF8&iwloc=&output=embed`}
+                title={`Map to ${site.name}, ${street}, ${site.city}, ${site.region}`}
+                loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade"
+                class="block aspect-[4/3] w-full border-0"
+              />
+            </div>
+          </div>
+        ) : (
+          <div>
+            <Copy value={site.street} as="p" />
+          </div>
+        )
+      }
 
       <div>
         <div class="card">
@@ -118,7 +134,7 @@ const mapQuery = encodeURIComponent(`${site.street}, ${site.city}, ${site.region
             {
               team.map((m) => (
                 <li class="text-[0.9375rem]">
-                  <a href={`/team/${m.slug}`} class="font-semibold hover:text-aurora-deep">
+                  <a href={`/team/${m.slug}`} class="font-semibold hover:text-brand">
                     {m.name}
                   </a>
                   {m.nmls && <span class="text-ink/70">, NMLS ID# {m.nmls}</span>}
@@ -132,7 +148,7 @@ const mapQuery = encodeURIComponent(`${site.street}, ${site.city}, ${site.region
               href={compliance.verifyUrl}
               rel="noopener noreferrer"
               target="_blank"
-              class="font-semibold text-aurora-deep underline underline-offset-2"
+              class="font-semibold text-brand underline underline-offset-2"
               >{compliance.verifyLabel}</a
             >.
           </p>

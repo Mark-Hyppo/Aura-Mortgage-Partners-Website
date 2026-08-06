@@ -10,7 +10,7 @@ const updated = "August 4, 2026";
 ---
 
 <Layout
-  title="Terms of Service | Aura Mortgage Partners | West Palm Beach"
+  title={`Terms of Service | Aura Mortgage Partners | ${site.city}`}
   description={`Aura Mortgage Partners provides mortgage brokerage services in ${site.city}, ${site.region}. Contact us at ${site.phoneDisplay}.`}
   pathname="/terms"
   breadcrumbs={[{ name: "Terms of Service", href: "/terms" }]}
@@ -147,7 +147,7 @@ const updated = "August 4, 2026";
         <h2>Privacy</h2>
         <p>
           Your use of our website and services is also subject to our{" "}
-          <a href="/privacy" class="font-semibold text-aurora-deep underline underline-offset-2"
+          <a href="/privacy" class="font-semibold text-brand underline underline-offset-2"
             >Privacy Policy</a
           >. By using our website or services, you acknowledge that you have reviewed our Privacy
           Policy.
@@ -203,14 +203,14 @@ const updated = "August 4, 2026";
         <p>If you have questions about these Terms, please contact us at:</p>
         <address class="mt-4 text-[0.9375rem] leading-relaxed text-ink/85 not-italic">
           {site.legalName}<br />
-          {site.street}<br />
-          {site.city}, {site.region} {site.postal}<br />
-          <a href={`tel:${site.phoneTel}`} class="font-semibold hover:text-aurora-deep"
+          {settled(site.street) && <>{settled(site.street)}<br /></>}
+          {site.city}, {site.region} {settled(site.postal)}<br />
+          <a href={`tel:${site.phoneTel}`} class="font-semibold hover:text-brand"
             >{site.phoneDisplay}</a
           ><br />
           {
             email ? (
-              <a href={`mailto:${email}`} class="font-semibold hover:text-aurora-deep">
+              <a href={`mailto:${email}`} class="font-semibold hover:text-brand">
                 {email}
               </a>
             ) : (

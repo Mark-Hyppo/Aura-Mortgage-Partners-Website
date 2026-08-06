@@ -1,25 +1,38 @@
 ---
-// The approved lockup: Nova's aurora ribbons with the Manrope wordmark typeset
-// into the negative space (scripts/logo-wordmark.mjs). public/logo.png is that
-// file cropped to the wordmark with its edges feathered to transparent, so it
-// melts into a dark surface instead of reading as a pasted rectangle.
+// The client's own logo, background knocked out to transparency by
+// scripts/gen-logo-assets.mjs. It is navy on a light ground, so it needs a LIGHT
+// surface — which is why the header and footer are white rather than dark. On the
+// old midnight chrome the navy measured 1.18:1 and disappeared entirely.
 //
-// It is a raster on a dark field by nature, so it only works on dark surfaces.
-// Both the header and the footer are midnight, which is why they can carry it.
+// Two crops of the one supplied file, nothing re-typeset. `full` is the complete
+// lockup including "MORTGAGE PARTNERS" and the tagline. `mark` stops after AURA,
+// because at any usable header height those two lower lines render a few pixels
+// tall and turn to mush.
 interface Props {
   class?: string;
-  /** Rendered height. The lockup is ~3.1:1, so width follows. */
-  size?: "sm" | "md";
+  variant?: "mark" | "full";
+  /** Rendered height. Width follows the crop's own aspect. */
+  size?: "sm" | "md" | "lg";
 }
 
-const { class: cls = "", size = "md" } = Astro.props;
-const h = size === "sm" ? "h-16" : "h-20 md:h-24";
+const { class: cls = "", variant = "mark", size = "md" } = Astro.props;
+
+const art =
+  variant === "full"
+    ? { src: "/logo-full.png", width: 792, height: 760 }
+    : { src: "/logo.png", width: 647, height: 520 };
+
+const heights = {
+  sm: "h-14",
+  md: "h-16 md:h-20",
+  lg: "h-32 md:h-40",
+};
 ---
 
 <img
-  src="/logo.png"
+  src={art.src}
   alt="Aura Mortgage Partners"
-  width="880"
-  height="287"
-  class={`${h} w-auto ${cls}`}
+  width={art.width}
+  height={art.height}
+  class={`${heights[size]} w-auto ${cls}`}
 />

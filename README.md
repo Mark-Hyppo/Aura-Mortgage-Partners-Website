@@ -1,8 +1,8 @@
 # Aura Mortgage Partners
 
-Multi-page marketing site for **Aura Mortgage Partners LLC**, a Florida mortgage brokerage in West
-Palm Beach. Originators: **Mark Wilkinson, NMLS ID# 297944** and **Lorie Lewis** (NMLS pending
-confirmation). Astro 5 with Tailwind CSS v4, static output, deployed to Vercel. Domain:
+Multi-page marketing site for **Aura Mortgage Partners LLC**, a Florida mortgage brokerage in Boca
+Raton. Originators: **Mark Wilkinson, NMLS ID# 297944** and **Lorie Lewis, NMLS ID# 273007**.
+Astro 5 with Tailwind CSS v4, static output, deployed to Vercel. Domain:
 `auramortgagepartners.com`.
 
 **This is a regulated financial advertiser.** SAFE Act, TILA/Reg Z, the CFPB MAP Rule, and
@@ -52,9 +52,9 @@ amber prompt instead, but nothing currently uses them.
 
 ## Confirmed by client
 
-Legal name **Aura Mortgage Partners LLC**, phone **(561) 755-7478**, address **12668 83rd Ln N,
-West Palm Beach, FL 33412**, hours **9–5 seven days a week including weekends and holidays**,
-domain **auramortgagepartners.com**. Mark Wilkinson's NMLS **297944** is confirmed against public
+Legal name **Aura Mortgage Partners LLC**, phone **(561) 755-7478**, city **Boca Raton, FL**
+(street address and ZIP still outstanding), hours **9–5 seven days a week including weekends and
+holidays**, domain **auramortgagepartners.com**. Mark Wilkinson's NMLS **297944** is confirmed against public
 record.
 
 The loan program taxonomy — "Inside the Box" and "Outside the Box" — is Mark Wilkinson's own
@@ -64,9 +64,17 @@ framing, taken from his existing site `markmymortgage.com`, whose phone number m
 
 - [ ] **Company NMLS ID for Aura Mortgage Partners LLC** (`compliance.companyNmls`). Required on
       every page by the SAFE Act. No public record found; must come from the client.
-- [ ] **Lorie Lewis's NMLS ID** (`team.ts`). The brief gave both `273007` and `334279`, and the AIOS
-      project docs say `273007`. Neither is verifiable from public search. Confirm on
-      nmlsconsumeraccess.org, and correct the AIOS docs too if `273007` is wrong there.
+- [ ] **Boca Raton street address and ZIP** (`site.street`, `site.postal`, `site.geo`). Currently
+      `pending()`, so address blocks show the city line only and the `/contact` map is omitted.
+      Re-derive the coordinates from the real address — do not reuse the old ZIP centroid.
+- [ ] **Lorie Lewis's headshot** (`team.ts`). The current image is an AI-generated portrait of
+      someone who does not exist, standing above her real name and NMLS ID. Replace before launch.
+- [ ] **Confirm Lorie Lewis's NMLS ID on the registry** (`team.ts`). Now set to `273007`. Group One
+      Mortgage's originator roster lists her at it and a ZoomInfo MLO profile matches; `334279` from
+      the brief returns no originator anywhere and looks like a transcription error. The AIOS docs
+      were right. Neither source page could be read directly — grouponemortgage.us refused the
+      connection and nmlsconsumeraccess.org 403s automated requests — so a human still needs to look
+      up `273007` under Individuals to close this out.
 - [ ] **The "Arch Mortgage" reference.** Copied from an email; nobody knows what it is. Nothing is
       built for it. **If Arch is the sponsoring entity, its NMLS ID likely has to appear alongside
       Aura's** — this is the one open item with compliance consequences. Tracked as
@@ -75,11 +83,10 @@ framing, taken from his existing site `markmymortgage.com`, whose phone number m
       triggering term under §1026.24(d)(1). The block ships with the full disclosure adjacent, but
       it deliberately walks up to a bright line and needs the client or their counsel to approve it.
 - [ ] Public email address (`site.email`) — `mark@markmymortgage.com` is his personal one
-- [ ] Both bios and both headshots (`team.ts`)
+- [ ] Both bios (`team.ts`). Mark Wilkinson's headshot is supplied; Lorie's is a placeholder — see above
 - [ ] Company story, three paragraphs (`about.intro`, `about.body`)
 - [ ] Confirm FL is the only licensed state (`compliance.statesLicensed` and `/licensing`)
 - [ ] Clarify what **"AI HELOC"** in the brief means — the `heloc` page ships as a standard HELOC
-- [ ] Latitude and longitude (`site.geo`) — geo meta and schema `geo` are omitted until set
 - [ ] Social profile URLs (`social`) — the footer column renders a placeholder, not dead links
 - [ ] Hyppo tenant slug, blog slug, pixel ID, contact form slug (`hyppo`)
 - [ ] HyppoCRM contact form created **and published** — API-created forms arrive unpublished and
@@ -99,20 +106,20 @@ npm run build
 # 1. Draft copy still in place. Every hit needs client confirmation.
 grep -rn "DRAFT:" src/
 
-# 2. Sitewide compliance coverage. All four must equal the page count (31).
+# 2. Sitewide compliance coverage. All four must equal the page count (32).
 grep -rl nmlsconsumeraccess dist --include=*.html | wc -l
 grep -rl 'Equal Housing Lender' dist --include=*.html | wc -l
 grep -rl '297944' dist --include=*.html | wc -l
 grep -ril 'not a commitment to lend' dist --include=*.html | wc -l
 
-# 3. The company NMLS ID. Currently 0 — must equal 31 before launch.
+# 3. The company NMLS ID. Currently 0 — must equal 32 before launch.
 grep -rl 'Company NMLS' dist --include=*.html | wc -l
 
 # 4. Reg Z / MAP Rule content scan. Every hit needs a human read.
 grep -rhoiE '[0-9]+(\.[0-9]+)?%|guarantee[a-z]*|lowest rate[s]?|instant [a-z]+' dist --include=*.html | sort | uniq -c
 ```
 
-As of the current build, checks 1–2 pass at 31/31 and scan 4 returns only SVG gradient stops, a
+As of the current build, checks 1–2 pass at 32/32 and scan 4 returns only SVG gradient stops, a
 URL-encoded map query, and the factual VA phrases "VA-guaranteed" and "guaranteed by the Department
 of Veterans Affairs", plus "personal guarantee" in the commercial FAQ. **No rate, payment, or
 down-payment figure appears anywhere on the site.** Check 3 returns **0** — that is the blocker.
@@ -124,7 +131,7 @@ pages. The footer carries the company NMLS ID, both originators' NMLS IDs, the E
 mark, the nmlsconsumeraccess.org link, and the underwriting disclaimer — putting it in the layout
 makes it structurally impossible to ship a page without compliance text.
 
-31 pages from 11 route files:
+32 pages from 12 route files:
 
 ```
 /                        /about              /contact         /licensing

@@ -20,21 +20,25 @@ export const site = {
   legalName: "Aura Mortgage Partners LLC",
   shortName: "Aura",
   // DRAFT: hero tagline
-  tagline: "The broker other brokers send their hard files to.",
+  tagline: "The Boca Raton broker other brokers send their hard files to.",
   phoneDisplay: "(561) 755-7478",
   phoneTel: "+15617557478",
   // DRAFT: mailbox must be created, or repoint to a real address, before launch
   email: "info@auramortgagepartners.com",
   url: "https://www.auramortgagepartners.com",
-  street: "12668 83rd Ln N",
-  city: "West Palm Beach",
+  // The office is in Boca Raton. The street address and ZIP have not been
+  // supplied, and a fabricated business location on a mortgage advertisement is
+  // the same category of problem as a fabricated NMLS ID — so these stay pending
+  // and every surface that renders them omits them. Re-derive geo from the real
+  // address when it arrives; do NOT carry the old West Palm Beach coordinates.
+  street: pending("Boca Raton street address"),
+  city: "Boca Raton",
   region: "FL",
   regionName: "Florida",
-  postal: "33412",
+  postal: pending("Boca Raton ZIP code"),
   hours: "9:00 AM – 5:00 PM, seven days a week — weekends and holidays included",
   hoursShort: "9–5, seven days a week",
-  // DRAFT: centroid of the 33412 ZIP, not a surveyed pin for the street address
-  geo: { lat: "26.8034", lng: "-80.1928" },
+  geo: { lat: pending("latitude of the Boca Raton office"), lng: pending("longitude") },
 } as const;
 
 export const compliance = {
@@ -58,7 +62,7 @@ export const compliance = {
 export const media = {
   logo: "https://www.auramortgagepartners.com/og-image.jpg",
   logoAlt:
-    "Aura Mortgage Partners wordmark in champagne gold over teal and violet aurora ribbons on a midnight background",
+    "Aura Mortgage Partners logo: a navy circle closed by a gold arc, enclosing a rooftop letter A above the AURA Mortgage Partners wordmark",
 } as const;
 
 // Empty until the HyppoCRM tenant exists. The blog renders a clean "no posts yet"
@@ -86,7 +90,7 @@ export const about = {
     "Aura Mortgage Partners was founded on a simple observation: the mortgage business is very good at financing straightforward borrowers, and very bad at everyone else. A W-2 employee buying a suburban house has a dozen lenders competing for the file. A self-employed borrower, a foreign national, or a buyer under contract in a condo building that just failed its reserve study has almost none.",
   body: [
     "We are a broker rather than a bank, and that distinction decides everything about how a file gets worked. A bank has one product sheet and has to fit you to it. We take your scenario to a panel of wholesale lenders and find the one whose guidelines already match it. When a file is unusual, that difference is not a matter of a better rate — it is the difference between closing and being declined.",
-    "We are based in West Palm Beach and most of what we write is in Palm Beach County, which means we deal constantly with the things that make South Florida financing its own discipline: non-warrantable condos, milestone inspections and the assessments that follow them, foreign national buyers, and appraisals that surprise people who moved here from somewhere else. We answer the phone nine to five, seven days a week, including weekends and holidays, because real estate does not close on a weekday schedule.",
+    "We are based in Boca Raton and most of what we write is in Palm Beach County, which means we deal constantly with the things that make South Florida financing its own discipline: non-warrantable condos, milestone inspections and the assessments that follow them, foreign national buyers, and appraisals that surprise people who moved here from somewhere else. We answer the phone nine to five, seven days a week, including weekends and holidays, because real estate does not close on a weekday schedule.",
   ],
 } as const;
 
@@ -115,17 +119,17 @@ export const trustPoints = [
 
 export const seo = {
   keywords: [
-    "mortgage broker west palm beach",
+    "mortgage broker boca raton",
     "mortgage broker palm beach county",
-    "jumbo loan west palm beach",
+    "jumbo loan boca raton",
     "non-warrantable condo loan florida",
     "dscr loan florida",
-    "bank statement loan west palm beach",
+    "bank statement loan boca raton",
     "foreign national mortgage florida",
-    "reverse mortgage west palm beach",
+    "reverse mortgage boca raton",
     "construction loan palm beach county",
     "hometown heroes florida lender",
-    "fha loan west palm beach",
+    "fha loan boca raton",
     "va loan palm beach county",
   ],
 } as const;
@@ -133,6 +137,7 @@ export const seo = {
 export const nav = [
   { label: "Home", href: "/" },
   { label: "Loan Programs", href: "/loan-programs" },
+  { label: "Calculator", href: "/mortgage-calculator" },
   { label: "Our Team", href: "/team" },
   { label: "About", href: "/about" },
   { label: "Blog", href: "/blog" },

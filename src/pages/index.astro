@@ -20,11 +20,11 @@ const featured = [
 ---
 
 <Layout
-  title="Mortgage Broker in West Palm Beach | Aura Mortgage Partners"
+  title={`Mortgage Broker in ${site.city} | Aura Mortgage Partners`}
   description={`Aura Mortgage Partners provides purchase, refinance, and specialty mortgage financing in ${site.city}, ${site.region}. Contact us at ${site.phoneDisplay}.`}
   pathname="/"
 >
-  <section class="relative isolate overflow-hidden bg-midnight text-white">
+  <section class="relative isolate overflow-hidden bg-navy text-white">
     <Image
       src={heroImage}
       alt=""
@@ -38,7 +38,7 @@ const featured = [
     />
     {/* Scrim keeps the centred headline legible over any part of the photo. */}
     <div
-      class="absolute inset-0 -z-10 bg-[radial-gradient(70%_60%_at_50%_45%,rgba(11,18,32,0.72),rgba(11,18,32,0.92))]"
+      class="absolute inset-0 -z-10 bg-[radial-gradient(70%_60%_at_50%_45%,rgba(0,32,80,0.74),rgba(0,22,58,0.93))]"
       aria-hidden="true"
     >
     </div>
@@ -52,7 +52,7 @@ const featured = [
         {site.tagline}
       </h1>
       <p class="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-white/80 md:text-xl">
-        Aura Mortgage Partners is a Florida mortgage brokerage in West Palm Beach. We shop your
+        Aura Mortgage Partners is a Florida mortgage brokerage in {site.city}. We shop your
         scenario across a panel of wholesale lenders — including the ones that write the files a
         retail bank will not.
       </p>
@@ -63,7 +63,7 @@ const featured = [
       </div>
 
       <p class="mt-6 flex items-center justify-center gap-2 text-sm text-white/70">
-        <Icon name="clock" class="h-4 w-4 text-champagne" />
+        <Icon name="clock" class="h-4 w-4 text-gold" />
         {site.hours}
       </p>
       </div>
@@ -77,7 +77,7 @@ const featured = [
         {
           trustPoints.map((point) => (
             <div class="card text-center">
-              <span class="mx-auto flex h-32 w-32 items-center justify-center rounded-full bg-halo text-aurora-deep">
+              <span class="mx-auto flex h-32 w-32 items-center justify-center rounded-full bg-halo text-brand">
                 <Icon name={point.icon} class="h-16 w-16" />
               </span>
               <h3 class="mt-6 font-display text-lg font-semibold">{point.title}</h3>
@@ -109,7 +109,7 @@ const featured = [
                   <li>
                     <a
                       href={`/loan-programs/${p.slug}`}
-                      class="inline-block rounded-full border border-line bg-white px-3.5 py-1.5 text-sm font-medium text-ink/80 transition-colors hover:border-aurora hover:text-aurora-deep"
+                      class="inline-block rounded-full border border-line bg-white px-3.5 py-1.5 text-sm font-medium text-ink/80 transition-colors hover:border-brand hover:text-brand"
                     >
                       {p.name}
                     </a>
@@ -146,16 +146,27 @@ const featured = [
           team.map((m) => (
             <a
               href={`/team/${m.slug}`}
-              class="card flex items-center gap-5 transition-all hover:-translate-y-0.5 hover:border-aurora"
+              class="card flex items-center gap-5 transition-all hover:-translate-y-0.5 hover:border-brand"
             >
-              <span class="flex h-20 w-20 shrink-0 items-center justify-center overflow-hidden rounded-full bg-halo font-display text-2xl font-bold text-aurora-deep">
-                {m.name.charAt(0)}
-              </span>
+              {settled(m.headshot) ? (
+                <img
+                  src={settled(m.headshot)}
+                  alt={settled(m.headshotAlt)}
+                  width="80"
+                  height="80"
+                  loading="lazy"
+                  class="h-20 w-20 shrink-0 rounded-full object-cover"
+                />
+              ) : (
+                <span class="flex h-20 w-20 shrink-0 items-center justify-center overflow-hidden rounded-full bg-halo font-display text-2xl font-bold text-brand">
+                  {m.name.charAt(0)}
+                </span>
+              )}
               <span class="min-w-0">
                 <span class="block font-display text-xl font-semibold">{m.name}</span>
                 <span class="block text-sm text-ink/70">{m.title}</span>
                 {m.nmls && (
-                  <span class="mt-1 block text-sm font-semibold text-aurora-deep">
+                  <span class="mt-1 block text-sm font-semibold text-brand">
                     NMLS ID# {m.nmls}
                   </span>
                 )}
@@ -168,7 +179,7 @@ const featured = [
     </div>
   </section>
 
-  <section class="aurora-wash bg-midnight text-white">
+  <section class="brand-wash bg-navy text-white">
     <div class="container-page py-16 text-center md:py-20">
       <h2 class="section-heading">Tell us the scenario</h2>
       <p class="mx-auto mt-4 max-w-xl text-lg text-white/75">
