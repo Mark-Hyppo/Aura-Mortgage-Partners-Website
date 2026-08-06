@@ -27,6 +27,8 @@ grep -rn "DRAFT:" src/
 | `trustPoints` | `src/data/site.ts` | Four "why us" cards |
 | `programs[*].lede` / `whoItFits` / `whatToBring` / `faq` | `src/data/programs.ts` | All 20 program pages. Program **names** come from `markmymortgage.com`; the surrounding copy is ours |
 | `groups.*.desc` | `src/data/programs.ts` | The Inside/Outside the Box descriptions |
+| `areas[*].conditions` / `blurb` / `faq` | `src/data/areas.ts` | All 10 Areas We Serve city pages. Financing-conditions paragraphs and ~21 FAQs, written from general South Florida lending knowledge. **Mark Wilkinson has to confirm every local claim** |
+| `areas[*].miles` | `src/data/areas.ts` | Approximate distances from the office. **Not computed from a real address** — the Boca Raton street address is still outstanding, so the city list itself is provisional |
 
 ### Copy written to be safe, and why it matters
 
@@ -112,7 +114,7 @@ or "coming soon" box appears.
 ```bash
 grep -rn "DRAFT:" src/          # every drafted field, incl. Lorie's placeholder portrait
 npm run build
-grep -rl 'Company NMLS' dist --include=*.html | wc -l    # must equal 32, currently 0
+grep -rl 'Company NMLS' dist --include=*.html | wc -l    # must equal 43, currently 0
 ```
 
 The full launch-blocker checklist is in [`README.md`](README.md).
