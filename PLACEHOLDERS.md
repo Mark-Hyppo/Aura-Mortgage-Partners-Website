@@ -114,7 +114,7 @@ or "coming soon" box appears.
 ```bash
 grep -rn "DRAFT:" src/          # every drafted field, incl. Lorie's placeholder portrait
 npm run build
-grep -rl 'Company NMLS' dist --include=*.html | wc -l    # must equal 43, currently 0
+grep -rl 'Company NMLS' dist --include=*.html | wc -l    # must equal 42, currently 0
 ```
 
 The full launch-blocker checklist is in [`README.md`](README.md).

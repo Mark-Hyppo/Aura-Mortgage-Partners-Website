@@ -38,7 +38,7 @@ const lng = settled(site.geo.lng);
 const companyNmls = settled(compliance.companyNmls);
 
 // streetAddress and postalCode are omitted rather than emitted blank while the
-// Boca Raton address is pending — a partial PostalAddress is valid, an empty
+// Boca Raton address is pending. A partial PostalAddress is valid, an empty
 // one publishes a wrong location.
 const address = {
   "@type": "PostalAddress",

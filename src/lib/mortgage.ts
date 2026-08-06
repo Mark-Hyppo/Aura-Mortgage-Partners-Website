@@ -1,7 +1,7 @@
 // Payment math for the mortgage calculator. Pure and side-effect free so the
 // same code runs in the browser bundle and under `node scripts/verify-calculator.mjs`.
 //
-// Nothing here states a rate. Every figure is supplied by the borrower — see the
+// Nothing here states a rate. Every figure is supplied by the borrower. See the
 // disclosure on the calculator page and the Reg Z section of COMPLIANCE.md.
 
 export interface CalculatorInput {

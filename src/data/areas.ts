@@ -1,16 +1,16 @@
-// "Areas We Serve" — per-city pages across Palm Beach County.
+// "Areas We Serve": per-city pages across Palm Beach County.
 //
 // TWO FAIR-LENDING RULES BIND THIS FILE. Both are in COMPLIANCE.md. Read them
 // before adding, removing, or rewriting a city.
 //
 // 1. SELECTION. Which places get a page is itself a fair-lending signal. Cities
-//    are chosen by a neutral written rule applied evenly — Palm Beach County
+//    are chosen by a neutral written rule applied evenly: Palm Beach County
 //    municipalities within ~25 miles of the Boca Raton office, population
 //    ~10,000+. Never hand-add a city because it has volume, and never hand-drop
 //    one because it does not. A footprint covering affluent areas while omitting
 //    lower-income ones is readable as redlining regardless of intent.
 //
-// 2. LANGUAGE. `conditions` describes FINANCING CONDITIONS ONLY — condo
+// 2. LANGUAGE. `conditions` describes FINANCING CONDITIONS ONLY: condo
 //    warrantability, HOA reserves and milestone inspections, flood zones,
 //    occupancy, acreage, age of housing stock, new construction. It must NEVER
 //    characterise a community. "Family-friendly", "desirable", "up-and-coming",
@@ -22,7 +22,7 @@
 //
 // DRAFT: every `conditions` paragraph and every FAQ answer below is our draft,
 // written from general South Florida lending knowledge. Mark Wilkinson has to
-// confirm each one — he is the one who knows whether the local claims hold.
+// confirm each one. He is the one who knows whether the local claims hold.
 // The mileages are unverified and were not computed from the real office
 // address, which is still outstanding. See PLACEHOLDERS.md.
 
@@ -31,7 +31,7 @@ import { programs } from "./programs";
 export interface Area {
   slug: string;
   city: string;
-  /** Approximate miles from the Boca Raton office. UNVERIFIED — see header. */
+  /** Approximate miles from the Boca Raton office. UNVERIFIED, see header. */
   miles: number;
   /** One line for the index grid. */
   blurb: string;
@@ -62,7 +62,7 @@ export const areas: Area[] = [
       },
       {
         q: "Can a buyer who is not a US citizen finance a Boca Raton property?",
-        a: "Yes. Foreign national programs underwrite without a US credit score or a US tax return, using passport identification, verification of foreign income or assets, and typically a larger reserve requirement. Terms and required documentation differ substantially between lenders, and the property type — particularly whether it is a warrantable condominium — affects which lenders will consider the file.",
+        a: "Yes. Foreign national programs underwrite without a US credit score or a US tax return, using passport identification, verification of foreign income or assets, and typically a larger reserve requirement. Terms and required documentation differ substantially between lenders, and the property type, particularly whether it is a warrantable condominium, affects which lenders will consider the file.",
       },
     ],
   },
@@ -72,7 +72,7 @@ export const areas: Area[] = [
     miles: 7,
     blurb: "Condominium and townhouse warrantability, and second-home occupancy.",
     conditions:
-      "Delray Beach purchases run heavily to attached housing — condominiums and townhouses — which puts project review at the centre of the file. Townhouses in a planned unit development are usually underwritten as single-family, while a condominium requires full project approval, so two similar-looking properties can follow very different paths. A meaningful share of purchases here are second homes rather than primary residences, and occupancy changes reserve requirements and pricing on nearly every program. Older coastal buildings are also the ones most affected by Florida's milestone inspection and reserve study requirements, which can suspend warrantable status until the association completes them.",
+      "Delray Beach purchases run heavily to attached housing, condominiums and townhouses, which puts project review at the centre of the file. Townhouses in a planned unit development are usually underwritten as single-family, while a condominium requires full project approval, so two similar-looking properties can follow very different paths. A meaningful share of purchases here are second homes rather than primary residences, and occupancy changes reserve requirements and pricing on nearly every program. Older coastal buildings are also the ones most affected by Florida's milestone inspection and reserve study requirements, which can suspend warrantable status until the association completes them.",
     programs: ["non-warrantable-condo", "conforming", "jumbo", "refinance", "heloc"],
     faq: [
       {
@@ -81,7 +81,7 @@ export const areas: Area[] = [
       },
       {
         q: "How does buying a second home in Delray Beach change the loan?",
-        a: "Occupancy is a rating factor on almost every program. A second home generally carries higher reserve requirements than a primary residence and is priced differently, and some programs are unavailable for non-primary occupancy altogether. The property also has to genuinely function as a second home — a property that is rented out is underwritten as an investment property, which is a different set of guidelines again.",
+        a: "Occupancy is a rating factor on almost every program. A second home generally carries higher reserve requirements than a primary residence and is priced differently, and some programs are unavailable for non-primary occupancy altogether. The property also has to genuinely function as a second home. A property that is rented out is underwritten as an investment property, which is a different set of guidelines again.",
       },
     ],
   },
@@ -96,7 +96,7 @@ export const areas: Area[] = [
     faq: [
       {
         q: "Can I finance a home in a 55+ community in Boynton Beach?",
-        a: "Yes. Age restriction alone does not prevent conventional financing. What matters is whether the project meets warrantability standards — reserve funding, investor concentration, litigation, and completion of any required inspections and reserve studies. Age-restricted projects are reviewed against those same criteria. Where a project falls outside them, non-warrantable programs underwrite the purchase against different standards.",
+        a: "Yes. Age restriction alone does not prevent conventional financing. What matters is whether the project meets warrantability standards: reserve funding, investor concentration, litigation, and completion of any required inspections and reserve studies. Age-restricted projects are reviewed against those same criteria. Where a project falls outside them, non-warrantable programs underwrite the purchase against different standards.",
       },
       {
         q: "How does a special assessment affect my loan?",
@@ -134,7 +134,7 @@ export const areas: Area[] = [
     faq: [
       {
         q: "Do I qualify for Hometown Heroes in Lake Worth Beach?",
-        a: "Hometown Heroes is a Florida Housing programme with published eligibility criteria — it is limited to eligible full-time employment in qualifying occupations, has county income limits, and requires the home to be a primary residence. Eligibility is determined against those published criteria, not at a lender's discretion. We can walk you through whether your occupation and income fall inside them before you start looking.",
+        a: "Hometown Heroes is a Florida Housing programme with published eligibility criteria: it is limited to eligible full-time employment in qualifying occupations, has county income limits, and requires the home to be a primary residence. Eligibility is determined against those published criteria, not at a lender's discretion. We can walk you through whether your occupation and income fall inside them before you start looking.",
       },
       {
         q: "What tends to hold up an FHA appraisal on an older Lake Worth Beach home?",
@@ -148,7 +148,7 @@ export const areas: Area[] = [
     miles: 19,
     blurb: "Conforming and FHA purchases in HOA-governed communities.",
     conditions:
-      "Greenacres purchases are predominantly single-family and attached homes inside homeowner associations, which keeps most files on conventional or FHA guidelines. The association matters less here than in a condominium — a homeowners association governing fee-simple homes does not trigger condominium project review — but the dues still enter the monthly obligation used to qualify, and some communities carry a mandatory capital contribution at closing. Attached villa-style units are the exception worth checking early, because some are legally condominiums and are reviewed as such. Property condition is a routine consideration given the age of several of the larger communities.",
+      "Greenacres purchases are predominantly single-family and attached homes inside homeowner associations, which keeps most files on conventional or FHA guidelines. The association matters less here than in a condominium, since a homeowners association governing fee-simple homes does not trigger condominium project review, but the dues still enter the monthly obligation used to qualify, and some communities carry a mandatory capital contribution at closing. Attached villa-style units are the exception worth checking early, because some are legally condominiums and are reviewed as such. Property condition is a routine consideration given the age of several of the larger communities.",
     programs: ["conforming", "fha", "hometown-heroes", "va", "refinance"],
     faq: [
       {
@@ -176,7 +176,7 @@ export const areas: Area[] = [
       },
       {
         q: "Can I use FHA financing on a condo in Palm Springs?",
-        a: "Only if the project holds FHA approval, which is a separate list from conventional warrantability — a project can be conventionally warrantable and still not FHA-approved. Single-unit approval is available in some cases for an individual unit in an otherwise unapproved project. Checking the project's status before an offer is the practical step, because approval is not something a borrower can resolve quickly.",
+        a: "Only if the project holds FHA approval, which is a separate list from conventional warrantability. A project can be conventionally warrantable and still not FHA-approved. Single-unit approval is available in some cases for an individual unit in an otherwise unapproved project. Checking the project's status before an offer is the practical step, because approval is not something a borrower can resolve quickly.",
       },
     ],
   },
@@ -205,12 +205,12 @@ export const areas: Area[] = [
     miles: 25,
     blurb: "The county seat, and the broadest mix of property types and programs.",
     conditions:
-      "West Palm Beach carries the widest spread of property types in the county, and the financing considerations vary accordingly. Downtown and waterfront condominium buildings bring project review, warrantability, and — in older towers — Florida's milestone inspection and reserve study requirements. Neighbourhoods west of the city are largely single-family and run on conventional and government guidelines, with property condition the usual variable given the age of the housing. Investment purchases appear more often here than elsewhere in the county, and those are underwritten on the property's rental income rather than the borrower's personal income under debt-service coverage programs.",
+      "West Palm Beach carries the widest spread of property types in the county, and the financing considerations vary accordingly. Downtown and waterfront condominium buildings bring project review, warrantability, and, in older towers, Florida's milestone inspection and reserve study requirements. Neighbourhoods west of the city are largely single-family and run on conventional and government guidelines, with property condition the usual variable given the age of the housing. Investment purchases appear more often here than elsewhere in the county, and those are underwritten on the property's rental income rather than the borrower's personal income under debt-service coverage programs.",
     programs: ["conforming", "dscr", "non-warrantable-condo", "fha", "jumbo"],
     faq: [
       {
         q: "Can I finance a West Palm Beach rental property without using my tax returns?",
-        a: "Often yes, through a debt-service coverage ratio loan. These are underwritten on whether the property's rental income covers its own mortgage payment, taxes, insurance, and any association dues, rather than on the borrower's personal income documentation. They are used for investment property only — not for a primary residence — and generally require a larger equity position than an owner-occupied loan.",
+        a: "Often yes, through a debt-service coverage ratio loan. These are underwritten on whether the property's rental income covers its own mortgage payment, taxes, insurance, and any association dues, rather than on the borrower's personal income documentation. They are used for investment property only, not for a primary residence, and generally require a larger equity position than an owner-occupied loan.",
       },
       {
         q: "What slows down a downtown condo purchase in West Palm Beach?",
@@ -247,6 +247,6 @@ export const programsForArea = (area: Area) =>
     .map((slug) => programs.find((p) => p.slug === slug))
     .filter((p): p is NonNullable<typeof p> => Boolean(p));
 
-/** Areas that name a given program — powers the program -> area interlink. */
+/** Areas that name a given program. Powers the program -> area interlink. */
 export const areasForProgram = (programSlug: string) =>
   areas.filter((a) => a.programs.includes(programSlug));

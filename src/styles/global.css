@@ -7,7 +7,7 @@
   --color-navy-deep: #00163a;
   --color-navy-soft: #0a3268;
 
-  /* Interactive accent on light surfaces — links, icons, focus rings. Deliberately
+  /* Interactive accent on light surfaces: links, icons, focus rings. Deliberately
      NOT the logo navy: navy on white is 15.88:1 and `ink` is 17.97:1, so the two
      are indistinguishable and links stop reading as links. This is 7.33:1 on
      white and 6.82:1 on halo, with clear separation from body text. */
@@ -18,7 +18,7 @@
   --color-muted: #56657d;
   --color-line: #dde4ee;
 
-  /* The logo's gold. 6.62:1 on navy, but only 2.40:1 on white — it is a
+  /* The logo's gold. 6.62:1 on navy, but only 2.40:1 on white, so it is a
      DARK-SURFACE accent only. Use gold-deep (5.04:1 on white, 4.69:1 on halo)
      anywhere gold has to sit on a light background. */
   --color-gold: #d0a030;
@@ -75,7 +75,7 @@ h4 {
   }
 
   /* Section headings are CENTRED by default. Left-alignment is the exception and
-     has to be asked for with .section-heading--left — it belongs to headings that
+     has to be asked for with .section-heading--left. It belongs to headings that
      sit inside a column, a card, or running prose, not ones introducing a section. */
   .section-heading {
     font-size: clamp(1.875rem, 1.4rem + 1.9vw, 2.75rem);
@@ -120,8 +120,8 @@ h4 {
     transform: translateY(1px);
   }
 
-  /* Navy fill with white text = 15.88:1. The old rule here was the inverse —
-     a light teal fill needing dark text — and does not survive the rebrand. */
+  /* Navy fill with white text = 15.88:1. The old rule here was the inverse,
+     a light teal fill needing dark text, and it does not survive the rebrand. */
   .btn-primary {
     background: var(--color-navy);
     color: #fff;
@@ -244,6 +244,80 @@ h4 {
     appearance: textfield;
   }
 
+  /* Header submenus. The panel spans the header rather than hanging off its own
+     trigger, because 20 program links do not fit under a 7rem label without running off
+     the page. Desktop only; below 1024px the same links render as an accordion
+     inside #mobile-nav, so the media query is the guard, not a JS check. */
+  .nav-mega {
+    display: none;
+    position: absolute;
+    inset-inline: 0;
+    top: 100%;
+    z-index: 40;
+    background: #fff;
+    border-bottom: 1px solid var(--color-line);
+    box-shadow: 0 24px 44px -28px rgb(0 32 80 / 0.55);
+  }
+
+  @media (min-width: 1024px) {
+    .nav-mega[data-open="true"] {
+      display: block;
+    }
+  }
+
+  .nav-mega-link {
+    display: block;
+    border-radius: 0.5rem;
+    padding: 0.4375rem 0.625rem;
+    font-size: 0.9375rem;
+    font-weight: 600;
+    color: rgb(15 23 36 / 0.75);
+    transition:
+      background-color 150ms ease,
+      color 150ms ease;
+  }
+
+  .nav-mega-link:hover,
+  .nav-mega-link:focus-visible {
+    background: var(--color-halo);
+    color: var(--color-brand);
+  }
+
+  .nav-mega-link[aria-current="page"] {
+    color: var(--color-brand);
+  }
+
+  .nav-caret {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 1.5rem;
+    width: 1.5rem;
+    flex: none;
+    border-radius: 9999px;
+    color: rgb(15 23 36 / 0.55);
+    transition:
+      background-color 150ms ease,
+      color 150ms ease;
+  }
+
+  .nav-caret:hover {
+    background: var(--color-halo);
+    color: var(--color-brand);
+  }
+
+  .nav-caret[aria-expanded="true"] {
+    color: var(--color-brand);
+  }
+
+  .nav-caret svg {
+    transition: transform 180ms ease;
+  }
+
+  .nav-caret[aria-expanded="true"] svg {
+    transform: rotate(180deg);
+  }
+
   .prose-legal {
     max-width: 52rem;
   }
@@ -285,7 +359,7 @@ h4 {
   }
 
   .pending::before {
-    content: "Needed from client — ";
+    content: "Needed from client: ";
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.06em;
@@ -293,7 +367,7 @@ h4 {
   }
 
   /* Brand wash for dark sections. Decorative only. Navy lifted toward the logo's
-     lighter blue, with a single gold pass — no third hue, since the brand has
+     lighter blue, with a single gold pass, no third hue, since the brand has
      exactly two colours. */
   .brand-wash {
     position: relative;

@@ -1,10 +1,10 @@
 // Bios marked `// DRAFT:` are written by us as stand-ins. They are deliberately
-// free of any claim that needs substantiation — no transaction counts, no volume
-// figures, no years-in-business — because those become advertising claims the
+// free of any claim that needs substantiation: no transaction counts, no volume
+// figures, no years-in-business, because those become advertising claims the
 // moment they are published. See PLACEHOLDERS.md.
 //
 // NMLS IDs are NOT drafted. Mark Wilkinson's 297944 is confirmed against public
-// record. Lorie Lewis's 273007 is corroborated but not yet registry-verified —
+// record. Lorie Lewis's 273007 is corroborated but not yet registry-verified,
 // see the note on her entry below.
 
 export interface TeamMember {
@@ -39,7 +39,7 @@ export const team: TeamMember[] = [
     // until Mark confirms he wants to advertise them.
     bio: [
       "Mark has spent his career in Palm Beach County real estate and mortgage lending, and the pattern he kept running into is the reason Aura exists: the files that were hardest to place were rarely the ones with weak borrowers. They were strong borrowers whose income, property, or timing did not fit the shape a retail bank underwrites to.",
-      "He works the complicated end of the book — jumbo and super jumbo, non-warrantable condos, foreign national purchases, and the bridge and cross-collateral structures that let a client buy before they sell. He takes the first call himself and stays on the file through closing.",
+      "He works the complicated end of the book: jumbo and super jumbo, non-warrantable condos, foreign national purchases, and the bridge and cross-collateral structures that let a client buy before they sell. He takes the first call himself and stays on the file through closing.",
     ],
     specialties: [
       "Jumbo and super jumbo",
@@ -55,11 +55,11 @@ export const team: TeamMember[] = [
     title: "Loan Originator",
     // The brief gave both 273007 and 334279. 273007 is the one that holds up:
     // Group One Mortgage's originator roster lists her at it, and it matches a
-    // ZoomInfo MLO profile. 334279 returns no originator anywhere — a bad
+    // ZoomInfo MLO profile. 334279 returns no originator anywhere, a bad
     // transcription. Still worth a confirming lookup on nmlsconsumeraccess.org;
     // neither source page could be read directly.
     nmls: "273007",
-    // DRAFT: PLACEHOLDER PORTRAIT — this is not Lorie Lewis. It is an
+    // DRAFT: PLACEHOLDER PORTRAIT. This is not Lorie Lewis. It is an
     // AI-generated image carried over from the AIOS project, standing in until a
     // real headshot is taken. It sits above a real name and a real NMLS ID on a
     // mortgage advertisement, so it must not reach production. See PLACEHOLDERS.md.
@@ -68,7 +68,7 @@ export const team: TeamMember[] = [
     // DRAFT: both paragraphs. Very little is known about Lorie's background, so
     // this is deliberately general and makes no verifiable claims.
     bio: [
-      "Lorie is a licensed loan originator working primarily with purchase financing across Palm Beach County. She spends most of her time with buyers who are early in the process — the ones who want to understand what they qualify for and what the next ninety days actually look like before they start touring houses.",
+      "Lorie is a licensed loan originator working primarily with purchase financing across Palm Beach County. She spends most of her time with buyers who are early in the process, the ones who want to understand what they qualify for and what the next ninety days actually look like before they start touring houses.",
       "She handles conventional, FHA, and VA financing, and Florida's Hometown Heroes program for eligible frontline and community workers. Her view is that most of the stress in a purchase comes from not knowing what happens next, so she over-explains on purpose.",
     ],
     specialties: [
