@@ -1,37 +1,104 @@
 ---
 import Logo from "./Logo.astro";
 import Icon from "./Icon.astro";
-import { nav, site } from "../data/site";
+import { nav, site, type NavItem } from "../data/site";
+import { groups, programsByGroup } from "../data/programs";
+import { areas } from "../data/areas";
 
-// Header scrolls with the page — not sticky. The hero owns the only above-the-fold
+// Header scrolls with the page, not sticky. The hero owns the only above-the-fold
 // conversion point, and MobileCallBar carries the CTA once the header scrolls away.
 const path = Astro.url.pathname.replace(/\.html$/, "").replace(/\/$/, "") || "/";
 const isCurrent = (href: string) => (href === "/" ? path === "/" : path.startsWith(href));
+const isCurrentItem = (item: NavItem) => {
+  const prefix = item.match ?? item.href;
+  return prefix ? isCurrent(prefix) : false;
+};
+
+interface SubBlock {
+  heading: string;
+  /** Grid columns the block spans, and the column count its list flows into. */
+  cols: number;
+  links: { label: string; href: string }[];
+}
+
+interface Submenu {
+  id: string;
+  /** Bottom link back to the section index. Omitted where no index exists. */
+  allLabel?: string;
+  blocks: SubBlock[];
+}
+
+const programLinks = (group: "inside" | "outside") =>
+  programsByGroup(group).map((p) => ({
+    label: p.titleName,
+    href: `/loan-programs/${p.slug}`,
+  }));
+
+const submenus: Record<string, Submenu> = {
+  "Loan Programs": {
+    id: "menu-loan-programs",
+    allLabel: "View all loan programs",
+    blocks: [
+      { heading: groups.inside.heading, cols: 1, links: programLinks("inside") },
+      { heading: groups.outside.heading, cols: 3, links: programLinks("outside") },
+    ],
+  },
+  "Areas We Serve": {
+    id: "menu-areas-we-serve",
+    blocks: [
+      {
+        heading: "",
+        cols: 4,
+        links: areas.map((a) => ({ label: a.city, href: `/areas-we-serve/${a.slug}` })),
+      },
+    ],
+  },
+};
+
+const menuItems = nav.filter((item) => submenus[item.label]);
 ---
 
-<header class="border-b border-line bg-white text-ink">
+<header id="site-header" class="relative z-40 border-b border-line bg-white text-ink">
   <div class="container-page flex items-center justify-between gap-6 py-3">
-    <a href="/" class="shrink-0" aria-label={`${site.name} — home`}>
+    <a href="/" class="shrink-0" aria-label={`${site.name} home page`}>
       <Logo />
     </a>
 
     <nav aria-label="Primary" class="hidden lg:block">
       <ul class="flex items-center gap-6 xl:gap-8">
         {
-          nav.map((item) => (
-            <li>
-              <a
-                href={item.href}
-                aria-current={isCurrent(item.href) ? "page" : undefined}
-                class:list={[
-                  "text-[0.9375rem] font-semibold transition-colors hover:text-brand",
-                  isCurrent(item.href) ? "text-brand" : "text-ink/75",
-                ]}
-              >
-                {item.label}
-              </a>
-            </li>
-          ))
+          nav.map((item) => {
+            const sub = submenus[item.label];
+            const current = isCurrentItem(item);
+            const label = [
+              "text-[0.9375rem] font-semibold transition-colors hover:text-brand",
+              current ? "text-brand" : "text-ink/75",
+            ];
+
+            return (
+              <li class="flex items-center gap-0.5" data-dd={sub ? item.label : undefined}>
+                {item.href ? (
+                  <a href={item.href} aria-current={current ? "page" : undefined} class:list={label}>
+                    {item.label}
+                  </a>
+                ) : (
+                  <span class:list={label}>{item.label}</span>
+                )}
+
+                {sub && (
+                  <button
+                    type="button"
+                    class="nav-caret"
+                    aria-expanded="false"
+                    aria-controls={sub.id}
+                    aria-label={`${item.label} menu`}
+                  >
+                    <Icon name="chevron-down" class="h-3.5 w-3.5" />
+                  </button>
+                )}
+              </li>
+            );
+          })
         }
       </ul>
     </nav>
@@ -48,21 +115,121 @@ const isCurrent = (href: string) => (href === "/" ? path === "/" : path.startsWi
     </button>
   </div>
 
+  {
+    /* Full-width panels rather than dropdowns anchored under their own trigger:
+       20 programs will not fit under a 105px label without overflowing the page. */
+  }
+  {
+    menuItems.map((item) => {
+      const sub = submenus[item.label];
+      return (
+        <div class="nav-mega" data-panel={item.label} id={sub.id}>
+          <nav aria-label={item.label} class="container-page py-8">
+            <div class="grid grid-cols-4 gap-x-8 gap-y-9">
+              {sub.blocks.map((block) => (
+                <div style={`grid-column: span ${block.cols} / span ${block.cols}`}>
+                  {block.heading && (
+                    <p class="mb-3 px-2.5 font-display text-base font-bold text-navy">
+                      {block.heading}
+                    </p>
+                  )}
+                  <ul style={`column-count: ${block.cols}; column-gap: 2rem`}>
+                    {block.links.map((link) => (
+                      <li class="break-inside-avoid">
+                        <a
+                          href={link.href}
+                          class="nav-mega-link"
+                          aria-current={path === link.href ? "page" : undefined}
+                        >
+                          {link.label}
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+            </div>
+
+            {sub.allLabel && item.href && (
+              <div class="mt-7 border-t border-line pt-5">
+                <a
+                  href={item.href}
+                  class="inline-flex items-center gap-2 px-2.5 text-sm font-semibold text-brand hover:text-navy"
+                >
+                  {sub.allLabel}
+                  <Icon name="arrow-right" class="h-4 w-4" />
+                </a>
+              </div>
+            )}
+          </nav>
+        </div>
+      );
+    })
+  }
+
   <div id="mobile-nav" class="hidden border-t border-line lg:hidden">
     <nav aria-label="Mobile" class="container-page py-5">
       <ul class="space-y-1">
         {
-          nav.map((item) => (
-            <li>
-              <a
-                href={item.href}
-                aria-current={isCurrent(item.href) ? "page" : undefined}
-                class="block rounded-lg px-3 py-3 text-base font-semibold text-ink/80 hover:bg-halo hover:text-brand"
-              >
-                {item.label}
-              </a>
-            </li>
-          ))
+          nav.map((item) => {
+            const sub = submenus[item.label];
+            const label =
+              "block rounded-lg px-3 py-3 text-base font-semibold text-ink/80 hover:bg-halo hover:text-brand";
+
+            return (
+              <li>
+                <div class="flex items-center gap-2">
+                  {item.href ? (
+                    <a
+                      href={item.href}
+                      aria-current={isCurrentItem(item) && !sub ? "page" : undefined}
+                      class:list={["flex-1", label]}
+                    >
+                      {item.label}
+                    </a>
+                  ) : (
+                    <span class:list={["flex-1", label]}>{item.label}</span>
+                  )}
+
+                  {sub && (
+                    <button
+                      type="button"
+                      class="nav-caret h-11 w-11"
+                      data-msub
+                      aria-expanded="false"
+                      aria-controls={`m-${sub.id}`}
+                      aria-label={`${item.label} menu`}
+                    >
+                      <Icon name="chevron-down" class="h-5 w-5" />
+                    </button>
+                  )}
+                </div>
+
+                {sub && (
+                  <div id={`m-${sub.id}`} class="hidden pb-2 pl-3">
+                    {sub.blocks.map((block) => (
+                      <>
+                        {block.heading && (
+                          <p class="mt-3 px-3 font-display text-sm font-bold text-navy">
+                            {block.heading}
+                          </p>
+                        )}
+                        <ul>
+                          {block.links.map((link) => (
+                            <li>
+                              <a href={link.href} class="nav-mega-link">
+                                {link.label}
+                              </a>
+                            </li>
+                          ))}
+                        </ul>
+                      </>
+                    ))}
+                  </div>
+                )}
+              </li>
+            );
+          })
         }
       </ul>
     </nav>
@@ -70,6 +237,7 @@ const isCurrent = (href: string) => (href === "/" ? path === "/" : path.startsWi
 </header>
 
 <script>
+  const header = document.getElementById("site-header");
   const toggle = document.getElementById("nav-toggle");
   const panel = document.getElementById("mobile-nav");
 
@@ -87,4 +255,97 @@ const isCurrent = (href: string) => (href === "/" ? path === "/" : path.startsWi
       toggle?.setAttribute("aria-label", "Open menu");
     })
   );
+
+  // Mobile accordions.
+  panel?.querySelectorAll("[data-msub]").forEach((btn) => {
+    const list = document.getElementById(btn.getAttribute("aria-controls") || "");
+    btn.addEventListener("click", () => {
+      const open = btn.getAttribute("aria-expanded") === "true";
+      btn.setAttribute("aria-expanded", String(!open));
+      list?.classList.toggle("hidden", open);
+    });
+  });
+
+  // Desktop dropdowns. Open on hover, on click, and on keyboard activation;
+  // close on Escape, on click outside, and when focus leaves the header.
+  const triggers = Array.from(header?.querySelectorAll("[data-dd]") || []);
+  const panels = new Map(
+    Array.from(header?.querySelectorAll("[data-panel]") || []).map((p) => [
+      p.getAttribute("data-panel"),
+      p,
+    ])
+  );
+  const desktop = window.matchMedia("(min-width: 1024px)");
+  const hoverable = window.matchMedia("(hover: hover)");
+  let hoverTimer;
+
+  const buttonFor = (trigger) => trigger.querySelector("button");
+
+  function setOpen(key, open) {
+    const trigger = triggers.find((t) => t.getAttribute("data-dd") === key);
+    if (!trigger) return;
+    buttonFor(trigger)?.setAttribute("aria-expanded", String(open));
+    const mega = panels.get(key);
+    if (open) mega?.setAttribute("data-open", "true");
+    else mega?.removeAttribute("data-open");
+  }
+
+  function closeAll(except) {
+    triggers.forEach((t) => {
+      const key = t.getAttribute("data-dd");
+      if (key !== except) setOpen(key, false);
+    });
+  }
+
+  triggers.forEach((trigger) => {
+    const key = trigger.getAttribute("data-dd");
+    const btn = buttonFor(trigger);
+    const mega = panels.get(key);
+
+    btn?.addEventListener("click", (e) => {
+      const open = btn.getAttribute("aria-expanded") === "true";
+      closeAll(key);
+      setOpen(key, !open);
+      // detail === 0 means Enter/Space, not a mouse click, so send focus into the
+      // panel so the keyboard path lands where the eye already is.
+      if (!open && e.detail === 0) mega?.querySelector("a")?.focus();
+    });
+
+    [trigger, mega].forEach((el) =>
+      el?.addEventListener("pointerenter", () => {
+        if (!hoverable.matches || !desktop.matches) return;
+        clearTimeout(hoverTimer);
+        closeAll(key);
+        setOpen(key, true);
+      })
+    );
+
+    [trigger, mega].forEach((el) =>
+      el?.addEventListener("pointerleave", () => {
+        if (!hoverable.matches) return;
+        clearTimeout(hoverTimer);
+        hoverTimer = setTimeout(() => setOpen(key, false), 180);
+      })
+    );
+  });
+
+  header?.addEventListener("focusout", (e) => {
+    if (!header.contains(e.relatedTarget)) closeAll();
+  });
+
+  document.addEventListener("click", (e) => {
+    if (!header?.contains(e.target)) closeAll();
+  });
+
+  document.addEventListener("keydown", (e) => {
+    if (e.key !== "Escape") return;
+    const open = triggers.find(
+      (t) => buttonFor(t)?.getAttribute("aria-expanded") === "true"
+    );
+    if (!open) return;
+    closeAll();
+    buttonFor(open)?.focus();
+  });
+
+  desktop.addEventListener("change", () => closeAll());
 </script>

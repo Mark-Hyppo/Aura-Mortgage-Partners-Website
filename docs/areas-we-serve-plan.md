@@ -1,8 +1,12 @@
 # Plan — "Areas We Serve" pages
 
-**Status: BUILT 2026-08-05.** `src/data/areas.ts` plus `src/pages/areas-we-serve/{index,[slug]}.astro`
-ship 10 city pages and an index — the site went 32 to 43 pages. Both fair-lending rules are in
-`COMPLIANCE.md`.
+**Status: BUILT 2026-08-05.** `src/data/areas.ts` plus `src/pages/areas-we-serve/[slug].astro` ship
+10 city pages. Both fair-lending rules are in `COMPLIANCE.md`.
+
+**The index page was removed 2026-08-06** at Mark's request, once the header dropdown listed every
+city. The site is 42 pages. Nothing links to the bare `/areas-we-serve` path any more — the city
+pages' breadcrumbs start at their own city, and the "not exhaustive, call and ask" line that lived
+on the index moved onto every city page.
 
 Still outstanding: the selection radius was never computed from a real office address (still
 `pending()`), so **the city list is provisional**, and every financing paragraph and FAQ is draft
@@ -168,7 +172,6 @@ Mirrors the loan-programs pattern already in the repo, so there is little new ma
 
 ```
 src/data/areas.ts              one array, same shape as programs.ts
-src/pages/areas-we-serve/index.astro    grid of served cities
 src/pages/areas-we-serve/[slug].astro   getStaticPaths() off the array
 ```
 
@@ -183,14 +186,15 @@ interface Area {
 }
 ```
 
-- Add `/areas-we-serve` to `nav` in `site.ts`.
+- Add an "Areas We Serve" entry to `nav` in `site.ts`. It carries `href: null` — the item exists
+  only to open the header dropdown, since there is no index page behind it.
 - `BreadcrumbList` + `FAQPage` schema per page; the reference site has none.
 - Extend the `MortgageBroker` schema's `areaServed` from the current `State` to an array of
   `City` nodes.
 - Interlink: each area page links its named programs, each program page links back to relevant
   areas. That internal linking is most of the SEO value and is what a doorway cluster lacks.
 
-Ten pages, +1 index = **11 routes, taking the site from 32 to 43 pages.**
+Ten pages from one route file, no index — **taking the site from 32 to 42 pages.**
 
 ---
 

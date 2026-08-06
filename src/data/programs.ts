@@ -80,12 +80,12 @@ export const programs: Program[] = [
     blurb:
       "Insured by the Federal Housing Administration. More flexible credit guidelines and lower down payment requirements than conventional financing.",
     lede:
-      "An FHA loan is a mortgage insured by the Federal Housing Administration. Because the insurance reduces the lender's risk, guidelines around credit history and down payment are more flexible than conventional financing — which makes it a common path for first-time buyers and for borrowers rebuilding credit.",
+      "An FHA loan is a mortgage insured by the Federal Housing Administration. Because the insurance reduces the lender's risk, guidelines around credit history and down payment are more flexible than conventional financing, which makes it a common path for first-time buyers and for borrowers rebuilding credit.",
     whoItFits: [
       "First-time buyers, though the program is not limited to them",
       "Borrowers whose credit profile does not yet meet conventional guidelines",
       "Buyers who want to keep more cash on hand at closing",
-      "Owner-occupants — FHA financing requires the property be your primary residence",
+      "Owner-occupants. FHA financing requires the property be your primary residence",
     ],
     whatToBring: [
       "Two most recent pay stubs and two years of W-2s",
@@ -123,7 +123,7 @@ export const programs: Program[] = [
       "Active-duty service members and veterans who meet VA service requirements",
       "National Guard and Reserve members who meet the service threshold",
       "Surviving spouses who hold a valid Certificate of Eligibility",
-      "Owner-occupants — the VA program requires the property be your primary residence",
+      "Owner-occupants. The VA program requires the property be your primary residence",
     ],
     whatToBring: [
       "Certificate of Eligibility, or DD-214 so we can request one",
@@ -156,7 +156,7 @@ export const programs: Program[] = [
     blurb:
       "Financing above the conforming loan limit, underwritten to lender guidelines rather than agency guidelines.",
     lede:
-      "A jumbo loan exceeds the conforming loan limit for the county, which means it cannot be sold to Fannie Mae or Freddie Mac. Each lender writes its own guidelines instead — so jumbo pricing and qualifying criteria vary far more between lenders than conforming does. That variation is exactly where a broker earns their keep.",
+      "A jumbo loan exceeds the conforming loan limit for the county, which means it cannot be sold to Fannie Mae or Freddie Mac. Each lender writes its own guidelines instead, so jumbo pricing and qualifying criteria vary far more between lenders than conforming does. That variation is exactly where a broker earns their keep.",
     whoItFits: [
       "Buyers in Palm Beach County price points above the conforming limit",
       "Borrowers with strong reserves and documented income",
@@ -230,7 +230,7 @@ export const programs: Program[] = [
     group: "inside",
     icon: "refinance",
     blurb:
-      "Replace an existing mortgage — to change the term, remove mortgage insurance, consolidate a second lien, or access equity.",
+      "Replace an existing mortgage to change the term, remove mortgage insurance, consolidate a second lien, or access equity.",
     lede:
       "Refinancing replaces your existing mortgage with a new one. People refinance to change the repayment period, to remove mortgage insurance once equity allows, to consolidate a second lien, or to take cash out against accumulated equity. Whether it makes sense depends entirely on your existing loan and how long you plan to keep the property.",
     whoItFits: [
@@ -308,7 +308,7 @@ export const programs: Program[] = [
     group: "outside",
     icon: "reverse",
     blurb:
-      "For homeowners 62 and older — convert home equity into funds without a required monthly mortgage payment.",
+      "For homeowners 62 and older, convert home equity into funds without a required monthly mortgage payment.",
     lede:
       "A reverse mortgage lets homeowners aged 62 and older convert part of their home equity into loan proceeds without a required monthly mortgage payment. The loan balance grows over time rather than shrinking, and becomes due when the last borrower permanently leaves the home. It is a significant decision that deserves a real conversation, not a sales pitch.",
     whoItFits: [
@@ -346,7 +346,7 @@ export const programs: Program[] = [
     group: "outside",
     icon: "heloc",
     blurb:
-      "A revolving line secured by your home — draw what you need, when you need it, without disturbing your first mortgage.",
+      "A revolving line secured by your home. Draw what you need, when you need it, without disturbing your first mortgage.",
     lede:
       "A home equity line of credit is a revolving line secured against your home. You draw against it as needed during a draw period, then repay over a repayment period. Its main advantage over a cash-out refinance is that it leaves your existing first mortgage untouched, which matters a great deal if that first mortgage is on terms you would not want to replace.",
     whoItFits: [
@@ -386,7 +386,7 @@ export const programs: Program[] = [
     blurb:
       "Bank statement, asset depletion, and alternative documentation for borrowers whose tax returns do not tell the whole story.",
     lede:
-      "Non-prime — sometimes called non-QM — covers programs that qualify a borrower on something other than agency-standard documentation. Bank statement programs use deposits instead of tax returns. Asset depletion converts a balance sheet into qualifying income. These exist because a self-employed borrower who writes off aggressively can look far weaker on a 1040 than they actually are.",
+      "Non-prime, sometimes called non-QM, covers programs that qualify a borrower on something other than agency-standard documentation. Bank statement programs use deposits instead of tax returns. Asset depletion converts a balance sheet into qualifying income. These exist because a self-employed borrower who writes off aggressively can look far weaker on a 1040 than they actually are.",
     whoItFits: [
       "Self-employed borrowers whose tax returns understate their actual cash flow",
       "Business owners with significant depreciation or write-offs",
@@ -424,7 +424,7 @@ export const programs: Program[] = [
     blurb:
       "Qualify on the property's rental income rather than your personal income. No tax returns, no employment verification.",
     lede:
-      "A DSCR loan — debt service coverage ratio — qualifies an investment property on the rent it generates rather than on the borrower's personal income. The lender compares the property's income against the proposed payment. If the ratio works, the file works. Personal tax returns and employment verification typically are not part of the equation.",
+      "A DSCR loan, or debt service coverage ratio, qualifies an investment property on the rent it generates rather than on the borrower's personal income. The lender compares the property's income against the proposed payment. If the ratio works, the file works. Personal tax returns and employment verification typically are not part of the equation.",
     whoItFits: [
       "Real estate investors scaling a portfolio beyond agency financed-property limits",
       "Self-employed investors who would rather not document personal income",
@@ -448,7 +448,7 @@ export const programs: Program[] = [
       },
       {
         q: "Do short-term rentals count?",
-        a: "With some lenders, yes — using a market rent projection or documented platform history. Not every DSCR investor allows it, so the property's intended use needs to be established up front.",
+        a: "With some lenders, yes, using a market rent projection or documented platform history. Not every DSCR investor allows it, so the property's intended use needs to be established up front.",
       },
     ],
   },
@@ -462,7 +462,7 @@ export const programs: Program[] = [
     blurb:
       "Financing that funds in draws as the build progresses, then converts to permanent financing at completion.",
     lede:
-      "A construction loan funds in stages as work is completed rather than in a single disbursement at closing. An inspector verifies each phase before the next draw releases. At completion the loan either converts to permanent financing or is replaced by it — the single-close and two-close structures behave very differently, and choosing wrong is expensive.",
+      "A construction loan funds in stages as work is completed rather than in a single disbursement at closing. An inspector verifies each phase before the next draw releases. At completion the loan either converts to permanent financing or is replaced by it. The single-close and two-close structures behave very differently, and choosing wrong is expensive.",
     whoItFits: [
       "Owners building a custom home on a lot they own or are purchasing",
       "Buyers undertaking a substantial renovation or teardown",
@@ -576,7 +576,7 @@ export const programs: Program[] = [
     blurb:
       "Asset-based private financing that funds on the strength of the property and closes on a short timeline.",
     lede:
-      "Hard money is private, asset-based financing underwritten primarily on the property rather than the borrower. It is more expensive than conventional financing, and it is not meant to be held long — it exists to solve for speed and for situations conventional underwriting cannot accommodate.",
+      "Hard money is private, asset-based financing underwritten primarily on the property rather than the borrower. It is more expensive than conventional financing, and it is not meant to be held long. It exists to solve for speed and for situations conventional underwriting cannot accommodate.",
     whoItFits: [
       "Investors acquiring at auction or on a compressed closing timeline",
       "Fix-and-flip projects where the property will not pass conventional appraisal",
@@ -587,7 +587,7 @@ export const programs: Program[] = [
       "The purchase contract and a scope of work with budget, if renovating",
       "Proof of funds for the required equity contribution",
       "Entity documents",
-      "An exit plan — sale, or a refinance target with timing",
+      "An exit plan: sale, or a refinance target with timing",
     ],
     faq: [
       {
@@ -614,7 +614,7 @@ export const programs: Program[] = [
     blurb:
       "Financing for non-U.S. citizens without a Social Security number or U.S. credit history.",
     lede:
-      "Foreign national programs finance non-U.S. citizens purchasing property in the United States — buyers who typically have no Social Security number, no U.S. credit file, and income documented in another country and another currency. South Florida sees more of these files than almost anywhere else, and standard agency underwriting has no path for them.",
+      "Foreign national programs finance non-U.S. citizens purchasing property in the United States, buyers who typically have no Social Security number, no U.S. credit file, and income documented in another country and another currency. South Florida sees more of these files than almost anywhere else, and standard agency underwriting has no path for them.",
     whoItFits: [
       "Non-resident buyers purchasing a second home or investment property in Florida",
       "Buyers with no U.S. credit history",
@@ -650,7 +650,7 @@ export const programs: Program[] = [
     group: "outside",
     icon: "non-warrantable-condo",
     blurb:
-      "Financing for condo projects that fail Fannie Mae warrantability — litigation, low reserves, high investor concentration.",
+      "Financing for condo projects that fail Fannie Mae warrantability: litigation, low reserves, high investor concentration.",
     lede:
       "A condominium is non-warrantable when the project itself fails agency guidelines, regardless of how strong the buyer is. Pending litigation, insufficient reserves, high investor concentration, a single owner holding too many units, or significant commercial space will all do it. In post-Surfside Florida, reserve and structural-study requirements have pushed a great many projects into this category.",
     whoItFits: [
@@ -690,7 +690,7 @@ export const programs: Program[] = [
     blurb:
       "Share loans for cooperative apartments, where you are financing stock and a proprietary lease rather than real property.",
     lede:
-      "In a cooperative you do not own real estate — you own shares in a corporation that owns the building, together with a proprietary lease for your unit. That makes the financing a share loan rather than a mortgage, and most lenders simply do not do them. Florida has a meaningful co-op inventory, particularly in older coastal communities.",
+      "In a cooperative you do not own real estate. You own shares in a corporation that owns the building, together with a proprietary lease for your unit. That makes the financing a share loan rather than a mortgage, and most lenders simply do not do them. Florida has a meaningful co-op inventory, particularly in older coastal communities.",
     whoItFits: [
       "Buyers purchasing in a cooperative rather than a condominium",
       "Owners refinancing an existing co-op share loan",
@@ -728,7 +728,7 @@ export const programs: Program[] = [
     blurb:
       "Financing to acquire and hold a building lot before construction begins.",
     lede:
-      "A lot loan finances the purchase of land — either to hold while you plan a build, or to sequence into construction financing later. Because vacant land produces no income and is harder to sell in a downturn, lenders treat it as higher risk than an improved property, and the guidelines reflect that.",
+      "A lot loan finances the purchase of land, either to hold while you plan a build, or to sequence into construction financing later. Because vacant land produces no income and is harder to sell in a downturn, lenders treat it as higher risk than an improved property, and the guidelines reflect that.",
     whoItFits: [
       "Buyers who found the right lot before they are ready to build",
       "Owners assembling adjacent parcels",
@@ -766,7 +766,7 @@ export const programs: Program[] = [
     blurb:
       "Financing for retail, office, industrial, multifamily, and mixed-use property.",
     lede:
-      "Commercial financing is underwritten on the property's performance — net operating income, debt service coverage, lease structure, and tenant quality — rather than on a personal debt-to-income ratio. Terms, amortization, and prepayment structures vary far more than they do in residential lending.",
+      "Commercial financing is underwritten on the property's performance: net operating income, debt service coverage, lease structure, and tenant quality, rather than on a personal debt-to-income ratio. Terms, amortization, and prepayment structures vary far more than they do in residential lending.",
     whoItFits: [
       "Owner-occupants buying a building for their own business",
       "Investors acquiring retail, office, industrial, or mixed-use property",
@@ -796,7 +796,7 @@ export const programs: Program[] = [
   },
 ];
 
-/** Loan terms shown on the index. Reg Z triggering terms — must render with the disclosure. */
+/** Loan terms shown on the index. Reg Z triggering terms, so they must render with the disclosure. */
 export const termOptions = ["10-year", "15-year", "20-year", "30-year", "40-year"];
 
 export const programsByGroup = (g: ProgramGroup) => programs.filter((p) => p.group === g);

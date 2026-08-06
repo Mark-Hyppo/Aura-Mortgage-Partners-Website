@@ -4,7 +4,6 @@ import SectionCta from "../../components/SectionCta.astro";
 import PageHeader from "../../components/PageHeader.astro";
 import CallButton from "../../components/CallButton.astro";
 import ProgramCard from "../../components/ProgramCard.astro";
-import Icon from "../../components/Icon.astro";
 import { areas, programsForArea, type Area } from "../../data/areas";
 import { site, compliance, isPending } from "../../data/site";
 import { team } from "../../data/team";
@@ -26,10 +25,9 @@ const nearby = areas
   .sort((a, b) => Math.abs(a.miles - area.miles) - Math.abs(b.miles - area.miles))
   .slice(0, 4);
 
-const crumbs = [
-  { name: "Areas We Serve", href: "/areas-we-serve" },
-  { name: area.city, href: `/areas-we-serve/${area.slug}` },
-];
+// No "Areas We Serve" crumb, because there is no index page behind it. The header
+// dropdown is the only entry point into the city pages.
+const crumbs = [{ name: area.city, href: `/areas-we-serve/${area.slug}` }];
 
 const faqSchema = {
   "@context": "https://schema.org",
@@ -129,15 +127,10 @@ const faqSchema = {
         }
       </ul>
 
-      <div class="mt-8 text-center">
-        <a
-          href="/areas-we-serve"
-          class="inline-flex items-center gap-1.5 text-sm font-semibold text-brand"
-        >
-          See every area we serve
-          <Icon name="arrow-right" class="h-4 w-4" />
-        </a>
-      </div>
+      <p class="mx-auto mt-8 max-w-3xl text-center text-sm leading-relaxed text-muted">
+        Licensed in {compliance.statesLicensed}. This list is not exhaustive. If your property is
+        elsewhere in the state, call and ask.
+      </p>
 
       <SectionCta />
     </div>

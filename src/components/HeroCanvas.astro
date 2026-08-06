@@ -1,7 +1,7 @@
 ---
 // Houses being framed, drawn progressively on a canvas over the hero image.
 // Same shape as the floor-plan canvas on mayan-design.com: spawn, draw, hold,
-// fade, respawn — but the geometry is house framing rather than room plans, and
+// fade, respawn, but the geometry is house framing rather than room plans, and
 // the strokes are ordered the way a house actually goes up: slab, studs, plates,
 // trusses, then openings.
 ---
@@ -91,7 +91,7 @@
     ],
   };
 
-  // Townhouse row — the co-op and non-warrantable condo end of the book.
+  // Townhouse row, the co-op and non-warrantable condo end of the book.
   const ROW: Template = {
     baseW: 132,
     baseH: 80,
@@ -138,7 +138,7 @@
     ],
   };
 
-  // Ranch with an attached garage — the most common Florida purchase shape.
+  // Ranch with an attached garage, the most common Florida purchase shape.
   const RANCH: Template = {
     baseW: 140,
     baseH: 66,
@@ -310,7 +310,7 @@
     }
 
     /**
-     * Draw from a shuffled deck rather than picking at random — random picks
+     * Draw from a shuffled deck rather than picking at random, because random picks
      * cluster and the same house shows twice in a row often enough to notice.
      */
     nextTemplate(): Template {

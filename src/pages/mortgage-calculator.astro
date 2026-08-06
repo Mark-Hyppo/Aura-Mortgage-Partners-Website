@@ -30,7 +30,7 @@ const fields = [
 >
   <PageHeader
     heading="Mortgage calculator"
-    lede="Enter your own figures to see what a monthly payment could look like. Everything here is an estimate — the numbers that matter come from an application."
+    lede="Enter your own figures to see what a monthly payment could look like. Everything here is an estimate. The numbers that matter come from an application."
     breadcrumbs={crumbs}
   />
 
@@ -97,29 +97,29 @@ const fields = [
               id="out-total"
               class="mt-3 font-display text-5xl font-bold text-navy tabular-nums"
             >
-              —
+              -
             </p>
 
             <dl class="mt-8 space-y-3.5 text-left">
               <div class="flex items-baseline justify-between gap-4">
                 <dt class="text-sm text-ink/75">Principal &amp; interest</dt>
-                <dd id="out-pi" class="text-base font-semibold tabular-nums">—</dd>
+                <dd id="out-pi" class="text-base font-semibold tabular-nums">-</dd>
               </div>
               <div class="flex items-baseline justify-between gap-4">
                 <dt class="text-sm text-ink/75">Property taxes</dt>
-                <dd id="out-tax" class="text-base font-semibold tabular-nums">—</dd>
+                <dd id="out-tax" class="text-base font-semibold tabular-nums">-</dd>
               </div>
               <div class="flex items-baseline justify-between gap-4">
                 <dt class="text-sm text-ink/75">Insurance</dt>
-                <dd id="out-ins" class="text-base font-semibold tabular-nums">—</dd>
+                <dd id="out-ins" class="text-base font-semibold tabular-nums">-</dd>
               </div>
               <div class="flex items-baseline justify-between gap-4">
                 <dt class="text-sm text-ink/75">HOA dues</dt>
-                <dd id="out-hoa" class="text-base font-semibold tabular-nums">—</dd>
+                <dd id="out-hoa" class="text-base font-semibold tabular-nums">-</dd>
               </div>
               <div class="flex items-baseline justify-between gap-4 border-t border-line pt-3.5">
                 <dt class="text-sm font-semibold">Amount financed</dt>
-                <dd id="out-principal" class="text-base font-semibold tabular-nums">—</dd>
+                <dd id="out-principal" class="text-base font-semibold tabular-nums">-</dd>
               </div>
             </dl>
 
@@ -180,12 +180,12 @@ const fields = [
       // is both wrong and a number we should never show. Hold the output instead.
       const ready = price > 0 && ratePct > 0;
 
-      setText("out-total", ready ? formatUsd(r.total) : "—");
-      setText("out-pi", ready ? formatUsd(r.principalAndInterest) : "—");
-      setText("out-tax", ready ? formatUsd(r.monthlyTaxes) : "—");
-      setText("out-ins", ready ? formatUsd(r.monthlyInsurance) : "—");
-      setText("out-hoa", ready ? formatUsd(r.monthlyHoa) : "—");
-      setText("out-principal", ready ? formatUsd(r.principal) : "—");
+      setText("out-total", ready ? formatUsd(r.total) : "-");
+      setText("out-pi", ready ? formatUsd(r.principalAndInterest) : "-");
+      setText("out-tax", ready ? formatUsd(r.monthlyTaxes) : "-");
+      setText("out-ins", ready ? formatUsd(r.monthlyInsurance) : "-");
+      setText("out-hoa", ready ? formatUsd(r.monthlyHoa) : "-");
+      setText("out-principal", ready ? formatUsd(r.principal) : "-");
 
       const hint = !price
         ? "Enter a purchase price and an interest rate to see an estimate."
