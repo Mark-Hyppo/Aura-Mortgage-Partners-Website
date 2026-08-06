@@ -6,6 +6,7 @@ import CallButton from "../../components/CallButton.astro";
 import Icon from "../../components/Icon.astro";
 import ProgramCard from "../../components/ProgramCard.astro";
 import { programs, groups, type Program } from "../../data/programs";
+import { areasForProgram } from "../../data/areas";
 import { site, compliance } from "../../data/site";
 import { team } from "../../data/team";
 import { isPending } from "../../data/site";
@@ -23,6 +24,10 @@ const { program } = Astro.props;
 const related = programs
   .filter((p) => p.group === program.group && p.slug !== program.slug)
   .slice(0, 3);
+
+// Areas naming this program, so the cluster links both directions rather than
+// only area -> program.
+const relevantAreas = areasForProgram(program.slug);
 
 const crumbs = [
   { name: "Loan Programs", href: "/loan-programs" },
@@ -120,6 +125,26 @@ const faqSchema = {
             }
           </ul>
         </div>
+
+        {
+          relevantAreas.length > 0 && (
+            <div class="card mt-6">
+              <h2 class="font-display text-lg font-semibold">Where this comes up</h2>
+              <ul class="mt-4 flex flex-wrap gap-2">
+                {relevantAreas.map((a) => (
+                  <li>
+                    <a
+                      href={`/areas-we-serve/${a.slug}`}
+                      class="inline-block rounded-full border border-line bg-halo px-3.5 py-1.5 text-sm font-medium text-ink/80 transition-colors hover:border-brand hover:text-brand"
+                    >
+                      {a.city}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )
+        }
 
         <p class="mt-5 text-xs leading-relaxed text-muted">{compliance.disclaimer}</p>
       </aside>

@@ -137,6 +137,7 @@ export const seo = {
 export const nav = [
   { label: "Home", href: "/" },
   { label: "Loan Programs", href: "/loan-programs" },
+  { label: "Areas We Serve", href: "/areas-we-serve" },
   { label: "Calculator", href: "/mortgage-calculator" },
   { label: "Our Team", href: "/team" },
   { label: "About", href: "/about" },

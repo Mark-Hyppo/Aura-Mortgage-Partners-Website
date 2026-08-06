@@ -1,0 +1,67 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import SectionCta from "../../components/SectionCta.astro";
+import PageHeader from "../../components/PageHeader.astro";
+import CallButton from "../../components/CallButton.astro";
+import Icon from "../../components/Icon.astro";
+import { areas } from "../../data/areas";
+import { site, compliance } from "../../data/site";
+
+const crumbs = [{ name: "Areas We Serve", href: "/areas-we-serve" }];
+---
+
+<Layout
+  title={`Areas We Serve | Aura Mortgage Partners | ${site.city}`}
+  description={`Aura Mortgage Partners serves ${areas.length} communities across Palm Beach County, Florida, from our ${site.city} office. Call ${site.phoneDisplay}.`}
+  pathname="/areas-we-serve"
+  breadcrumbs={crumbs}
+>
+  <PageHeader
+    heading="Areas we serve"
+    lede={`We write loans across Palm Beach County from our ${site.city} office. Every community below has its own financing considerations — the ones that actually change how a file is underwritten.`}
+    breadcrumbs={crumbs}
+  />
+
+  <section class="section">
+    <div class="container-page">
+      <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        {
+          areas.map((area) => (
+            <a
+              href={`/areas-we-serve/${area.slug}`}
+              class="card group flex flex-col transition-all hover:-translate-y-0.5 hover:border-brand"
+            >
+              <h2 class="font-display text-xl font-semibold">{area.city}</h2>
+              <p class="mt-3 flex-1 text-[0.9375rem] leading-relaxed text-ink/75">{area.blurb}</p>
+              <span class="mt-6 inline-flex items-center gap-1.5 text-sm font-semibold text-brand">
+                {area.city} financing
+                <Icon name="arrow-right" class="h-4 w-4" />
+              </span>
+            </a>
+          ))
+        }
+      </div>
+
+      <p class="mx-auto mt-12 max-w-3xl text-center text-sm leading-relaxed text-muted">
+        Licensed in {compliance.statesLicensed}. This list is not exhaustive — if your property is
+        elsewhere in the state, call and ask.
+      </p>
+
+      <SectionCta />
+    </div>
+  </section>
+
+  <section class="brand-wash bg-navy text-white">
+    <div class="container-page py-16 text-center md:py-20">
+      <h2 class="section-heading">Not sure which rules apply to your property?</h2>
+      <p class="mx-auto mt-4 max-w-xl text-lg text-white/75">
+        Condo warrantability, flood zone, acreage, occupancy — the answer usually takes one call.
+      </p>
+      <div class="btn-stack mt-8">
+        <CallButton />
+        <a href="/mortgage-calculator" class="btn btn-on-dark">Try the calculator</a>
+      </div>
+      <p class="mt-4 text-sm text-gold/80">{site.hoursShort}</p>
+    </div>
+  </section>
+</Layout>
