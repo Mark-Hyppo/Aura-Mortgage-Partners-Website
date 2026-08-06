@@ -1,8 +1,8 @@
 # Compliance rules — Aura Mortgage Partners LLC
 
 Aura Mortgage Partners LLC is a Florida mortgage brokerage. Its originators are **Mark Wilkinson,
-NMLS ID# 297944** and **Lorie Lewis, NMLS ID# pending confirmation**. Every word on this site, in
-the blog, and in any advertising is governed by the rules below.
+NMLS ID# 297944** and **Lorie Lewis, NMLS ID# 273007**. Every word on this site, in the blog, and
+in any advertising is governed by the rules below.
 
 Read this before editing any copy in `src/data/`. Paste this document into the Aura brand voice
 system prompt in HyppoCRM so the ASP-Rank blogging agent is bound by it too — the website build
@@ -69,6 +69,23 @@ program guarantees approval.
   the criteria, never imply preference for or against any group beyond them.
 - The **Equal Housing Lender** mark and statement appear on every page.
 
+#### Geographic marketing — both rules bind before any city page ships
+
+These govern the proposed "Areas We Serve" pages (`docs/areas-we-serve-plan.md`) and any other
+place-targeted copy, including blog posts generated in HyppoCRM.
+
+1. **Selection rule.** *Which* places get a page is itself a fair-lending signal. A footprint that
+   covers affluent areas and omits lower-income ones is readable as redlining regardless of intent.
+   Cities are chosen by a **neutral, written rule applied evenly** — currently: Palm Beach County
+   municipalities within ~25 miles of the Boca Raton office, population ~10,000 or more. Never
+   hand-add a city for its volume, and never hand-drop one for lack of it. If the geography
+   changes, it changes for everyone at that distance.
+2. **Language rule.** Local copy describes **financing conditions only** — condo warrantability,
+   HOA reserves after milestone inspections, jumbo thresholds, flood zones, occupancy,
+   new-construction activity. **Never characterise a community.** "Family-friendly",
+   "up-and-coming", "desirable schools", "safe", "good area" are steering language under the FHA.
+   The distinction: describe what underwriting does there, never who lives there.
+
 ---
 
 ## 2. Summary checklist
@@ -110,7 +127,7 @@ so no page can ship without it:
 
 - **Company NMLS ID#** for Aura Mortgage Partners LLC, displayed prominently. Required on every
   page by the SAFE Act. *Currently pending from the client — launch blocker.*
-- **Each loan originator's NMLS ID**: Mark Wilkinson NMLS ID# 297944, Lorie Lewis NMLS ID# pending.
+- **Each loan originator's NMLS ID**: Mark Wilkinson NMLS ID# 297944, Lorie Lewis NMLS ID# 273007.
   Each officer's ID must also appear on their bio and on any page where they appear.
 - A link to **nmlsconsumeraccess.org** for license verification.
 - **Equal Housing Lender** statement and mark. The mark is drawn in-house as inline SVG in

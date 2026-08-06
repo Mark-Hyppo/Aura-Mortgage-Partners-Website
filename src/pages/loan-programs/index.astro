@@ -9,7 +9,7 @@ import { site, compliance } from "../../data/site";
 ---
 
 <Layout
-  title="Loan Programs | Aura Mortgage Partners | West Palm Beach"
+  title={`Loan Programs | Aura Mortgage Partners | ${site.city}`}
   description={`Aura Mortgage Partners provides conventional, FHA, VA, jumbo, and non-agency loan programs in ${site.city}, ${site.region}. Contact us at ${site.phoneDisplay}.`}
   pathname="/loan-programs"
   breadcrumbs={[{ name: "Loan Programs", href: "/loan-programs" }]}
@@ -54,7 +54,7 @@ import { site, compliance } from "../../data/site";
         <ul class="mt-6 flex flex-wrap gap-3">
           {
             termOptions.map((t) => (
-              <li class="rounded-full border border-line bg-halo px-5 py-2.5 text-sm font-semibold text-midnight">
+              <li class="rounded-full border border-line bg-halo px-5 py-2.5 text-sm font-semibold text-navy">
                 {t}
               </li>
             ))
@@ -69,7 +69,7 @@ import { site, compliance } from "../../data/site";
     </div>
   </section>
 
-  <section class="aurora-wash bg-midnight text-white">
+  <section class="brand-wash bg-navy text-white">
     <div class="container-page py-16 text-center md:py-20">
       <h2 class="section-heading">Not sure which one fits?</h2>
       <p class="mx-auto mt-4 max-w-xl text-lg text-white/75">
@@ -79,7 +79,7 @@ import { site, compliance } from "../../data/site";
       <div class="btn-stack mt-8">
         <CallButton />
       </div>
-      <p class="mt-4 text-sm text-champagne/80">{site.hoursShort}</p>
+      <p class="mt-4 text-sm text-gold/80">{site.hoursShort}</p>
     </div>
   </section>
 </Layout>

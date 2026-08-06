@@ -14,7 +14,7 @@ const mountId = blog ? `hyppo-blog-${blog}` : "hyppo-blog";
 ---
 
 <Layout
-  title="Mortgage Blog | Aura Mortgage Partners | West Palm Beach"
+  title={`Mortgage Blog | Aura Mortgage Partners | ${site.city}`}
   description={`Aura Mortgage Partners provides mortgage guidance and market education in ${site.city}, ${site.region}. Contact us at ${site.phoneDisplay}.`}
   pathname="/blog"
   breadcrumbs={crumbs}
@@ -35,11 +35,11 @@ const mountId = blog ? `hyppo-blog-${blog}` : "hyppo-blog";
     )
   }
 
-  <section class="aurora-wash bg-midnight text-white">
+  <section class="brand-wash bg-navy text-white">
     <div class="container-page py-16 text-center md:py-20">
       <h2 class="section-heading">Questions the blog did not answer?</h2>
       <div class="btn-stack mt-8"><CallButton /></div>
-      <p class="mt-4 text-sm text-champagne/80">{site.hoursShort}</p>
+      <p class="mt-4 text-sm text-gold/80">{site.hoursShort}</p>
     </div>
   </section>
 </Layout>

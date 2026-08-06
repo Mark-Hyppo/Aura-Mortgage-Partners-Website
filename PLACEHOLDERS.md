@@ -48,7 +48,7 @@ These will resolve to something wrong or dead if shipped as-is.
 | --- | --- | --- |
 | `site.email` | `info@auramortgagepartners.com` | **The mailbox may not exist.** Every legal page, the footer, and the contact page link to it |
 | `social[*].href` | `facebook.com/auramortgagepartners`, `instagram.com/auramortgagepartners`, `linkedin.com/company/aura-mortgage-partners` | **Unverified — all three may 404.** Delete the entry rather than ship a dead link |
-| `site.geo` | `26.8034, -80.1928` | Centroid of ZIP 33412, not a surveyed pin for 12668 83rd Ln N. Feeds geo meta and `GeoCoordinates` schema |
+| `team[1].headshot` | `/team/lorie-lewis.webp` | **This is not Lorie Lewis.** An AI-generated portrait carried over from the AIOS project, standing in until a real headshot is taken. It renders above her real name and real NMLS ID on a mortgage advertisement. Must not reach production |
 
 ---
 
@@ -61,11 +61,36 @@ renders them omits them cleanly rather than showing a guess.
 | Field | Status |
 | --- | --- |
 | `compliance.companyNmls` | Empty. **SAFE Act requires the company NMLS ID on every page** — this is the hardest launch blocker on the project. No public NMLS record was found for Aura Mortgage Partners LLC |
-| `team[1].nmls` (Lorie Lewis) | Empty. The brief gave **both** `273007` and `334279`; the AIOS project docs say `273007`. Unverifiable from public search. Confirm at nmlsconsumeraccess.org |
 | `compliance.sponsorNmls` | Empty. Only applies if Aura originates under a sponsoring lender — possibly what the unidentified "Arch Mortgage" reference means |
+
+`team[0].headshot` is the client's real photograph and is *not* a placeholder.
 
 `team[0].nmls` = **297944** is *not* a placeholder. Mark Wilkinson's NMLS ID is confirmed against
 public record and against his existing site.
+
+`team[1].nmls` = **273007** is no longer empty. Of the two numbers the brief gave, `273007` is
+corroborated by Group One Mortgage's published originator roster and by a ZoomInfo MLO profile,
+and the AIOS project docs agree; **`334279` returns no originator anywhere** and appears to be a
+transcription error. Neither source page could be read directly — grouponemortgage.us refused the
+connection and nmlsconsumeraccess.org 403s automated requests — so this is **corroborated, not
+registry-verified**. Look up `273007` under Individuals at nmlsconsumeraccess.org to close it.
+
+---
+
+## Pending — rendered as nothing until supplied
+
+The Boca Raton office address was never supplied. A fabricated business location on a mortgage
+advertisement is the same category of problem as a fabricated NMLS ID, so these use the
+`pending()` sentinel and every surface omits them cleanly.
+
+| Field | Effect while pending |
+| --- | --- |
+| `site.street` | Address blocks in the footer, `/contact`, `/licensing`, `/privacy` and `/terms` render the city line only. `streetAddress` is omitted from `PostalAddress` schema |
+| `site.postal` | Same; `postalCode` omitted from schema |
+| `site.geo.lat` / `.lng` | The `/contact` map embed is omitted entirely rather than resolving to a city-wide search, and `GeoCoordinates` drops out of the business schema |
+
+The old West Palm Beach values were deliberately **not** carried over — `12668 83rd Ln N, 33412`
+and the ZIP-centroid coordinates belonged to the previous address and would have been wrong.
 
 ---
 
@@ -85,9 +110,9 @@ or "coming soon" box appears.
 ## Pre-launch check
 
 ```bash
-grep -rn "DRAFT:" src/          # every drafted field
+grep -rn "DRAFT:" src/          # every drafted field, incl. Lorie's placeholder portrait
 npm run build
-grep -rl 'Company NMLS' dist --include=*.html | wc -l    # must equal 31, currently 0
+grep -rl 'Company NMLS' dist --include=*.html | wc -l    # must equal 32, currently 0
 ```
 
 The full launch-blocker checklist is in [`README.md`](README.md).

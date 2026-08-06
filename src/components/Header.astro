@@ -9,7 +9,7 @@ const path = Astro.url.pathname.replace(/\.html$/, "").replace(/\/$/, "") || "/"
 const isCurrent = (href: string) => (href === "/" ? path === "/" : path.startsWith(href));
 ---
 
-<header class="border-b border-white/10 bg-midnight text-white">
+<header class="border-b border-line bg-white text-ink">
   <div class="container-page flex items-center justify-between gap-6 py-3">
     <a href="/" class="shrink-0" aria-label={`${site.name} — home`}>
       <Logo />
@@ -24,8 +24,8 @@ const isCurrent = (href: string) => (href === "/" ? path === "/" : path.startsWi
                 href={item.href}
                 aria-current={isCurrent(item.href) ? "page" : undefined}
                 class:list={[
-                  "text-[0.9375rem] font-semibold transition-colors hover:text-champagne",
-                  isCurrent(item.href) ? "text-champagne" : "text-white/75",
+                  "text-[0.9375rem] font-semibold transition-colors hover:text-brand",
+                  isCurrent(item.href) ? "text-brand" : "text-ink/75",
                 ]}
               >
                 {item.label}
@@ -39,7 +39,7 @@ const isCurrent = (href: string) => (href === "/" ? path === "/" : path.startsWi
     <button
       type="button"
       id="nav-toggle"
-      class="inline-flex h-12 w-12 items-center justify-center rounded-full border border-white/25 text-white lg:hidden"
+      class="inline-flex h-12 w-12 items-center justify-center rounded-full border border-line text-ink lg:hidden"
       aria-expanded="false"
       aria-controls="mobile-nav"
       aria-label="Open menu"
@@ -48,7 +48,7 @@ const isCurrent = (href: string) => (href === "/" ? path === "/" : path.startsWi
     </button>
   </div>
 
-  <div id="mobile-nav" class="hidden border-t border-white/10 lg:hidden">
+  <div id="mobile-nav" class="hidden border-t border-line lg:hidden">
     <nav aria-label="Mobile" class="container-page py-5">
       <ul class="space-y-1">
         {
@@ -57,7 +57,7 @@ const isCurrent = (href: string) => (href === "/" ? path === "/" : path.startsWi
               <a
                 href={item.href}
                 aria-current={isCurrent(item.href) ? "page" : undefined}
-                class="block rounded-lg px-3 py-3 text-base font-semibold text-white/80 hover:bg-white/5 hover:text-champagne"
+                class="block rounded-lg px-3 py-3 text-base font-semibold text-ink/80 hover:bg-halo hover:text-brand"
               >
                 {item.label}
               </a>

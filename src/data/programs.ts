@@ -6,7 +6,7 @@ export interface Program {
   name: string;
   /** Short name used in <title>. Must be <= 26 chars so the built title stays under 70. */
   titleName: string;
-  /** Fills "Aura Mortgage Partners provides {service} in West Palm Beach, FL." */
+  /** Fills "Aura Mortgage Partners provides {service} in {site.city}, FL." */
   service: string;
   group: ProgramGroup;
   icon: string;

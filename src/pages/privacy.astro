@@ -10,7 +10,7 @@ const updated = "August 4, 2026";
 ---
 
 <Layout
-  title="Privacy Policy | Aura Mortgage Partners | West Palm Beach"
+  title={`Privacy Policy | Aura Mortgage Partners | ${site.city}`}
   description={`Aura Mortgage Partners provides mortgage brokerage services in ${site.city}, ${site.region}. Contact us at ${site.phoneDisplay}.`}
   pathname="/privacy"
   breadcrumbs={[{ name: "Privacy Policy", href: "/privacy" }]}
@@ -109,14 +109,14 @@ const updated = "August 4, 2026";
         </p>
         <address class="mt-4 text-[0.9375rem] leading-relaxed text-ink/85 not-italic">
           {site.legalName}<br />
-          {site.street}<br />
-          {site.city}, {site.region} {site.postal}<br />
-          <a href={`tel:${site.phoneTel}`} class="font-semibold hover:text-aurora-deep"
+          {settled(site.street) && <>{settled(site.street)}<br /></>}
+          {site.city}, {site.region} {settled(site.postal)}<br />
+          <a href={`tel:${site.phoneTel}`} class="font-semibold hover:text-brand"
             >{site.phoneDisplay}</a
           ><br />
           {
             email ? (
-              <a href={`mailto:${email}`} class="font-semibold hover:text-aurora-deep">
+              <a href={`mailto:${email}`} class="font-semibold hover:text-brand">
                 {email}
               </a>
             ) : (

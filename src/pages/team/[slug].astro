@@ -41,7 +41,7 @@ const personSchema = {
 ---
 
 <Layout
-  title={`${member.name} | Aura Mortgage Partners | West Palm Beach`}
+  title={`${member.name} | Aura Mortgage Partners | ${site.city}`}
   description={`${member.name} is a licensed mortgage loan originator with Aura Mortgage Partners in ${site.city}, ${site.region}. Call ${site.phoneDisplay}.`}
   pathname={`/team/${member.slug}`}
   breadcrumbs={crumbs}
@@ -61,7 +61,7 @@ const personSchema = {
               class="h-40 w-40 rounded-full object-cover"
             />
           ) : (
-            <span class="flex h-40 w-40 items-center justify-center rounded-full bg-halo font-display text-5xl font-bold text-aurora-deep">
+            <span class="flex h-40 w-40 items-center justify-center rounded-full bg-halo font-display text-5xl font-bold text-brand">
               {member.name.charAt(0)}
             </span>
           )
@@ -80,7 +80,7 @@ const personSchema = {
           {
             member.specialties.map((s) => (
               <li class="flex gap-3 text-[0.9375rem] text-ink/80">
-                <Icon name="check" class="mt-1 h-4 w-4 shrink-0 text-aurora-deep" />
+                <Icon name="check" class="mt-1 h-4 w-4 shrink-0 text-brand" />
                 <span>{s}</span>
               </li>
             ))
@@ -91,7 +91,7 @@ const personSchema = {
       <aside class="lg:sticky lg:top-8 lg:self-start">
         <div class="card">
           <h2 class="font-display text-lg font-semibold">Licensing</h2>
-          <p class="mt-3 rounded-lg border border-aurora/40 bg-halo px-4 py-3 text-base font-bold text-midnight">
+          <p class="mt-3 rounded-lg border border-brand/40 bg-halo px-4 py-3 text-base font-bold text-navy">
             {member.legalName}
             {nmls && (
               <>
@@ -105,7 +105,7 @@ const personSchema = {
               href={compliance.verifyUrl}
               rel="noopener noreferrer"
               target="_blank"
-              class="font-semibold text-aurora-deep underline underline-offset-2"
+              class="font-semibold text-brand underline underline-offset-2"
               >{compliance.verifyLabel}</a
             >.
           </p>

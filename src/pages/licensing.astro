@@ -50,9 +50,9 @@ const sponsorNmls = settled(compliance.sponsorNmls);
           <table class="w-full min-w-[32rem] border-collapse text-left text-[0.9375rem]">
             <thead>
               <tr class="border-b border-line">
-                <th class="py-3 pr-4 font-semibold text-midnight">State</th>
-                <th class="py-3 pr-4 font-semibold text-midnight">Regulator</th>
-                <th class="py-3 font-semibold text-midnight">License number</th>
+                <th class="py-3 pr-4 font-semibold text-navy">State</th>
+                <th class="py-3 pr-4 font-semibold text-navy">Regulator</th>
+                <th class="py-3 font-semibold text-navy">License number</th>
               </tr>
             </thead>
             <tbody>
@@ -72,7 +72,7 @@ const sponsorNmls = settled(compliance.sponsorNmls);
           {
             team.map((m) => (
               <li>
-                <a href={`/team/${m.slug}`} class="font-semibold text-aurora-deep">
+                <a href={`/team/${m.slug}`} class="font-semibold text-brand">
                   {m.legalName}
                 </a>
                 {m.nmls && <span> — NMLS ID# {m.nmls}</span>}
@@ -91,13 +91,13 @@ const sponsorNmls = settled(compliance.sponsorNmls);
             href={compliance.verifyUrl}
             rel="noopener noreferrer"
             target="_blank"
-            class="font-semibold text-aurora-deep underline underline-offset-2"
+            class="font-semibold text-brand underline underline-offset-2"
             >{compliance.verifyLabel}</a
           >
         </p>
 
         <h2>Equal Housing Lender</h2>
-        <div class="mt-4 flex items-center gap-3 text-midnight">
+        <div class="mt-4 flex items-center gap-3 text-navy">
           <Icon name="equal-housing" class="h-10 w-10" />
           <span class="text-sm font-semibold tracking-wider uppercase">
             {compliance.equalHousing}
@@ -139,9 +139,9 @@ const sponsorNmls = settled(compliance.sponsorNmls);
         <h2>Contact</h2>
         <address class="mt-4 text-[0.9375rem] leading-relaxed text-ink/85 not-italic">
           {site.legalName}<br />
-          {site.street}<br />
-          {site.city}, {site.region} {site.postal}<br />
-          <a href={`tel:${site.phoneTel}`} class="font-semibold hover:text-aurora-deep"
+          {settled(site.street) && <>{settled(site.street)}<br /></>}
+          {site.city}, {site.region} {settled(site.postal)}<br />
+          <a href={`tel:${site.phoneTel}`} class="font-semibold hover:text-brand"
             >{site.phoneDisplay}</a
           >
         </address>

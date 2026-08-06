@@ -3,13 +3,13 @@ import CallButton from "./CallButton.astro";
 import { site } from "../data/site";
 
 interface Props {
-  /** "dark" for midnight sections, "light" for halo/white sections. */
+  /** "dark" for navy sections, "light" for halo/white sections. */
   tone?: "light" | "dark";
   class?: string;
 }
 
 const { tone = "light", class: cls = "" } = Astro.props;
-const hoursColor = tone === "dark" ? "text-champagne/80" : "text-muted";
+const hoursColor = tone === "dark" ? "text-gold/80" : "text-muted";
 ---
 
 <div class={`mt-14 flex flex-col items-center gap-3 ${cls}`}>
