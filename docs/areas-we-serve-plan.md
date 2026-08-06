@@ -1,8 +1,12 @@
 # Plan — "Areas We Serve" pages
 
-**Status: proposal, not committed.** Nothing here is built — no routes, data, or copy exist yet.
-Revised 2026-08-05 after the office was confirmed as **Boca Raton**, which moved the home market
-from West Palm Beach and changed the selection rule.
+**Status: BUILT 2026-08-05.** `src/data/areas.ts` plus `src/pages/areas-we-serve/{index,[slug]}.astro`
+ship 10 city pages and an index — the site went 32 to 43 pages. Both fair-lending rules are in
+`COMPLIANCE.md`.
+
+Still outstanding: the selection radius was never computed from a real office address (still
+`pending()`), so **the city list is provisional**, and every financing paragraph and FAQ is draft
+copy awaiting Mark Wilkinson's confirmation. Both are registered in `PLACEHOLDERS.md`.
 
 ---
 
