@@ -1,13 +1,22 @@
-// "Areas We Serve": per-city pages across Palm Beach County.
+// "Areas We Serve": place pages for Florida. Two kinds, and the difference
+// matters legally, not just visually. CITY pages cover a single municipality.
+// REGION pages cover a whole region and never name a subset of its towns.
 //
 // TWO FAIR-LENDING RULES BIND THIS FILE. Both are in COMPLIANCE.md. Read them
-// before adding, removing, or rewriting a city.
+// before adding, removing, or rewriting a place.
 //
-// 1. SELECTION. Which places get a page is itself a fair-lending signal. Cities
-//    are chosen by a neutral written rule applied evenly: Palm Beach County
-//    municipalities within ~25 miles of the Boca Raton office, population
-//    ~10,000+. Never hand-add a city because it has volume, and never hand-drop
-//    one because it does not. A footprint covering affluent areas while omitting
+// 1. SELECTION. Which places get a page is itself a fair-lending signal. Aura is
+//    licensed across Florida and takes files statewide, so the page set is not
+//    the footprint; it marks where underwriting differs. Two neutral written
+//    rules, each applied evenly:
+//      (a) CITY pages: Palm Beach County municipalities within ~25 miles of the
+//          Boca Raton office, population ~10,000+.
+//      (b) REGION pages: Florida regions whose financing conditions differ
+//          materially from Palm Beach County. A region page covers the entire
+//          region. Naming a subset of its towns would reintroduce exactly the
+//          selection signal a region page exists to avoid.
+//    Never hand-add a place because it has volume, and never hand-drop one
+//    because it does not. A footprint covering affluent areas while omitting
 //    lower-income ones is readable as redlining regardless of intent.
 //
 // 2. LANGUAGE. `conditions` describes FINANCING CONDITIONS ONLY: condo
@@ -18,21 +27,26 @@
 //    Describe what underwriting does there, never who lives there.
 //
 // Also inherited from the rest of the site: no rate, APR, payment, down payment
-// amount, or percentage appears in any of this copy (Reg Z §1026.24(d)(1)).
+// amount, or percentage appears in any of this copy (Reg Z 1026.24(d)(1)).
 //
 // DRAFT: every `conditions` paragraph and every FAQ answer below is our draft,
-// written from general South Florida lending knowledge. Mark Wilkinson has to
-// confirm each one. He is the one who knows whether the local claims hold.
-// The mileages are unverified and were not computed from the real office
-// address, which is still outstanding. See PLACEHOLDERS.md.
+// written from general Florida lending knowledge. Mark Wilkinson has to confirm
+// each one. He is the one who knows whether the local claims hold. The mileages
+// are unverified and were not computed from the real office address, which is
+// still outstanding. See PLACEHOLDERS.md.
 
 import { programs } from "./programs";
 
+export type AreaKind = "city" | "region";
+
 export interface Area {
   slug: string;
+  /** A region page covers its whole region. See rule 1(b) in the header. */
+  kind: AreaKind;
+  /** Display name. Used adjectivally too, as in "a {city} file". */
   city: string;
-  /** Approximate miles from the Boca Raton office. UNVERIFIED, see header. */
-  miles: number;
+  /** Approximate miles from the Boca Raton office. Cities only, UNVERIFIED. */
+  miles?: number;
   /** One line for the index grid. */
   blurb: string;
   /** 80–120 words. Financing conditions only. */
@@ -45,6 +59,7 @@ export interface Area {
 export const areas: Area[] = [
   {
     slug: "boca-raton",
+    kind: "city",
     city: "Boca Raton",
     miles: 0,
     blurb: "Our home market. Jumbo, super jumbo, and a very large condominium inventory.",
@@ -68,6 +83,7 @@ export const areas: Area[] = [
   },
   {
     slug: "delray-beach",
+    kind: "city",
     city: "Delray Beach",
     miles: 7,
     blurb: "Condominium and townhouse warrantability, and second-home occupancy.",
@@ -87,6 +103,7 @@ export const areas: Area[] = [
   },
   {
     slug: "boynton-beach",
+    kind: "city",
     city: "Boynton Beach",
     miles: 12,
     blurb: "Condominium warrantability and age-restricted community financing.",
@@ -106,6 +123,7 @@ export const areas: Area[] = [
   },
   {
     slug: "lantana",
+    kind: "city",
     city: "Lantana",
     miles: 16,
     blurb: "Older housing stock, renovation financing, and coastal flood zones.",
@@ -125,6 +143,7 @@ export const areas: Area[] = [
   },
   {
     slug: "lake-worth-beach",
+    kind: "city",
     city: "Lake Worth Beach",
     miles: 18,
     blurb: "FHA, VA, and Hometown Heroes, against an older housing stock.",
@@ -144,6 +163,7 @@ export const areas: Area[] = [
   },
   {
     slug: "greenacres",
+    kind: "city",
     city: "Greenacres",
     miles: 19,
     blurb: "Conforming and FHA purchases in HOA-governed communities.",
@@ -163,6 +183,7 @@ export const areas: Area[] = [
   },
   {
     slug: "palm-springs",
+    kind: "city",
     city: "Palm Springs",
     miles: 20,
     blurb: "Entry-price purchase financing, FHA and VA.",
@@ -182,6 +203,7 @@ export const areas: Area[] = [
   },
   {
     slug: "wellington",
+    kind: "city",
     city: "Wellington",
     miles: 21,
     blurb: "Equestrian property, acreage, and non-conforming parcels.",
@@ -201,6 +223,7 @@ export const areas: Area[] = [
   },
   {
     slug: "west-palm-beach",
+    kind: "city",
     city: "West Palm Beach",
     miles: 25,
     blurb: "The county seat, and the broadest mix of property types and programs.",
@@ -220,6 +243,7 @@ export const areas: Area[] = [
   },
   {
     slug: "royal-palm-beach",
+    kind: "city",
     city: "Royal Palm Beach",
     miles: 25,
     blurb: "Newer planned communities, conforming and FHA financing.",
@@ -237,9 +261,65 @@ export const areas: Area[] = [
       },
     ],
   },
+  // Region pages. Each covers its whole region. Do not add a page for a town
+  // inside one, and do not name a subset of towns in the copy. See rule 1(b).
+  {
+    slug: "florida-keys",
+    kind: "region",
+    city: "Florida Keys",
+    blurb:
+      "Monroe County financing, where insurance, elevation, and project approval decide more files than the borrower profile does.",
+    conditions:
+      "Keys files turn on insurance and elevation more often than on borrower profile. Almost every property sits in a FEMA flood zone, so flood coverage is required and its premium enters the qualifying calculation alongside windstorm coverage, which is written separately in Monroe County. Elevation certificates and ground-level enclosures affect both insurability and how an appraiser treats the square footage. Condominium and townhouse projects carry warrantability review, and Florida's milestone inspection and structural integrity reserve study requirements reach the older buildings among them. Monroe County also carries a high-cost conforming loan limit above the statewide figure, so the threshold at which a file becomes jumbo is not the mainland threshold. Short-term rental use puts occupancy and income documentation in play.",
+    programs: ["non-warrantable-condo", "jumbo", "dscr", "conforming", "super-jumbo"],
+    faq: [
+      {
+        q: "Why does insurance matter so much on a Florida Keys mortgage?",
+        a: "Because it is part of what you are qualified on. Flood and windstorm premiums are counted in the recurring housing obligation alongside taxes and association dues, and in the Keys they are large enough to change how much financing a given income supports. They also vary with elevation, construction type, and deductible, so two similar properties can qualify differently. It is worth getting quotes before an offer rather than after inspection.",
+      },
+      {
+        q: "Is the conforming loan limit different in the Keys?",
+        a: "Yes. The Federal Housing Finance Agency designates Monroe County a high-cost area, so its conforming limit sits above the standard Florida figure. A loan amount that would be jumbo elsewhere in the state can still be conforming there. Limits are published annually and vary by the number of units, so the current year's figure is what governs your file.",
+      },
+      {
+        q: "Can I finance a property I plan to rent out short term?",
+        a: "Yes, though the occupancy classification changes the underwriting. A property held for rental income is underwritten as an investment property, and debt-service coverage programs qualify it on the rent the property produces rather than on your personal income. Local rental licensing and any association restriction on rental terms both affect which lenders will consider the file.",
+      },
+    ],
+  },
+  {
+    slug: "florida-panhandle",
+    kind: "region",
+    city: "Florida Panhandle",
+    blurb:
+      "Two underwriting pictures in one region: coastal insurance and project review along the Gulf, rural program eligibility inland.",
+    conditions:
+      "The Panhandle splits into two underwriting pictures. Along the Gulf, windstorm and flood coverage drive the qualifying calculation, second homes and rental condominiums make up a large share of files, and project warrantability, reserve funding, and investor concentration decide whether agency financing is available at all. Inland, much of the region falls inside USDA Rural Development eligibility, where the geographic boundaries and household income limits are published and set by county. Housing stock inland runs older, so minimum property standards and appraiser-flagged repairs enter files more often, particularly roof age and electrical systems. Areas rebuilt after recent hurricanes bring construction and renovation financing, which is appraised against plans and specifications and requires a final inspection before closing.",
+    programs: ["conforming", "va", "construction", "dscr", "non-warrantable-condo"],
+    faq: [
+      {
+        q: "How does USDA eligibility work in the Panhandle?",
+        a: "USDA Rural Development sets eligibility by the property's location against published maps, and by household income against limits set per county. The property has to be your primary residence. Because the boundaries follow published maps rather than a general sense of what is rural, eligibility is checked by address before an offer, and two adjacent properties can fall on opposite sides of a line.",
+      },
+      {
+        q: "What makes coastal condominium financing here different?",
+        a: "Project review rather than borrower review. A conventional loan requires the project to be warrantable, which turns on reserve funding, the share of units held by investors, pending litigation, and commercial space. Florida's milestone inspection and structural integrity reserve study requirements apply to the older buildings. Projects operating substantial short-term rental programs can also fall outside agency guidelines, which moves the file to a non-warrantable lender.",
+      },
+      {
+        q: "Can I finance a rebuild or a home that needs repairs?",
+        a: "Yes. Construction and renovation programs fold the cost of the work into the financing rather than requiring it to be completed first. The appraisal is made against plans and specifications rather than the current condition, funds are released against inspections as the work progresses, and a final inspection is required before closing. Where a property will not meet a program's minimum property standards as-is, this is usually the path.",
+      },
+    ],
+  },
 ];
 
 export const areaBySlug = (slug: string) => areas.find((a) => a.slug === slug);
+
+/** "in Boca Raton" vs "in the Florida Keys". Regions take a definite article. */
+export const inArea = (a: Area) => (a.kind === "region" ? `the ${a.city}` : a.city);
+
+export const cities = areas.filter((a) => a.kind === "city");
+export const regions = areas.filter((a) => a.kind === "region");
 
 /** Programs named by an area, in the order that area lists them. */
 export const programsForArea = (area: Area) =>

@@ -4,7 +4,7 @@ import SectionCta from "../../components/SectionCta.astro";
 import PageHeader from "../../components/PageHeader.astro";
 import CallButton from "../../components/CallButton.astro";
 import ProgramCard from "../../components/ProgramCard.astro";
-import { areas, programsForArea, type Area } from "../../data/areas";
+import { areas, programsForArea, inArea, type Area } from "../../data/areas";
 import { site, compliance, isPending } from "../../data/site";
 import { team } from "../../data/team";
 
@@ -19,11 +19,27 @@ interface Props {
 const { area } = Astro.props;
 const localPrograms = programsForArea(area);
 
-// Nearest other areas, so each page links laterally rather than only up.
-const nearby = areas
-  .filter((a) => a.slug !== area.slug)
-  .sort((a, b) => Math.abs(a.miles - area.miles) - Math.abs(b.miles - area.miles))
-  .slice(0, 4);
+// Lateral links, so each page connects sideways rather than only up. A city
+// links to the cities nearest it. A region has no single distance from the
+// office, so it links to the other regions first and then the closest cities,
+// and its heading drops the claim of proximity.
+const others = areas.filter((a) => a.slug !== area.slug);
+const nearby =
+  area.kind === "city"
+    ? others
+        .filter((a) => a.kind === "city")
+        .sort(
+          (a, b) =>
+            Math.abs((a.miles ?? 0) - (area.miles ?? 0)) -
+            Math.abs((b.miles ?? 0) - (area.miles ?? 0)),
+        )
+        .slice(0, 4)
+    : [
+        ...others.filter((a) => a.kind === "region"),
+        ...others
+          .filter((a) => a.kind === "city")
+          .sort((a, b) => (a.miles ?? 0) - (b.miles ?? 0)),
+      ].slice(0, 4);
 
 // No "Areas We Serve" crumb, because there is no index page behind it. The header
 // dropdown is the only entry point into the city pages.
@@ -41,13 +57,13 @@ const faqSchema = {
 ---
 
 <Layout
-  title={`Mortgage Broker in ${area.city}, FL | Aura Mortgage Partners`}
-  description={`Mortgage broker serving ${area.city}, Florida. Aura Mortgage Partners shops your scenario across wholesale lenders. Call ${site.phoneDisplay}.`}
+  title={`Mortgage Broker in ${area.kind === "region" ? inArea(area) : `${area.city}, FL`} | Aura Mortgage Partners`}
+  description={`Mortgage broker serving ${area.kind === "region" ? inArea(area) : `${area.city}, Florida`}. Aura Mortgage Partners shops your scenario across wholesale lenders. Call ${site.phoneDisplay}.`}
   pathname={`/areas-we-serve/${area.slug}`}
   breadcrumbs={crumbs}
 >
   <PageHeader
-    heading={`Mortgage financing in ${area.city}`}
+    heading={`Mortgage financing in ${inArea(area)}`}
     lede={area.blurb}
     breadcrumbs={crumbs}
   />
@@ -61,7 +77,7 @@ const faqSchema = {
         <p class="mt-5 leading-relaxed text-ink/85">{area.conditions}</p>
 
         <h2 class="mt-14 font-display text-2xl font-semibold">
-          Programs that come up most in {area.city}
+          Programs that come up most in {inArea(area)}
         </h2>
         <div class="mt-8 grid gap-5 sm:grid-cols-2">
           {localPrograms.map((p) => <ProgramCard program={p} />)}
@@ -111,7 +127,9 @@ const faqSchema = {
 
   <section class="section bg-white">
     <div class="container-page">
-      <h2 class="section-heading">Also serving nearby</h2>
+      <h2 class="section-heading">
+        {area.kind === "region" ? "Also serving" : "Also serving nearby"}
+      </h2>
       <ul class="mt-10 flex flex-wrap justify-center gap-3">
         {
           nearby.map((a) => (

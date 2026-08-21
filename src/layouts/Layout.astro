@@ -69,7 +69,13 @@ const businessSchema = {
   address,
   areaServed: [
     { "@type": "State", name: "Florida" },
-    ...areas.map((a) => ({ "@type": "City", name: a.city, addressRegion: "FL" })),
+    // A region is not a City. The Keys span a county and the Panhandle spans
+    // several, so typing either as City would be false structured data.
+    ...areas.map((a) =>
+      a.kind === "region"
+        ? { "@type": "Place", name: `${a.city}, Florida` }
+        : { "@type": "City", name: a.city, addressRegion: "FL" },
+    ),
   ],
   priceRange: "$$",
   openingHoursSpecification: {

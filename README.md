@@ -110,20 +110,20 @@ npm run build
 # 1. Draft copy still in place. Every hit needs client confirmation.
 grep -rn "DRAFT:" src/
 
-# 2. Sitewide compliance coverage. All four must equal the page count (42).
+# 2. Sitewide compliance coverage. All four must equal the page count (44).
 grep -rl nmlsconsumeraccess dist --include=*.html | wc -l
 grep -rl 'Equal Housing Lender' dist --include=*.html | wc -l
 grep -rl '297944' dist --include=*.html | wc -l
 grep -ril 'not a commitment to lend' dist --include=*.html | wc -l
 
-# 3. The company NMLS ID. Currently 0 — must equal 42 before launch.
+# 3. The company NMLS ID. Currently 0 — must equal 44 before launch.
 grep -rl 'Company NMLS' dist --include=*.html | wc -l
 
 # 4. Reg Z / MAP Rule content scan. Every hit needs a human read.
 grep -rhoiE '[0-9]+(\.[0-9]+)?%|guarantee[a-z]*|lowest rate[s]?|instant [a-z]+' dist --include=*.html | sort | uniq -c
 ```
 
-As of the current build, checks 1–2 pass at 42/42 and scan 4 returns only SVG gradient stops, a
+As of the current build, checks 1–2 pass at 44/44 and scan 4 returns only SVG gradient stops, a
 URL-encoded map query, and the factual VA phrases "VA-guaranteed" and "guaranteed by the Department
 of Veterans Affairs", plus "personal guarantee" in the commercial FAQ. **No rate, payment, or
 down-payment figure appears anywhere on the site.** Check 3 returns **0** — that is the blocker.
@@ -135,7 +135,7 @@ pages. The footer carries the company NMLS ID, both originators' NMLS IDs, the E
 mark, the nmlsconsumeraccess.org link, and the underwriting disclaimer — putting it in the layout
 makes it structurally impossible to ship a page without compliance text.
 
-42 pages from 13 route files:
+44 pages from 13 route files:
 
 ```
 /                        /about              /contact         /licensing
@@ -147,8 +147,11 @@ makes it structurally impossible to ship a page without compliance text.
 `/loan-programs/[slug]` generates 20 pages from `programs.ts` via `getStaticPaths()`. One array
 drives the nav, both index grids, the detail pages, the sitemap, and the `hasOfferCatalog` JSON-LD.
 
-**`/areas-we-serve` has no index page.** The 10 city pages are reached through the header dropdown
-only, so nothing links to that bare path — no breadcrumb, no footer link, no "see every area".
+**`/areas-we-serve` has no index page.** Its 12 pages are reached through the header dropdown only,
+so nothing links to that bare path — no breadcrumb, no footer link, no "see every area". The 12 are
+**10 Palm Beach County city pages** plus **2 region pages**, the Florida Keys and the Florida
+Panhandle. A region page covers its whole region and never names a subset of its towns; that is a
+fair-lending rule, not a style choice. See `COMPLIANCE.md` before adding or removing any of them.
 
 **The header scrolls with the page** — not sticky — and carries no CTA. It is midnight rather than
 white so it can hold the champagne logo, which fails contrast on a light background.

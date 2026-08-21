@@ -3,7 +3,7 @@ import Logo from "./Logo.astro";
 import Icon from "./Icon.astro";
 import { nav, site, type NavItem } from "../data/site";
 import { groups, programsByGroup } from "../data/programs";
-import { areas } from "../data/areas";
+import { cities, regions } from "../data/areas";
 
 // Header scrolls with the page, not sticky. The hero owns the only above-the-fold
 // conversion point, and MobileCallBar carries the CTA once the header scrolls away.
@@ -47,9 +47,14 @@ const submenus: Record<string, Submenu> = {
     id: "menu-areas-we-serve",
     blocks: [
       {
-        heading: "",
-        cols: 4,
-        links: areas.map((a) => ({ label: a.city, href: `/areas-we-serve/${a.slug}` })),
+        heading: "Palm Beach County",
+        cols: 3,
+        links: cities.map((a) => ({ label: a.city, href: `/areas-we-serve/${a.slug}` })),
+      },
+      {
+        heading: "Elsewhere in Florida",
+        cols: 1,
+        links: regions.map((a) => ({ label: a.city, href: `/areas-we-serve/${a.slug}` })),
       },
     ],
   },
