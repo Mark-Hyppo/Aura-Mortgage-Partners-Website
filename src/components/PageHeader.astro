@@ -1,4 +1,6 @@
 ---
+import CallButton from "./CallButton.astro";
+
 interface Props {
   heading: string;
   lede?: string;
@@ -40,5 +42,9 @@ const { heading, lede, breadcrumbs } = Astro.props;
 
     <h1 class="section-heading">{heading}</h1>
     {lede && <p class="section-lede mt-5 text-lg leading-relaxed text-white/75">{lede}</p>}
+
+    <div class="btn-stack mt-8">
+      <CallButton variant="gold" />
+    </div>
   </div>
 </section>

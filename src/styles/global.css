@@ -143,6 +143,20 @@ h4 {
     color: #fff;
   }
 
+  /* The primary call to action on a dark surface. btn-primary cannot be used
+     there: its navy fill is the same value as the navy behind it, which measured
+     1.00:1. Gold is 6.62:1 on navy and carries navy text at 6.62:1. Light
+     surfaces keep btn-primary, because gold on white is only 2.40:1. */
+  .btn-gold {
+    background: var(--color-gold);
+    color: var(--color-navy);
+    box-shadow: 0 10px 24px -12px rgb(0 0 0 / 0.45);
+  }
+
+  .btn-gold:hover {
+    background: #e0b246;
+  }
+
   .btn-on-dark {
     background: rgb(255 255 255 / 0.08);
     color: #fff;

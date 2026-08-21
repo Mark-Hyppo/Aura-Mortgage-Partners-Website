@@ -36,9 +36,12 @@ const featured = [
       fetchpriority="high"
       class="absolute inset-0 -z-20 h-full w-full object-cover"
     />
-    {/* Scrim keeps the centred headline legible over any part of the photo. */}
+    {/* Scrim keeps the centred headline legible over any part of the photo. The
+        photo is already dark (mean luminance 50/255 behind the button stack), so
+        it does not need to be heavy: at the old 0.74 the scrim matched the navy
+        button fill exactly and the CTA disappeared into it. */}
     <div
-      class="absolute inset-0 -z-10 bg-[radial-gradient(70%_60%_at_50%_45%,rgba(0,32,80,0.74),rgba(0,22,58,0.93))]"
+      class="absolute inset-0 -z-10 bg-[radial-gradient(70%_60%_at_50%_45%,rgba(10,50,104,0.62),rgba(0,22,58,0.88))]"
       aria-hidden="true"
     >
     </div>
@@ -58,7 +61,7 @@ const featured = [
       </p>
 
       <div class="btn-stack mt-9">
-        <CallButton size="lg" />
+        <CallButton size="lg" variant="gold" />
         <a href="/loan-programs" class="btn btn-on-dark btn-lg">See loan programs</a>
       </div>
 
@@ -125,7 +128,7 @@ const featured = [
         {featured.map((program) => <ProgramCard program={program} />)}
       </div>
 
-      <div class="mt-10 flex justify-center">
+      <div class="btn-stack mt-10">
         <a href="/loan-programs" class="btn btn-secondary">See all loan programs</a>
       </div>
       <SectionCta />
@@ -187,7 +190,7 @@ const featured = [
         straightforward. The first call costs nothing and there is no application to fill out.
       </p>
       <div class="btn-stack mt-8">
-        <CallButton />
+        <CallButton variant="gold" />
         <a href="/contact" class="btn btn-on-dark">Send a message</a>
       </div>
       {
