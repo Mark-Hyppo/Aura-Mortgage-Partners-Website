@@ -28,8 +28,8 @@ grep -rn "DRAFT:" src/
 | `programs[*].lede` / `whoItFits` / `faq` | `src/data/programs.ts` | All 20 program pages. Program **names** come from `markmymortgage.com`; the surrounding copy is ours |
 | `programs[*].whatToBring` | `src/data/programs.ts` | Only the 9 Outside the Box programs from Construction onward. The client asked for the checklist to be dropped from the other 11, so the field is now optional and absent on those |
 | `groups.*.desc` | `src/data/programs.ts` | The Inside/Outside the Box descriptions |
-| `areas[*].conditions` / `blurb` / `faq` | `src/data/areas.ts` | All 10 Areas We Serve city pages. Financing-conditions paragraphs and ~21 FAQs, written from general South Florida lending knowledge. **Mark Wilkinson has to confirm every local claim** |
-| `areas[*].miles` | `src/data/areas.ts` | Approximate distances from the office. **Not computed from a real address** — the Boca Raton street address is still outstanding, so the city list itself is provisional |
+| `areas[*].conditions` / `blurb` / `faq` | `src/data/areas.ts` | All 12 Areas We Serve pages: 10 Palm Beach County cities plus the Florida Keys and Florida Panhandle regions. Financing-conditions paragraphs and ~27 FAQs, written from general Florida lending knowledge. **Mark Wilkinson has to confirm every local claim** |
+| `areas[*].miles` | `src/data/areas.ts` | Approximate distances from the office, city pages only. **Not computed from a real address** — the Boca Raton street address is still outstanding, so the city list itself is provisional. Regions carry no mileage |
 
 ### Copy written to be safe, and why it matters
 

@@ -76,10 +76,24 @@ place-targeted copy, including blog posts generated in HyppoCRM.
 
 1. **Selection rule.** *Which* places get a page is itself a fair-lending signal. A footprint that
    covers affluent areas and omits lower-income ones is readable as redlining regardless of intent.
-   Cities are chosen by a **neutral, written rule applied evenly** — currently: Palm Beach County
-   municipalities within ~25 miles of the Boca Raton office, population ~10,000 or more. Never
-   hand-add a city for its volume, and never hand-drop one for lack of it. If the geography
-   changes, it changes for everyone at that distance.
+
+   Aura is licensed across Florida and takes files statewide, so **the page set is not the
+   footprint.** No Florida borrower is outside it. The pages mark where underwriting differs, not
+   where we lend, and that is what makes the set defensible: it excludes nobody. Every page carries
+   the line that the list is not exhaustive and to call if a property is elsewhere in the state.
+
+   Places are chosen by **neutral, written rules applied evenly**, at two tiers:
+
+   - **City pages** — Palm Beach County municipalities within ~25 miles of the Boca Raton office,
+     population ~10,000 or more. If the geography changes, it changes for everyone at that distance.
+   - **Region pages** — Florida regions whose financing conditions differ materially from Palm Beach
+     County. **A region page covers the entire region and never names a subset of its towns.**
+     Naming a subset would reintroduce exactly the selection signal a region page exists to avoid:
+     it is the difference between "we finance the Panhandle" and a hand-picked list of its
+     wealthier coastal towns.
+
+   Never hand-add a place for its volume, and never hand-drop one for lack of it. Do not create a
+   city page for a town that sits inside a region page.
 2. **Language rule.** Local copy describes **financing conditions only** — condo warrantability,
    HOA reserves after milestone inspections, jumbo thresholds, flood zones, occupancy,
    new-construction activity. **Never characterise a community.** "Family-friendly",
