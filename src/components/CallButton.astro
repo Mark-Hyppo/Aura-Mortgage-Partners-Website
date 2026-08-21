@@ -3,7 +3,7 @@ import Icon from "./Icon.astro";
 import { site } from "../data/site";
 
 interface Props {
-  variant?: "primary" | "secondary" | "on-dark";
+  variant?: "primary" | "secondary" | "on-dark" | "gold";
   size?: "sm" | "md" | "lg";
   label?: string;
   class?: string;
@@ -15,6 +15,7 @@ const variantClass = {
   primary: "btn-primary",
   secondary: "btn-secondary",
   "on-dark": "btn-on-dark",
+  gold: "btn-gold",
 }[variant];
 
 const sizeClass = size === "sm" ? "text-base px-6 min-h-[3rem]" : size === "lg" ? "btn-lg" : "";
