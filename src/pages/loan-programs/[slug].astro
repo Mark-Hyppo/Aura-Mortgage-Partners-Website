@@ -29,6 +29,8 @@ const related = programs
 // only area -> program.
 const relevantAreas = areasForProgram(program.slug);
 
+const checklist = program.whatToBring ?? [];
+
 const crumbs = [
   { name: "Loan Programs", href: "/loan-programs" },
   { name: program.name, href: `/loan-programs/${program.slug}` },
@@ -56,9 +58,16 @@ const faqSchema = {
   <section class="section">
     <div class="container-page grid gap-12 lg:grid-cols-[1fr_20rem] lg:gap-16">
       <div>
-        <div class="grid gap-10 sm:grid-cols-2">
-          <div>
-            <h2 class="font-display text-xl font-semibold">Who it fits</h2>
+        <div class:list={["grid gap-10", checklist.length > 0 && "sm:grid-cols-2"]}>
+          <div class:list={[checklist.length === 0 && "mx-auto w-full max-w-xl"]}>
+            <h2
+              class:list={[
+                "font-display text-xl font-semibold",
+                checklist.length === 0 && "text-center",
+              ]}
+            >
+              Who it fits
+            </h2>
             <ul class="mt-5 space-y-3">
               {
                 program.whoItFits.map((item) => (
@@ -71,19 +80,21 @@ const faqSchema = {
             </ul>
           </div>
 
-          <div>
-            <h2 class="font-display text-xl font-semibold">What to bring</h2>
-            <ul class="mt-5 space-y-3">
-              {
-                program.whatToBring.map((item) => (
-                  <li class="flex gap-3 text-[0.9375rem] leading-relaxed text-ink/80">
-                    <Icon name="check" class="mt-1 h-4 w-4 shrink-0 text-brand" />
-                    <span>{item}</span>
-                  </li>
-                ))
-              }
-            </ul>
-          </div>
+          {
+            checklist.length > 0 && (
+              <div>
+                <h2 class="font-display text-xl font-semibold">What to bring</h2>
+                <ul class="mt-5 space-y-3">
+                  {checklist.map((item) => (
+                    <li class="flex gap-3 text-[0.9375rem] leading-relaxed text-ink/80">
+                      <Icon name="check" class="mt-1 h-4 w-4 shrink-0 text-brand" />
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )
+          }
         </div>
 
         <h2 class="mt-14 font-display text-2xl font-semibold">Common questions</h2>
