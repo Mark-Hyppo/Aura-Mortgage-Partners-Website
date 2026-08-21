@@ -25,7 +25,8 @@ grep -rn "DRAFT:" src/
 | `team[0].bio` | `src/data/team.ts` | Mark Wilkinson, two paragraphs |
 | `team[1].bio` | `src/data/team.ts` | Lorie Lewis, two paragraphs |
 | `trustPoints` | `src/data/site.ts` | Four "why us" cards |
-| `programs[*].lede` / `whoItFits` / `whatToBring` / `faq` | `src/data/programs.ts` | All 20 program pages. Program **names** come from `markmymortgage.com`; the surrounding copy is ours |
+| `programs[*].lede` / `whoItFits` / `faq` | `src/data/programs.ts` | All 20 program pages. Program **names** come from `markmymortgage.com`; the surrounding copy is ours |
+| `programs[*].whatToBring` | `src/data/programs.ts` | Only the 9 Outside the Box programs from Construction onward. The client asked for the checklist to be dropped from the other 11, so the field is now optional and absent on those |
 | `groups.*.desc` | `src/data/programs.ts` | The Inside/Outside the Box descriptions |
 | `areas[*].conditions` / `blurb` / `faq` | `src/data/areas.ts` | All 10 Areas We Serve city pages. Financing-conditions paragraphs and ~21 FAQs, written from general South Florida lending knowledge. **Mark Wilkinson has to confirm every local claim** |
 | `areas[*].miles` | `src/data/areas.ts` | Approximate distances from the office. **Not computed from a real address** — the Boca Raton street address is still outstanding, so the city list itself is provisional |

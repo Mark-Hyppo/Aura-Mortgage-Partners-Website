@@ -13,7 +13,8 @@ export interface Program {
   blurb: string;
   lede: string;
   whoItFits: string[];
-  whatToBring: string[];
+  /** Omitted on the 11 programs the client asked to drop the checklist from. */
+  whatToBring?: string[];
   faq: { q: string; a: string }[];
 }
 
@@ -49,12 +50,6 @@ export const programs: Program[] = [
       "Borrowers with an established credit history",
       "Anyone who wants the widest choice of terms and the most competitive wholesale pricing",
     ],
-    whatToBring: [
-      "Two most recent pay stubs",
-      "W-2s for the past two years",
-      "Two months of bank statements for all accounts",
-      "Photo ID and, if applicable, the purchase contract",
-    ],
     faq: [
       {
         q: "What makes a loan conforming?",
@@ -86,12 +81,6 @@ export const programs: Program[] = [
       "Borrowers whose credit profile does not yet meet conventional guidelines",
       "Buyers who want to keep more cash on hand at closing",
       "Owner-occupants. FHA financing requires the property be your primary residence",
-    ],
-    whatToBring: [
-      "Two most recent pay stubs and two years of W-2s",
-      "Two months of bank statements",
-      "Photo ID and Social Security number for the FHA case number",
-      "Explanation letters for any recent credit events",
     ],
     faq: [
       {
@@ -125,12 +114,6 @@ export const programs: Program[] = [
       "Surviving spouses who hold a valid Certificate of Eligibility",
       "Owner-occupants. The VA program requires the property be your primary residence",
     ],
-    whatToBring: [
-      "Certificate of Eligibility, or DD-214 so we can request one",
-      "Two most recent pay stubs, or a Leave and Earnings Statement if active duty",
-      "Two months of bank statements",
-      "Photo ID",
-    ],
     faq: [
       {
         q: "How do I get my Certificate of Eligibility?",
@@ -162,12 +145,6 @@ export const programs: Program[] = [
       "Borrowers with strong reserves and documented income",
       "Homeowners refinancing a high-balance mortgage",
       "Purchasers of second homes and investment properties at higher loan amounts",
-    ],
-    whatToBring: [
-      "Two years of complete personal tax returns with all schedules",
-      "Two months of statements for every asset account, including retirement",
-      "Two most recent pay stubs",
-      "A schedule of any other real estate owned",
     ],
     faq: [
       {
@@ -201,12 +178,6 @@ export const programs: Program[] = [
       "Households within the county income limits published by Florida Housing",
       "Buyers purchasing a primary residence within program purchase price limits",
     ],
-    whatToBring: [
-      "Proof of full-time employment in an eligible occupation",
-      "Two most recent pay stubs and two years of W-2s",
-      "Homebuyer education certificate, which the program requires",
-      "Photo ID and proof of Florida residency",
-    ],
     faq: [
       {
         q: "Which occupations qualify?",
@@ -238,12 +209,6 @@ export const programs: Program[] = [
       "Borrowers carrying mortgage insurance that may no longer be required",
       "Owners consolidating a first and second mortgage into one loan",
       "Homeowners who need to access equity for a defined purpose",
-    ],
-    whatToBring: [
-      "Your current mortgage statement, and the statement for any second lien",
-      "Most recent homeowners insurance declaration page",
-      "Two most recent pay stubs and two years of W-2s",
-      "Two months of bank statements",
     ],
     faq: [
       {
@@ -279,12 +244,6 @@ export const programs: Program[] = [
       "Buyers who need cross-collateralization or asset-based qualifying",
       "Purchasers on a compressed timeline where a portfolio lender can move faster",
     ],
-    whatToBring: [
-      "Two years of complete tax returns, personal and business",
-      "Statements for all liquid and retirement accounts",
-      "A schedule of real estate owned with current values and liens",
-      "Entity documents if the property will be held in a trust or LLC",
-    ],
     faq: [
       {
         q: "Where does jumbo end and super jumbo begin?",
@@ -316,12 +275,6 @@ export const programs: Program[] = [
       "Owners with substantial equity who want to stay in the home",
       "Households restructuring retirement cash flow",
       "Borrowers who have completed the required HUD-approved counseling",
-    ],
-    whatToBring: [
-      "Photo ID and proof of age for all borrowers",
-      "Current mortgage statement, if any balance remains",
-      "Homeowners insurance declaration page and most recent property tax bill",
-      "Certificate from HUD-approved reverse mortgage counseling",
     ],
     faq: [
       {
@@ -355,12 +308,6 @@ export const programs: Program[] = [
       "Borrowers who want a standby facility rather than a lump sum",
       "Investors accessing equity in a held property",
     ],
-    whatToBring: [
-      "Current first mortgage statement",
-      "Two most recent pay stubs and two years of W-2s",
-      "Homeowners insurance declaration page",
-      "Most recent property tax bill",
-    ],
     faq: [
       {
         q: "HELOC or cash-out refinance?",
@@ -393,12 +340,6 @@ export const programs: Program[] = [
       "Borrowers with a recent credit event who are otherwise strong",
       "Retirees and others qualifying on assets rather than earned income",
     ],
-    whatToBring: [
-      "Twelve to twenty-four months of business or personal bank statements",
-      "A CPA letter confirming business ownership and expense ratio, if available",
-      "Business license or entity documents",
-      "Statements for any accounts being used for asset depletion",
-    ],
     faq: [
       {
         q: "How does a bank statement loan work?",
@@ -430,12 +371,6 @@ export const programs: Program[] = [
       "Self-employed investors who would rather not document personal income",
       "Buyers of long-term and, with some lenders, short-term rentals",
       "Investors purchasing in an LLC",
-    ],
-    whatToBring: [
-      "The lease, or a market rent appraisal for a vacant property",
-      "Two months of bank statements showing down payment and reserves",
-      "Entity documents if closing in an LLC",
-      "A schedule of real estate owned",
     ],
     faq: [
       {
